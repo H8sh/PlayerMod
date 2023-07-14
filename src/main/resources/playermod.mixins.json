@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.h8sh.playermod.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "client": [
+    "MixinPlayerModel",
+    "MixinPiglinModel",
+    "MixinPlayerRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "playermod.mixin-refmap.json"
+}
