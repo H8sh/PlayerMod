@@ -2,9 +2,12 @@ package net.h8sh.playermod;
 
 import com.mojang.logging.LogUtils;
 import net.h8sh.playermod.block.ModBlocks;
+import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.entity.client.SwouiffiRenderer;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -35,6 +38,8 @@ public class PlayerMod {
 
         ModTabs.register(modEventBus);
 
+        ModEntities.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::addCreative);
@@ -63,7 +68,7 @@ public class PlayerMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            EntityRenderers.register(ModEntities.Swouiffi.get(), SwouiffiRenderer::new);
         }
     }
 }

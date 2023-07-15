@@ -17,7 +17,9 @@ public class ModTabs {
             .icon(() -> Items.DIAMOND.getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(Items.DIAMOND);
+                output.accept(ModItems.SWOUIFFI_SPAWN_EGG.get());
             }).build());
+
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);

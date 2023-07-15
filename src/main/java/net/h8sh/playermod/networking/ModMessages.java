@@ -53,18 +53,6 @@ public class ModMessages {
                 .consumerMainThread(ProfessionBasicC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(ProfessionCurrentC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ProfessionCurrentC2SPacket::new)
-                .encoder(ProfessionCurrentC2SPacket::toBytes)
-                .consumerMainThread(ProfessionCurrentC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(PlayerModelS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(PlayerModelS2CPacket::new)
-                .encoder(PlayerModelS2CPacket::toBytes)
-                .consumerMainThread(PlayerModelS2CPacket::handle)
-                .add();
-
     }
 
     public static <MSG> void sendToServer(MSG message) {

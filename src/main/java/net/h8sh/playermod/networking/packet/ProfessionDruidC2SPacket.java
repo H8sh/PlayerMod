@@ -46,7 +46,6 @@ public class ProfessionDruidC2SPacket {
 
                 if (profession.getProfessionKnown() != 1) { // Check if there is already a profession
                     profession.addProfession(Profession.Professions.DRUID);
-                    ModMessages.sendToPlayer(new PlayerModelS2CPacket(profession.getProfession()), player);
                     player.sendSystemMessage(Component.literal("profession: "
                             + profession.getProfessionByName()
                             + " and the number of professions known are: " + profession.getProfessionKnown()).withStyle(ChatFormatting.RED));

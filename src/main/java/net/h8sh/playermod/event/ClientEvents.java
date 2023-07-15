@@ -28,9 +28,6 @@ public class ClientEvents {
             if (KeyBinding.BASIC_PROFESSION_KEY.consumeClick()) {
                 ModMessages.sendToServer(new ProfessionBasicC2SPacket());
             }
-            if (KeyBinding.CURRENT_PROFESSION_KEY.consumeClick()) {
-                ModMessages.sendToServer(new ProfessionCurrentC2SPacket());
-            }
 
         }
 
