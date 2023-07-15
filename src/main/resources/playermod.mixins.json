@@ -3,9 +3,9 @@
   "package": "net.h8sh.playermod.mixin",
   "compatibilityLevel": "JAVA_16",
   "client": [
-    "MixinPlayerModel",
     "MixinPiglinModel",
-    "MixinPlayerRenderer"
+    "MixinPlayerRenderer",
+    "MixinPlayerModel"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -39,11 +39,12 @@ public class ProfessionCurrentC2SPacket {
                     0.5F, level.random.nextFloat() * 1.0F + 0.9F);
 
             player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
-                    player.sendSystemMessage(Component.literal("profession: "
-                            + profession.getProfessionByName()
-                            + " and the number of professions known are: " + profession.getProfessionKnown()).withStyle(ChatFormatting.GREEN));
-                ModMessages.sendToPlayer(new PlayerModelS2CPacket(profession.getProfession()), player);
 
+
+                player.sendSystemMessage(Component.literal("profession: "
+                        + profession.getProfessionByName()
+                        + " and the number of professions known are: " + profession.getProfessionKnown()).withStyle(ChatFormatting.GREEN));
+                ModMessages.sendToPlayer(new PlayerModelS2CPacket(profession.getProfession()), player);
             });
 
         });

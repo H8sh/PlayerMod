@@ -24,6 +24,8 @@ public class Profession {
         return profession;
     }
 
+
+
     public int getProfessionKnown() {
         return professionKnown;
     }
@@ -32,6 +34,10 @@ public class Profession {
         this.PROFESSION_TEXTURE = getProfessionTexture(professions.getId());
         this.profession = professions.getId();
         this.professionKnown += 1;
+    }
+
+    public static void setProfession(int newProfession){
+        profession = newProfession;
     }
 
     public void resetProfession() {

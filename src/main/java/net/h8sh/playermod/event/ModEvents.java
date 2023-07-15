@@ -16,12 +16,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import java.lang.reflect.Method;
-
-import static net.h8sh.playermod.mixin.MixinPlayerModel.createMesh;
-
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class ModEvents {
+
 
     @SubscribeEvent
     public static void onAttachedCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -66,5 +63,6 @@ public class ModEvents {
             }
         }
     }
+
 
 }
