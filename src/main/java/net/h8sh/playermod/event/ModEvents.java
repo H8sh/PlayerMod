@@ -13,6 +13,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -56,6 +57,15 @@ public class ModEvents {
                 });
             }
         }
+
+        @SubscribeEvent
+        public void kill(LivingDeathEvent event) {
+            if (event.getSource().getEntity() instanceof Player) {
+                Player player = (Player) event.getSource().getEntity();
+
+            }
+        }
+
     }
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
