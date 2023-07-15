@@ -32,6 +32,8 @@ public class PlayerMod {
 
         modEventBus.addListener(this::commonSetup);
 
+        ModTabs.register(modEventBus);
+
         ModBlocks.register(modEventBus);
 
         ModItems.register(modEventBus);

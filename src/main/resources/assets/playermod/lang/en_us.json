@@ -4,5 +4,9 @@
   "key.playermod.paladin": "Paladin",
   "key.playermod.wizard": "Wizard",
   "key.playermod.basic": "Basic",
-  "key.playermod.current": "Current"
+  "key.playermod.current": "Current",
+
+  "creativetab.tutorial_tab": "Tutorial Tab",
+
+  "item.playermod.swouiffi_spawn_egg": "Swouiffi Spawn Egg"
 }

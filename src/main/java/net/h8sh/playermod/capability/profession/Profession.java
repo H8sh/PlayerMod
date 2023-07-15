@@ -63,10 +63,10 @@ public class Profession {
     }
 
     public enum Professions {
-        BASIC(0, "basic"),
-        PALADIN(1, "paladin"),
-        WIZARD(2, "wizard"),
-        DRUID(3, "druid");
+        BASIC(0, "Basic"),
+        PALADIN(1, "Paladin"),
+        WIZARD(2, "Wizard"),
+        DRUID(3, "Druid");
 
         private final int id;
         private final String name;
