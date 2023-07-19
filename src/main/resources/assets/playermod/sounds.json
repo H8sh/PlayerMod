@@ -1,0 +1,8 @@
+{
+  "custom_sound_menu": {
+    "subtitle": "sounds.playermod.custom_sound_menu",
+    "sounds": [
+      "playermod:custom_sound_menu"
+    ]
+  }
+}

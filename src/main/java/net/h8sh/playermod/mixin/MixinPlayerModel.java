@@ -53,11 +53,11 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
     private static void createMesh(CubeDeformation p_170826_, boolean p_170827_, CallbackInfoReturnable<MeshDefinition> cir) {
         cir.cancel();
 
-        cir.setReturnValue(createDruidProfession());
+        cir.setReturnValue(createCustomPlayer());
 
     }
 
-    private static MeshDefinition createDruidProfession() {
+    private static MeshDefinition createCustomPlayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partdefinition = meshDefinition.getRoot();
         createEmptyPart(partdefinition, "ear");

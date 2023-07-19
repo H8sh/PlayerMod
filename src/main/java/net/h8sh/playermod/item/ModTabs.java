@@ -1,6 +1,7 @@
 package net.h8sh.playermod.item;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +25,7 @@ public class ModTabs {
                     .title(Component.translatable("creativetab.tutorial_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.SWOUIFFI_SPAWN_EGG.get());
+                        pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
                     })
                     .build());
 

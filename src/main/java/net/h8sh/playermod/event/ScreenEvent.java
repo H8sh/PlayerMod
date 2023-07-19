@@ -1,12 +1,13 @@
 package net.h8sh.playermod.event;
 
-import net.h8sh.playermod.screen.CinematicScreen;
+import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
+import net.h8sh.playermod.sound.ModMusics;
+import net.h8sh.playermod.sound.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.Musics;
+import net.minecraft.sounds.Music;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 import static net.h8sh.playermod.PlayerMod.MODID;
-import static net.h8sh.playermod.screen.CinematicScreen.createResourceLocations;
+import static net.h8sh.playermod.screen.cinematic.EndPortalCinematic.createResourceLocations;
 
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ScreenEvent {
@@ -28,15 +29,17 @@ public class ScreenEvent {
         if (event.phase == TickEvent.Phase.END) {
             Screen currentScreen = Minecraft.getInstance().screen;
 
-            if (!isCinematicScreenOpen && shouldOpenCinematicScreen && currentScreen != null && currentScreen.getClass() == TitleScreen.class) {
-                Minecraft.getInstance().setScreen(new CinematicScreen(Component.literal("Cinematic screen loaded with success !!"),
-                        images, Musics.CREDITS));
+            if (!isCinematicScreenOpen && shouldOpenCinematicScreen && currentScreen != null && currentScreen.getClass() == WinScreen.class) {
+                Minecraft.getInstance().setScreen(new EndPortalCinematic(images, ModMusics.CUSTOM_MENU_MENU_MUSIC));
                 isCinematicScreenOpen = true;
-            } else if (isCinematicScreenOpen && (currentScreen == null || currentScreen.getClass() != CinematicScreen.class)) {
+            } else if (isCinematicScreenOpen && (currentScreen == null || currentScreen.getClass() != EndPortalCinematic.class)) {
                 isCinematicScreenOpen = false;
                 shouldOpenCinematicScreen = false;
             }
         }
     }
+
+
+
 
 }

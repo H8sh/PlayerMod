@@ -7,11 +7,9 @@ import net.h8sh.playermod.entity.client.SwouiffiRenderer;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.sound.ModSounds;
+import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.level.block.EndPortalBlock;
-import net.minecraft.world.level.block.EndPortalFrameBlock;
-import net.minecraft.world.level.block.entity.TheEndPortalBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -28,7 +26,7 @@ import org.slf4j.Logger;
 public class PlayerMod {
     public static final String MODID = "playermod";
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
 
     public PlayerMod() {
@@ -44,13 +42,16 @@ public class PlayerMod {
 
         ModTabs.register(modEventBus);
 
+        ModDimensions.register();
+
+        ModSounds.register(modEventBus);
+
         ModEntities.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::addCreative);
     }
-
 
 
     private void commonSetup(final FMLCommonSetupEvent event) {

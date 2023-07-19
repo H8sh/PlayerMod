@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "playermod:block/portal_side",
+    "up": "playermod:block/portal_top",
+    "north": "playermod:block/portal_side",
+    "south": "playermod:block/portal_side",
+    "east": "playermod:block/portal_side",
+    "west": "playermod:block/portal_side"
+  }
+}
