@@ -5,11 +5,10 @@ import net.h8sh.playermod.capability.narrator.NarratorManager;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.packet.narrator.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
+import net.h8sh.playermod.sound.ModSounds;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,6 +24,7 @@ public class NarratorEvents {
 
     private static boolean sendEmptyMessage = true;
     private static boolean spawnFlag = true;
+
 
     @SubscribeEvent
     public static void onPlayerGettingLOGForFirstTime(PlayerEvent.ItemPickupEvent event) {
@@ -51,6 +51,13 @@ public class NarratorEvents {
                 executor.shutdown();
 
                 narrator.setFlagWood();
+
+                //Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.CUSTOM_MENU_MENU_MUSIC);
+
+                event.getEntity().level().playSound(null, event.getEntity().getOnPos(), ModSounds.CUSTOM_SOUND_MENU.get(), SoundSource.PLAYERS,
+                        0.5F, 1F);
+
+
             }
 
             if ((event.getStack().is(Items.COAL) || event.getStack().is(Items.CHARCOAL)) && !narrator.asAlreadyGetCoal()) {
@@ -220,23 +227,6 @@ public class NarratorEvents {
                 }
             });
         }
-    }
-
-
-    @SubscribeEvent
-    public static void onWonderlandsConnectionWithPlayerForFirstTime(ViewportEvent.ComputeFov event) {
-        Player player = Minecraft.getInstance().player;
-
-        player.getCapability(NarratorProvider.NARRATOR).ifPresent(narrator -> {
-
-            if (NarratorManager.wonderlandsTalkingToPlayer()) {
-                event.setFOV(100.0F);
-            } else {
-                event.setFOV(70.0F);
-            }
-
-        });
-
     }
 
 }

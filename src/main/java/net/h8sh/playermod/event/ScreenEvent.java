@@ -2,12 +2,10 @@ package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
 import net.h8sh.playermod.sound.ModMusics;
-import net.h8sh.playermod.sound.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.Music;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,7 +28,7 @@ public class ScreenEvent {
             Screen currentScreen = Minecraft.getInstance().screen;
 
             if (!isCinematicScreenOpen && shouldOpenCinematicScreen && currentScreen != null && currentScreen.getClass() == WinScreen.class) {
-                Minecraft.getInstance().setScreen(new EndPortalCinematic(images, ModMusics.CUSTOM_MENU_MENU_MUSIC));
+                Minecraft.getInstance().setScreen(new EndPortalCinematic(images, ModMusics.CUSTOM_MUSIC_MENU));
                 isCinematicScreenOpen = true;
             } else if (isCinematicScreenOpen && (currentScreen == null || currentScreen.getClass() != EndPortalCinematic.class)) {
                 isCinematicScreenOpen = false;

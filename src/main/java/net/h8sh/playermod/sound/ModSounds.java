@@ -12,7 +12,7 @@ public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PlayerMod.MODID);
 
-    public static final RegistryObject<SoundEvent> CUSTOM_MENU_MENU = registerSoundEvent("custom_sound_menu");
+    public static final RegistryObject<SoundEvent> CUSTOM_SOUND_MENU = registerSoundEvent("custom_sound_menu");
 
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

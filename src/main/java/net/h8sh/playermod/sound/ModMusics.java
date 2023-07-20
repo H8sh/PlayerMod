@@ -4,6 +4,6 @@ import net.minecraft.sounds.Music;
 
 public class ModMusics {
 
-    public static final Music CUSTOM_MENU_MENU_MUSIC = new Music(ModSounds.CUSTOM_MENU_MENU.getHolder().get(), 200, 400, true);
+    public static final Music CUSTOM_MUSIC_MENU = new Music(ModSounds.CUSTOM_SOUND_MENU.getHolder().get(), 200, 400, true);
 
 }
