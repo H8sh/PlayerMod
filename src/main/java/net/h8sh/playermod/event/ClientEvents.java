@@ -4,7 +4,6 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.narrator.NarratorOverlay;
 import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.packet.profession.ProfessionBasicC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionDruidC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionPaladinC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionWizardC2SPacket;
@@ -21,17 +20,14 @@ public class ClientEvents {
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            if (KeyBinding.DRUID_PROFESSION_KEY.consumeClick()) {
+            if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new ProfessionDruidC2SPacket());
             }
-            if (KeyBinding.PALADIN_PROFESSION_KEY.consumeClick()) {
+            if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new ProfessionPaladinC2SPacket());
             }
-            if (KeyBinding.WIZARD_PROFESSION_KEY.consumeClick()) {
+            if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new ProfessionWizardC2SPacket());
-            }
-            if (KeyBinding.BASIC_PROFESSION_KEY.consumeClick()) {
-                ModMessages.sendToServer(new ProfessionBasicC2SPacket());
             }
 
         }
@@ -42,11 +38,11 @@ public class ClientEvents {
     public static class ClientModBusEvent {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-            event.register(KeyBinding.DRUID_PROFESSION_KEY);
-            event.register(KeyBinding.PALADIN_PROFESSION_KEY);
-            event.register(KeyBinding.WIZARD_PROFESSION_KEY);
-            event.register(KeyBinding.BASIC_PROFESSION_KEY);
-            event.register(KeyBinding.CURRENT_PROFESSION_KEY);
+            event.register(KeyBinding.FIRST_SPELL_KEY);
+            event.register(KeyBinding.SECOND_SPELL_KEY);
+            event.register(KeyBinding.THIRD_SPELL_KEY);
+            event.register(KeyBinding.ULTIMATE_SPELL_KEY);
+            event.register(KeyBinding.INTERACTION_KEY);
         }
 
         @SubscribeEvent

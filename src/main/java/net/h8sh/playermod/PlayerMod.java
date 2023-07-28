@@ -2,13 +2,17 @@ package net.h8sh.playermod;
 
 import com.mojang.logging.LogUtils;
 import net.h8sh.playermod.block.ModBlocks;
+import net.h8sh.playermod.block.entity.ModBlockEntities;
+import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
 import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.entity.client.LivingLamppostRenderer;
 import net.h8sh.playermod.entity.client.SwouiffiRenderer;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +25,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 @Mod(PlayerMod.MODID)
 public class PlayerMod {
@@ -38,6 +43,8 @@ public class PlayerMod {
 
         ModBlocks.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+
         ModItems.register(modEventBus);
 
         ModTabs.register(modEventBus);
@@ -48,11 +55,12 @@ public class PlayerMod {
 
         ModEntities.register(modEventBus);
 
+        GeckoLib.initialize();
+
         MinecraftForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::addCreative);
     }
-
 
     private void commonSetup(final FMLCommonSetupEvent event) {
 
@@ -77,7 +85,12 @@ public class PlayerMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityRenderers.register(ModEntities.Swouiffi.get(), SwouiffiRenderer::new);
+            EntityRenderers.register(ModEntities.SWOUIFFI.get(), SwouiffiRenderer::new);
+            EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);
+
+
+
+            BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);
         }
     }
 }

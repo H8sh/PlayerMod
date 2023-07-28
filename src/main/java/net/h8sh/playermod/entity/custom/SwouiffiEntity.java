@@ -50,7 +50,7 @@ public class SwouiffiEntity extends ShoulderRidingEntity implements GeoEntity {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        SwouiffiEntity cat = ModEntities.Swouiffi.get().create(level);
+        SwouiffiEntity cat = ModEntities.SWOUIFFI.get().create(level);
         return cat;
     }
 

@@ -4,5 +4,19 @@
     "sounds": [
       "playermod:custom_sound_menu"
     ]
+  },
+
+  "living_lamppost_idle": {
+    "subtitle": "sounds.playermod.living_lamppost_idle",
+    "sounds": [
+      "playermod:living_lamppost_idle"
+    ]
+  },
+
+  "living_lamppost_moving": {
+    "subtitle": "sounds.playermod.living_lamppost_moving",
+    "sounds": [
+      "playermod:living_lamppost_moving"
+    ]
   }
 }

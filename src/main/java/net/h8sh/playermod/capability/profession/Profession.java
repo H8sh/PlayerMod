@@ -24,8 +24,6 @@ public class Profession {
         return profession;
     }
 
-
-
     public int getProfessionKnown() {
         return professionKnown;
     }

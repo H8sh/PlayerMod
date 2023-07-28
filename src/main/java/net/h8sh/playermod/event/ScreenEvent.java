@@ -1,11 +1,14 @@
 package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
+import net.h8sh.playermod.screen.profession.PaladinBookScreen;
 import net.h8sh.playermod.sound.ModMusics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WinScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Musics;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,21 +22,36 @@ import static net.h8sh.playermod.screen.cinematic.EndPortalCinematic.createResou
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class ScreenEvent {
     private static final List<ResourceLocation> images = createResourceLocations();
-    private static boolean isCinematicScreenOpen = false;
-    private static boolean shouldOpenCinematicScreen = true;
+    private static boolean isEndPortalCinematicScreenOpen = false;
+    private static boolean shouldOpenEndPortalCinematicScreen = true;
+
+    private static boolean shouldOpenPaladinBookScreen = false;
+
+    public static void openPaladinBookScreen(){
+        shouldOpenPaladinBookScreen = true;
+    }
+    public static void closePaladinBookScreen(){
+        shouldOpenPaladinBookScreen = false;
+    }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             Screen currentScreen = Minecraft.getInstance().screen;
 
-            if (!isCinematicScreenOpen && shouldOpenCinematicScreen && currentScreen != null && currentScreen.getClass() == WinScreen.class) {
+            if (!isEndPortalCinematicScreenOpen && shouldOpenEndPortalCinematicScreen && currentScreen != null && currentScreen.getClass() == WinScreen.class) {
                 Minecraft.getInstance().setScreen(new EndPortalCinematic(images, ModMusics.CUSTOM_MUSIC_MENU));
-                isCinematicScreenOpen = true;
-            } else if (isCinematicScreenOpen && (currentScreen == null || currentScreen.getClass() != EndPortalCinematic.class)) {
-                isCinematicScreenOpen = false;
-                shouldOpenCinematicScreen = false;
+                isEndPortalCinematicScreenOpen = true;
+            } else if (isEndPortalCinematicScreenOpen && (currentScreen == null || currentScreen.getClass() != EndPortalCinematic.class)) {
+                isEndPortalCinematicScreenOpen = false;
+                shouldOpenEndPortalCinematicScreen = false;
             }
+
+
+            if (shouldOpenPaladinBookScreen) {
+                Minecraft.getInstance().setScreen(new PaladinBookScreen());
+            }
+
         }
     }
 

@@ -2,7 +2,6 @@ package net.h8sh.playermod.networking;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.networking.packet.narrator.*;
-import net.h8sh.playermod.networking.packet.profession.ProfessionBasicC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionDruidC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionPaladinC2SPacket;
 import net.h8sh.playermod.networking.packet.profession.ProfessionWizardC2SPacket;
@@ -52,12 +51,6 @@ public class ModMessages {
                 .decoder(ProfessionWizardC2SPacket::new)
                 .encoder(ProfessionWizardC2SPacket::toBytes)
                 .consumerMainThread(ProfessionWizardC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(ProfessionBasicC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ProfessionBasicC2SPacket::new)
-                .encoder(ProfessionBasicC2SPacket::toBytes)
-                .consumerMainThread(ProfessionBasicC2SPacket::handle)
                 .add();
 
         //Travelling ---------------------------------------------------------------------------------------------------

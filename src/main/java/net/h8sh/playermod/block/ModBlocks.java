@@ -1,6 +1,7 @@
 package net.h8sh.playermod.block;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.block.custom.PaladinLectern;
 import net.h8sh.playermod.block.custom.PortalBlock;
 import net.h8sh.playermod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +25,11 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal",
             ()-> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL)));
+
+    public static final RegistryObject<Block> PALADIN_LECTERN = BLOCKS.register("paladin_lectern",
+            ()-> new PaladinLectern(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
+
+
 
 
 

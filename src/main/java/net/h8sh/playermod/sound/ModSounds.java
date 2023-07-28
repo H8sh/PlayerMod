@@ -15,6 +15,10 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> CUSTOM_SOUND_MENU = registerSoundEvent("custom_sound_menu");
 
 
+    public static final RegistryObject<SoundEvent> LIVING_LAMPPOST_IDLE = registerSoundEvent("living_lamppost_idle");
+    public static final RegistryObject<SoundEvent> LIVING_LAMPPOST_MOVING = registerSoundEvent("living_lamppost_moving");
+
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = new ResourceLocation(PlayerMod.MODID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

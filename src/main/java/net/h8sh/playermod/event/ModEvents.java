@@ -4,15 +4,21 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.awt.geom.Point2D;
 
 public class ModEvents {
 
@@ -52,6 +58,20 @@ public class ModEvents {
             }
         }
 
+        public static BlockPos currentPlayerBlockPos;
+        public static BlockPos getCurrentPlayerBlockPos() {
+            return currentPlayerBlockPos;
+        }
+
+        @SubscribeEvent
+        public static void onPlayerCloned(TickEvent.PlayerTickEvent event) {
+
+            Player player = event.player;
+            BlockPos pos = player.blockPosition();
+            currentPlayerBlockPos = pos;
+
+        }
+
 
     }
 
@@ -60,7 +80,8 @@ public class ModEvents {
 
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-            event.put(ModEntities.Swouiffi.get(), SwouiffiEntity.setAttributes());
+            event.put(ModEntities.SWOUIFFI.get(), SwouiffiEntity.setAttributes());
+            event.put(ModEntities.LIVING_LAMPPOST.get(), LivingLamppost.setAttributes());
         }
 
     }
