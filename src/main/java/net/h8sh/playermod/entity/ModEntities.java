@@ -1,6 +1,7 @@
 package net.h8sh.playermod.entity;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +28,12 @@ public class ModEntities {
                     () -> EntityType.Builder.of(LivingLamppost::new, MobCategory.CREATURE)
                             .sized(1.5f, 1.75f)
                             .build(new ResourceLocation(PlayerMod.MODID, "living_lamppost").toString()));
+
+    public static final RegistryObject<EntityType<CrystalEntity>> CRYSTAL =
+            ENTITY_TYPES.register("crystal",
+                    () -> EntityType.Builder.of(CrystalEntity::new, MobCategory.CREATURE)
+                            .sized(1.5f, 1.75f)
+                            .build(new ResourceLocation(PlayerMod.MODID, "crystal").toString()));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

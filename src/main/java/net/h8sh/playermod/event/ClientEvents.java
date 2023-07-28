@@ -2,11 +2,11 @@ package net.h8sh.playermod.event;
 
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.capability.narrator.NarratorOverlay;
-import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.packet.profession.ProfessionDruidC2SPacket;
-import net.h8sh.playermod.networking.packet.profession.ProfessionPaladinC2SPacket;
-import net.h8sh.playermod.networking.packet.profession.ProfessionWizardC2SPacket;
+import net.h8sh.playermod.gui.CrystalOverlay;
+import net.h8sh.playermod.gui.ManaBarOverlay;
+import net.h8sh.playermod.gui.ManaOverlay;
+import net.h8sh.playermod.gui.NarratorOverlay;
+import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -20,16 +20,58 @@ public class ClientEvents {
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                ModMessages.sendToServer(new ProfessionDruidC2SPacket());
-            }
-            if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                ModMessages.sendToServer(new ProfessionPaladinC2SPacket());
-            }
-            if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-                ModMessages.sendToServer(new ProfessionWizardC2SPacket());
-            }
+            int currentProfession = Profession.getProfession();
 
+            switch (currentProfession) {
+                case 1: //Paladin
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+
+                    }
+                case 2: //Wizard
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+
+                    }
+                case 3: //Druid
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+
+                    }
+            }
         }
 
     }
@@ -47,7 +89,10 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll("narrator", NarratorOverlay.HUD_THIRST);
+            event.registerAboveAll("narrator", NarratorOverlay.HUD_NARRATOR);
+            event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
+            event.registerAboveAll("crystal", CrystalOverlay.HUD_CRYSTAL);
+            event.registerAboveAll("mana_bar", ManaBarOverlay.HUD_MANA_BAR);
         }
 
     }
