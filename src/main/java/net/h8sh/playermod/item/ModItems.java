@@ -25,7 +25,11 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.LIVING_LAMPPOST, 0x555555, 0xFFAA00,
                     new Item.Properties()));
 
-    //Professions ------------------------------------------------------------------------------------------------------
+    public static final RegistryObject<Item> CRYSTAL_SPAWN_EGG = ITEMS.register("crystal_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.CRYSTAL, 0x555555, 0xFFAA00,
+                    new Item.Properties()));
+
+    //Metamorphoses ------------------------------------------------------------------------------------------------------
     public static final RegistryObject<Item> PALADIN_LECTERN_ITEM = ITEMS.register("paladin_lectern",
             () -> new PaladinLecternItem(ModBlocks.PALADIN_LECTERN.get(), new Item.Properties()));
 

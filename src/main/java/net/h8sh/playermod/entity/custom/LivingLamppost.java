@@ -77,7 +77,7 @@ public class LivingLamppost extends Animal implements GeoEntity {
     @Override
     public void tick() {
 
-            BlockPos playerPos = ClientUtils.getClientPlayer().blockPosition();
+            BlockPos playerPos = ModEvents.ForgeEvents.getPlayerBlockPos();
             if (playerPos != null) {
                 BlockPos livingLamppostPos = this.blockPosition();
 
@@ -85,20 +85,16 @@ public class LivingLamppost extends Animal implements GeoEntity {
 
                 if (distance > 6) {
                     setLampOff();
-                    //System.out.println("the lamp should be off/false: " + isLampOn );
                 } else if (distance <= 6 && distance > 3) {
                     if (!isLampOn) {
                         setLampOn();
-                        //System.out.println("the lamp should be on/true: " + isLampOn );
                     }
                     if (isAwake) {
                         setSleeping();
-                        //System.out.println("the lamp should be sleeping/false: " + isAwake );
                     }
                 } else if (distance <= 3) {
                     if (!isAwake) {
                         setAwake();
-                        //System.out.println("the lamp should be awake/true: " + isAwake );
                     }
                 }
             }
@@ -122,21 +118,18 @@ public class LivingLamppost extends Animal implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if (distance > 6) {
-            System.out.println("the lamp should be off/false: " + isLampOn );
 
             tAnimationState.getController().setAnimation(LAMP_SWITCH.then("idle", Animation.LoopType.LOOP));
             this.playSound(SoundEvents.LANTERN_PLACE);
             return PlayState.CONTINUE;
         } else if (distance <= 6 && distance > 3) {
             if (!isLampOn) {
-                System.out.println("the lamp should be on/true: " + isLampOn );
 
                 tAnimationState.getController().setAnimation(LAMP_SWITCH.then("idle", Animation.LoopType.LOOP));
                 this.playSound(SoundEvents.LANTERN_PLACE);
                 return PlayState.CONTINUE;
             }
             if (isAwake) {
-                System.out.println("the lamp should be sleeping/false: " + isAwake );
 
                 tAnimationState.getController().setAnimation(SLEEP.then("idle", Animation.LoopType.LOOP));
                 this.playSound(ModSounds.LIVING_LAMPPOST_MOVING.get());
@@ -144,7 +137,6 @@ public class LivingLamppost extends Animal implements GeoEntity {
             }
         } else if (distance <= 3) {
             if (!isAwake) {
-                System.out.println("the lamp should be awake/true: " + isAwake );
 
                 tAnimationState.getController().setAnimation(WAKE_UP.then("awake", Animation.LoopType.LOOP));
                 this.playSound(ModSounds.LIVING_LAMPPOST_MOVING.get());

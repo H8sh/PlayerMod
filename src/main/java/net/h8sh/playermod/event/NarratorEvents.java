@@ -4,7 +4,7 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.narrator.NarratorManager;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.packet.narrator.*;
+import net.h8sh.playermod.networking.narrator.*;
 import net.h8sh.playermod.sound.ModSounds;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
@@ -206,24 +206,25 @@ public class NarratorEvents {
 
     @SubscribeEvent
     public static void onPlayerSpawningForFirstTime(TickEvent.PlayerTickEvent event) {
-        if (event.side == LogicalSide.SERVER) {
+        if (event.side == LogicalSide.SERVER && event.player != null) {
             event.player.getCapability(NarratorProvider.NARRATOR).ifPresent(narrator -> {
+                if (event.player.level().dimension() == Level.OVERWORLD) {
+                    if (!narrator.asAlreadySpawn() && shouldCheckForSpawn()) {
 
-                if (!narrator.asAlreadySpawn() && shouldCheckForSpawn()) {
+                        asSpawn();
 
-                    asSpawn();
+                        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-                    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                        executor.schedule(() -> ModMessages.sendToServer(new NarratorSendSpawnMessageToPlayerC2SPacket()), 0, TimeUnit.SECONDS);
 
-                    executor.schedule(() -> ModMessages.sendToServer(new NarratorSendSpawnMessageToPlayerC2SPacket()), 0, TimeUnit.SECONDS);
+                        executor.schedule(() -> narrator.setFlagSpawn(), 10, TimeUnit.SECONDS);
 
-                    executor.schedule(() -> narrator.setFlagSpawn(), 10, TimeUnit.SECONDS);
+                        executor.shutdown();
 
-                    executor.shutdown();
-
-                } else if (narrator.asAlreadySpawn() && shouldSendEmptyMessage()) {
-                    ModMessages.sendToServer(new NarratorSendEmptyMessageToPlayerC2SPacket());
-                    noMoreEmptyMessage();
+                    } else if (narrator.asAlreadySpawn() && shouldSendEmptyMessage()) {
+                        ModMessages.sendToServer(new NarratorSendEmptyMessageToPlayerC2SPacket());
+                        noMoreEmptyMessage();
+                    }
                 }
             });
         }

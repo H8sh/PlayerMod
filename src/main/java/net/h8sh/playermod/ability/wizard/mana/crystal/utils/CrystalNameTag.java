@@ -1,6 +1,6 @@
 package net.h8sh.playermod.ability.wizard.mana.crystal.utils;
 
-import net.h8sh.playermod.ability.networking.wizard.manapacket.crystal.PacketResetCrystal;
+import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.ResetCrystalS2CPacket;
 import net.h8sh.playermod.ability.wizard.mana.ManaManager;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.networking.ModMessages;
@@ -24,7 +24,7 @@ public class CrystalNameTag extends Thread {
             if (counter <= 0) {
 
                 ManaManager.get(crystal.level()).setManaInternal(crystal.blockPosition());
-                ModMessages.sendToServer(new PacketResetCrystal(crystal.blockPosition()));
+                ModMessages.sendToServer(new ResetCrystalS2CPacket(crystal.blockPosition()));
                 crystal.remove(Entity.RemovalReason.UNLOADED_TO_CHUNK);
 
                 return;

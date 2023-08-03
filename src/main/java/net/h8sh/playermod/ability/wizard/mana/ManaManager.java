@@ -1,10 +1,10 @@
 package net.h8sh.playermod.ability.wizard.mana;
 
-import net.h8sh.playermod.ability.networking.AbilityMessages;
-import net.h8sh.playermod.ability.networking.wizard.manapacket.PacketSyncManaToClient;
 import net.h8sh.playermod.capability.ability.wizard.mana.ManaCapability;
 import net.h8sh.playermod.capability.ability.wizard.mana.ManaCapabilityProvider;
 import net.h8sh.playermod.config.WonderlandsModServerConfigs;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.wizard.manapacket.SyncManaToClientS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -49,7 +49,7 @@ public class ManaManager extends SavedData {
             throw new RuntimeException("Don't access this cleint side");
         }
         DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
-        return storage.computeIfAbsent(ManaManager::new, ManaManager::new, "manager");
+        return storage.computeIfAbsent(ManaManager::new, ManaManager::new, "mana_manager");
     }
 
     @NotNull
@@ -93,7 +93,7 @@ public class ManaManager extends SavedData {
 
                     int chunkMana = getMana(serverPlayer.blockPosition());
 
-                    AbilityMessages.sendToPlayer(new PacketSyncManaToClient(playerMana, chunkMana), serverPlayer);
+                    ModMessages.sendToPlayer(new SyncManaToClientS2CPacket(playerMana, chunkMana), serverPlayer);
                 }
             });
         }

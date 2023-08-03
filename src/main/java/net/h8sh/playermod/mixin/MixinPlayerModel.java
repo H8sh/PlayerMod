@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerModel.class)
 public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidModel<T> {
-    //Use to create a personalized player model, with custom animations (player & hands)
+    //Use to create a personalized player model, with custom animations
 
     public MixinPlayerModel(ModelPart root) {
         super(root);
@@ -76,6 +76,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         //KEEP ONLY HEAD AND BODY
 
+        // Profession --------------------------------------------------------------------------------------------------
 
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -6.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, 0.0F));
 
@@ -102,6 +103,14 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         PartDefinition wizard_hat = head.addOrReplaceChild("wizard_hat", CubeListBuilder.create(), PartPose.offset(0.0F, -8.0F, 0.0F));
 
         PartDefinition wizard_hat_r1 = wizard_hat.addOrReplaceChild("wizard_hat_r1", CubeListBuilder.create().texOffs(24, 16).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+
+        // Riding ------------------------------------------------------------------------------------------------------
+
+        //TODO
+
+        // Druid metamorphoses -----------------------------------------------------------------------------------------
+
+        //TODO
 
 
         return meshDefinition;

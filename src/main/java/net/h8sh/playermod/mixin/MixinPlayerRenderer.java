@@ -1,6 +1,8 @@
 package net.h8sh.playermod.mixin;
 
+import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
 import net.h8sh.playermod.capability.profession.Profession;
+import net.h8sh.playermod.capability.riding.Riding;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -10,7 +12,6 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
@@ -91,61 +92,79 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             playermodel.hat.visible = true;
         } else {
 
-            int currentProfession = Profession.getProfession();
+            // Profession ----------------------------------------------------------------------------------------------
 
-            if (currentProfession == 0) {
-                playermodel.body.getChild("druid_tail").visible = false;
-                playermodel.body.getChild("druid_right_arm").visible = true;
-                playermodel.body.getChild("druid_left_arm").visible = true;
-                playermodel.body.getChild("druid_right_leg").visible = true;
-                playermodel.body.getChild("druid_left_leg").visible = true;
-                playermodel.body.getChild("wizard_right_arm").visible = false;
-                playermodel.body.getChild("wizard_left_arm").visible = false;
-                playermodel.body.getChild("wizard_right_leg").visible = false;
-                playermodel.body.getChild("wizard_left_leg").visible = false;
-                playermodel.head.getChild("wizard_hat").visible = false;
-                playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
-            }
-            if (currentProfession == 1) {
-                playermodel.body.getChild("druid_tail").visible = false;
-                playermodel.body.getChild("druid_right_arm").visible = true;
-                playermodel.body.getChild("druid_left_arm").visible = true;
-                playermodel.body.getChild("druid_right_leg").visible = true;
-                playermodel.body.getChild("druid_left_leg").visible = true;
-                playermodel.body.getChild("wizard_right_arm").visible = false;
-                playermodel.body.getChild("wizard_left_arm").visible = false;
-                playermodel.body.getChild("wizard_right_leg").visible = false;
-                playermodel.body.getChild("wizard_left_leg").visible = false;
-                playermodel.head.getChild("wizard_hat").visible = false;
-                playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
-            }
-            if (currentProfession == 2) {
-                playermodel.body.getChild("druid_tail").visible = false;
-                playermodel.body.getChild("druid_right_arm").visible = false;
-                playermodel.body.getChild("druid_left_arm").visible = false;
-                playermodel.body.getChild("druid_right_leg").visible = false;
-                playermodel.body.getChild("druid_left_leg").visible = false;
-                playermodel.body.getChild("wizard_right_arm").visible = true;
-                playermodel.body.getChild("wizard_left_arm").visible = true;
-                playermodel.body.getChild("wizard_right_leg").visible = true;
-                playermodel.body.getChild("wizard_left_leg").visible = true;
-                playermodel.head.getChild("wizard_hat").visible = true;
-                playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = true;
-            }
-            if (currentProfession == 3) {
-                playermodel.body.getChild("druid_tail").visible = true;
-                playermodel.body.getChild("druid_right_arm").visible = true;
-                playermodel.body.getChild("druid_left_arm").visible = true;
-                playermodel.body.getChild("druid_right_leg").visible = true;
-                playermodel.body.getChild("druid_left_leg").visible = true;
-                playermodel.body.getChild("wizard_right_arm").visible = false;
-                playermodel.body.getChild("wizard_left_arm").visible = false;
-                playermodel.body.getChild("wizard_right_leg").visible = false;
-                playermodel.body.getChild("wizard_left_leg").visible = false;
-                playermodel.head.getChild("wizard_hat").visible = false;
-                playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
+            var currentProfession = Profession.getProfession();
+
+            switch (currentProfession) {
+
+                case BASIC -> {
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
+                }
+                case PALADIN -> {
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
+                }
+                case WIZARD -> {
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = false;
+                    playermodel.body.getChild("druid_left_arm").visible = false;
+                    playermodel.body.getChild("druid_right_leg").visible = false;
+                    playermodel.body.getChild("druid_left_leg").visible = false;
+                    playermodel.body.getChild("wizard_right_arm").visible = true;
+                    playermodel.body.getChild("wizard_left_arm").visible = true;
+                    playermodel.body.getChild("wizard_right_leg").visible = true;
+                    playermodel.body.getChild("wizard_left_leg").visible = true;
+                    playermodel.head.getChild("wizard_hat").visible = true;
+                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = true;
+                }
+                case DRUID -> {
+                    playermodel.body.getChild("druid_tail").visible = true;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
+                }
             }
 
+            // Riding --------------------------------------------------------------------------------------------------
+
+            //TODO
+
+            var currentMount = Riding.getRiding();
+
+            // Druid metamorphoses ------------------------------------------------------------------------------------
+
+            //TODO
+
+            var currentMetamorphose = Metamorphose.getMetamorphose();
+
+            // Rendering -----------------------------------------------------------------------------------------------
 
             playermodel.setAllVisible(true);
             playermodel.hat.visible = p_117819_.isModelPartShown(PlayerModelPart.HAT);
@@ -178,19 +197,33 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     )
     public void getTextureLocation(AbstractClientPlayer p_117783_, CallbackInfoReturnable<ResourceLocation> cir) {
 
-        int currentProfession = Profession.getProfession();
+        // Profession texture ------------------------------------------------------------------------------------------
 
-        switch (currentProfession) {
-            case 0:
-                cir.setReturnValue(Profession.getProfessionTexture(currentProfession));
-            case 1:
-                cir.setReturnValue(Profession.getProfessionTexture(currentProfession));
-            case 2:
-                cir.setReturnValue(Profession.getProfessionTexture(currentProfession));
-            case 3:
-                cir.setReturnValue(Profession.getProfessionTexture(currentProfession));
+        var currentProfession = Profession.getProfession();
+        cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
 
-        }
     }
 
+    // Riding ------------------------------------------------------------------------------------------------------
+
+    //TODO: add textures to asset folder
+
+        /*var currentMount = Riding.getRiding();
+
+        cir.setReturnValue(Riding.getRidingTexture(currentMount))
+
+        }*/
+
+    // Metamorphose ------------------------------------------------------------------------------------------------
+
+    //TODO: add textures to asset folder
+
+       /* var currentMetamorphose = Metamorphose.getMetamorphose();
+
+        cir.setReturnValue(Metamorphose.getMetamorphoseTexture(currentMetamorphose))
+
+        }*/
+
 }
+
+

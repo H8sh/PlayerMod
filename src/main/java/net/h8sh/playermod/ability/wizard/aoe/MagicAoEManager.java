@@ -1,8 +1,9 @@
 package net.h8sh.playermod.ability.wizard.aoe;
 
-import net.h8sh.playermod.ability.networking.AbilityMessages;
-import net.h8sh.playermod.ability.networking.wizard.aoepacket.PacketMagicAoE;
 import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.wizard.aoepacket.MagicAoES2CPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,19 +14,16 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.phys.HitResult;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MagicAoEManager extends SavedData {
+    private final static String AOE_TAG = "AoE";
 
     private static int counter = 0;
-    private static float deltaRadius;
-    private static float blocLookAtX;
-    private static float blocLookAtZ;
-    private static float deltaAngle;
     private static BlockPos pos;
     private static BlockPos currentPos;
     private Map<BlockPos, MagicAoE> AoEMap = new HashMap<>();
@@ -34,10 +32,10 @@ public class MagicAoEManager extends SavedData {
     }
 
     public MagicAoEManager(CompoundTag tag) {
-        ListTag list = tag.getList("AoE", Tag.TAG_COMPOUND);
+        ListTag list = tag.getList(AOE_TAG, Tag.TAG_COMPOUND);
         for (Tag t : list) {
             CompoundTag AoETag = (CompoundTag) t;
-            MagicAoE AoE = new MagicAoE(AoETag.getInt("AoE"));
+            MagicAoE AoE = new MagicAoE(AoETag.getInt(AOE_TAG));
             BlockPos pos = new BlockPos(AoETag.getInt("x"), AoETag.getInt("y"), AoETag.getInt("z"));
             AoEMap.put(pos, AoE);
         }
@@ -49,20 +47,23 @@ public class MagicAoEManager extends SavedData {
             throw new RuntimeException("Don't access this cleint side");
         }
         DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
-        return storage.computeIfAbsent(MagicAoEManager::new, MagicAoEManager::new, "manager");
+        return storage.computeIfAbsent(MagicAoEManager::new, MagicAoEManager::new, "aoe_manager");
     }
 
     public static void tick(Level level) {
         counter--;
         if (counter <= 0) {
             counter = 10;
+
+            // TODO AoE visualization: client-only and re-use the same entity (spawn it once, then move it, destroy it at the end).
+
             level.players().forEach(player -> {
                 if (player instanceof ServerPlayer serverPlayer) {
                     //TODO: change CrystalEntity to MagicAoEEntity && save current pos
-                    pos = getBlockLookAt(serverPlayer);
+                    pos = getBlockLookAt();
                     if (pos != currentPos) {
                         //TODO: kill aoe
-                        AbilityMessages.sendToServer(new PacketMagicAoE());
+                        ModMessages.sendToServer(new MagicAoES2CPacket());
                         currentPos = pos;
                         //TODO: spawn new aoe
                         ModEntities.CRYSTAL.get().spawn((ServerLevel) serverPlayer.level(), null, serverPlayer, pos, MobSpawnType.COMMAND, true, false);
@@ -72,55 +73,24 @@ public class MagicAoEManager extends SavedData {
         }
     }
 
-    public static BlockPos getPos() {
-        return pos;
-    }
+    private static BlockPos getBlockLookAt() {
 
-    private static BlockPos getBlockLookAt(ServerPlayer serverPlayer) {
+        HitResult rt = Minecraft.getInstance().hitResult;
 
-        float xRot = (float) (serverPlayer.getXRot() * (Math.PI / 180));
-        float yHeadRot = (float) (serverPlayer.getYHeadRot() * Math.PI / 180);
-        if (yHeadRot < 0) {
-            deltaRadius = (float) (Math.tan(Math.PI / 2 - xRot) * serverPlayer.getEyeHeight());
-            deltaAngle = (float) (Math.PI / 2 + yHeadRot);
-            blocLookAtX = (float) (serverPlayer.position().x + deltaRadius * Math.cos(deltaAngle));
-        } else if (yHeadRot > 0) {
-            deltaRadius = (float) (Math.tan(Math.PI / 2 - xRot) * serverPlayer.getEyeHeight());
-            deltaAngle = (float) (Math.PI / 2 - yHeadRot);
-            blocLookAtX = (float) (serverPlayer.position().x - deltaRadius * Math.cos(deltaAngle));
-        }
+        double x = (rt.getLocation().x);
+        double y = (rt.getLocation().y);
+        double z = (rt.getLocation().z);
 
-        blocLookAtZ = (float) (serverPlayer.position().z + deltaRadius * Math.sin(deltaAngle));
+        double xla = Minecraft.getInstance().player.getLookAngle().x;
+        double yla = Minecraft.getInstance().player.getLookAngle().y;
+        double zla = Minecraft.getInstance().player.getLookAngle().z;
 
-        return new BlockPos((int) blocLookAtX, (int) serverPlayer.position().y, (int) blocLookAtZ);
-    }
+        if ((x % 1 == 0) && (xla < 0)) x -= 0.01;
+        if ((y % 1 == 0) && (yla < 0)) y -= 0.01;
+        if ((z % 1 == 0) && (zla < 0)) z -= 0.01;
 
-    @NotNull
-    private MagicAoE setNewMagicAoEInternal(BlockPos pos) {
-        return AoEMap.computeIfAbsent(pos, cp -> new MagicAoE(0));
-    }
+        return new BlockPos((int) x, (int) y, (int) z);
 
-    public int setMagicAoEHashMapToZero(BlockPos pos) {
-        MagicAoE magicAoE = setNewMagicAoEInternal(pos);
-        return magicAoE.getAoE();
-    }
-
-    public MagicAoE setMagicAoEFlag(BlockPos pos) {
-
-        return AoEMap.put(pos, new MagicAoE(1));
-    }
-
-    public MagicAoE getMagicAoE(BlockPos pos) {
-
-        return AoEMap.get(pos);
-    }
-
-    public int extractAoE(BlockPos pos) {
-        MagicAoE magicAoE = setNewMagicAoEInternal(pos);
-        int present = magicAoE.getAoE();
-        magicAoE.setAoE(present + 1);
-        setDirty();
-        return 1;
     }
 
     @Override
@@ -131,10 +101,10 @@ public class MagicAoEManager extends SavedData {
             AoETag.putInt("x", key.getX());
             AoETag.putInt("y", key.getY());
             AoETag.putInt("z", key.getZ());
-            AoETag.putInt("AoE", value.getAoE());
+            AoETag.putInt(AOE_TAG, value.getAoE());
             listAoE.add(AoETag);
         });
-        tag.put("AoE", listAoE);
+        tag.put(AOE_TAG, listAoE);
         return tag;
     }
 

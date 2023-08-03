@@ -8,6 +8,7 @@ import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.h8sh.playermod.config.WonderlandsModCommonConfigs;
 import net.h8sh.playermod.config.WonderlandsModServerConfigs;
 import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.entity.client.CrystalRenderer;
 import net.h8sh.playermod.entity.client.LivingLamppostRenderer;
 import net.h8sh.playermod.entity.client.SwouiffiRenderer;
 import net.h8sh.playermod.item.ModItems;
@@ -37,7 +38,6 @@ public class PlayerMod {
     public static final String MODID = "playermod";
 
     public static final Logger LOGGER = LogUtils.getLogger();
-
 
     public PlayerMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -77,7 +77,6 @@ public class PlayerMod {
 
         });
         ModMessages.register();
-
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -96,7 +95,7 @@ public class PlayerMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.SWOUIFFI.get(), SwouiffiRenderer::new);
             EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);
-
+            EntityRenderers.register(ModEntities.CRYSTAL.get(), CrystalRenderer::new);
 
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);

@@ -8,6 +8,8 @@ import java.util.function.IntFunction;
 import javax.annotation.Nullable;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.block.entity.PaladinLecternEntity;
+import net.h8sh.playermod.event.ScreenEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
@@ -243,6 +245,18 @@ public class PaladinBookScreen extends Screen {
 
     protected void closeScreen() {
         this.minecraft.setScreen((Screen)null);
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return true;
+    }
+
+    @Override
+    public void onClose() {
+        this.minecraft.popGuiLayer();
+        ScreenEvent.closePaladinBookScreen();
+        PaladinLecternEntity.closeScreen();
     }
 
     @Nullable

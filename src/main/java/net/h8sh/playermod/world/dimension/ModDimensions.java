@@ -14,6 +14,11 @@ public class ModDimensions {
     public static final ResourceKey<DimensionType> WONDERLANDS_TYPE =
             ResourceKey.create(Registries.DIMENSION_TYPE, WONDERLANDS_KEY.location());
 
+    public static final ResourceKey<Level> HUNTED_MANSION_KEY = ResourceKey.create(Registries.DIMENSION,
+            new ResourceLocation(PlayerMod.MODID, "hunted_mansion"));
+    public static final ResourceKey<DimensionType> HUNTED_MANSION_TYPE =
+            ResourceKey.create(Registries.DIMENSION_TYPE, HUNTED_MANSION_KEY.location());
+
     public static void register() {
         System.out.println("Registering ModDimensions for " + PlayerMod.MODID);
     }

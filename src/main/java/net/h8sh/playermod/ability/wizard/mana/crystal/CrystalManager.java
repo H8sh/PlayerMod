@@ -1,12 +1,12 @@
 package net.h8sh.playermod.ability.wizard.mana.crystal;
 
-import net.h8sh.playermod.ability.networking.AbilityMessages;
-import net.h8sh.playermod.ability.networking.wizard.manapacket.crystal.PacketSyncCrystalToClient;
 import net.h8sh.playermod.ability.wizard.mana.crystal.utils.CrystalNameTag;
 import net.h8sh.playermod.capability.ability.wizard.mana.crystal.CrystalCapability;
 import net.h8sh.playermod.capability.ability.wizard.mana.crystal.CrystalCapabilityProvider;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.SyncCrystalToClientC2SPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -55,6 +55,26 @@ public class CrystalManager extends SavedData {
         }
         DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
         return storage.computeIfAbsent(CrystalManager::new, CrystalManager::new, "crystal");
+    }
+
+    public static List<Entity> removeLivingCrystals(Player player, Level world) {
+        AABB overlordBoundingBox = new AABB(
+                world.getWorldBorder().getMinX(),
+                -128,
+                world.getWorldBorder().getMinZ(),
+                world.getWorldBorder().getMaxX(),
+                128,
+                world.getWorldBorder().getMaxZ()
+        );
+        List<Entity> crystals = new ArrayList<>();
+        List<Entity> entities = new ArrayList<>();
+        world.getEntities(player, overlordBoundingBox, Entity::isAlive).forEach(entities::add);
+        for (Entity entity : entities) {
+            if (entity instanceof CrystalEntity) {
+                crystals.add(entity);
+            }
+        }
+        return crystals;
     }
 
     @NotNull
@@ -112,26 +132,6 @@ public class CrystalManager extends SavedData {
         return crystal;
     }
 
-    public static List<Entity> removeLivingCrystals(Player player, Level world) {
-        AABB overlordBoundingBox = new AABB(
-                world.getWorldBorder().getMinX(),
-                -128,
-                world.getWorldBorder().getMinZ(),
-                world.getWorldBorder().getMaxX(),
-                128,
-                world.getWorldBorder().getMaxZ()
-        );
-        List<Entity> crystals = new ArrayList<>();
-        List<Entity> entities = new ArrayList<>();
-        world.getEntities(player, overlordBoundingBox, Entity::isAlive).forEach(entities::add);
-        for (Entity entity : entities){
-            if (entity instanceof CrystalEntity){
-                crystals.add(entity);
-            }
-        }
-        return crystals;
-    }
-
     public void tick(Level level) {
         counter--;
         if (counter <= 0) {
@@ -140,7 +140,7 @@ public class CrystalManager extends SavedData {
                 if (player instanceof ServerPlayer serverPlayer) {
                     int playerCrystal = serverPlayer.getCapability(CrystalCapabilityProvider.PLAYER_CRYSTAL).map(CrystalCapability::getCrystal).orElse(-1);
 
-                    AbilityMessages.sendToPlayer(new PacketSyncCrystalToClient(playerCrystal), serverPlayer);
+                    ModMessages.sendToPlayer(new SyncCrystalToClientC2SPacket(playerCrystal), serverPlayer);
                 }
             });
         }

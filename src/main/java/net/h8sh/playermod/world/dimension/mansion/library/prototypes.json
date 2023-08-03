@@ -1,0 +1,148 @@
+{
+  "prototypes": [
+    {
+      "structure": {
+        "neighbors": [
+          {
+            "eastNeighbor": [
+              "structure_0R3"
+            ],
+            "westNeighbor": [
+              "structure_0R3"
+            ],
+            "southNeighbor": [
+              "structure_0R3"
+            ],
+            "northNeighbor": [
+              "structure_0R3"
+            ]
+          }
+        ],
+        "rotation": {
+          "rotation_allowed": 4,
+          "rotation_type": 1
+        },
+        "name": {
+          "name_type": "structure_0R1"
+        },
+        "sockets": {
+          "east": 1,
+          "south": 3,
+          "north": 2,
+          "west": 0
+        },
+        "mesh": {
+          "mesh_type": "structure_0"
+        }
+      }
+    },
+    {
+      "structure": {
+        "neighbors": [
+          {
+            "eastNeighbor": [
+              "structure_0R0"
+            ],
+            "westNeighbor": [
+              "structure_0R0"
+            ],
+            "southNeighbor": [
+              "structure_0R0"
+            ],
+            "northNeighbor": [
+              "structure_0R0"
+            ]
+          }
+        ],
+        "rotation": {
+          "rotation_allowed": 4,
+          "rotation_type": 2
+        },
+        "name": {
+          "name_type": "structure_0R2"
+        },
+        "sockets": {
+          "east": 3,
+          "south": 0,
+          "north": 1,
+          "west": 2
+        },
+        "mesh": {
+          "mesh_type": "structure_0"
+        }
+      }
+    },
+    {
+      "structure": {
+        "neighbors": [
+          {
+            "eastNeighbor": [
+              "structure_0R1"
+            ],
+            "westNeighbor": [
+              "structure_0R1"
+            ],
+            "southNeighbor": [
+              "structure_0R1"
+            ],
+            "northNeighbor": [
+              "structure_0R1"
+            ]
+          }
+        ],
+        "rotation": {
+          "rotation_allowed": 4,
+          "rotation_type": 3
+        },
+        "name": {
+          "name_type": "structure_0R3"
+        },
+        "sockets": {
+          "east": 0,
+          "south": 2,
+          "north": 3,
+          "west": 1
+        },
+        "mesh": {
+          "mesh_type": "structure_0"
+        }
+      }
+    },
+    {
+      "structure": {
+        "neighbors": [
+          {
+            "eastNeighbor": [
+              "structure_0R2"
+            ],
+            "westNeighbor": [
+              "structure_0R2"
+            ],
+            "southNeighbor": [
+              "structure_0R2"
+            ],
+            "northNeighbor": [
+              "structure_0R2"
+            ]
+          }
+        ],
+        "rotation": {
+          "rotation_allowed": 4,
+          "rotation_type": 0
+        },
+        "name": {
+          "name_type": "structure_0R0"
+        },
+        "sockets": {
+          "east": 2,
+          "south": 1,
+          "north": 0,
+          "west": 3
+        },
+        "mesh": {
+          "mesh_type": "structure_0"
+        }
+      }
+    }
+  ]
+}

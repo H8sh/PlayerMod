@@ -20,7 +20,10 @@ public class ModTabs {
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.SWOUIFFI_SPAWN_EGG.get());
                         pOutput.accept(ModItems.LIVING_LAMPPOST_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.CRYSTAL_SPAWN_EGG.get());
+
                         pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
+
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
 
                         pOutput.accept(ModItems.PALADIN_BOOK.get());

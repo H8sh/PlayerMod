@@ -7,20 +7,19 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 @AutoRegisterCapability
 public class Profession {
-    private static int profession;
+    private static Professions profession;
     private int professionKnown;
-
     private ResourceLocation PROFESSION_TEXTURE;
 
     public static ResourceLocation getProfessionTexture(int professionId) {
         return new ResourceLocation(PlayerMod.MODID, "textures/profession/" + professionId + "_texture.png");
     }
 
-    public static String getProfessionByName() {
-        return Professions.getNameFormId(profession);
+    public static String getProfessionName() {
+        return profession.getName();
     }
 
-    public static int getProfession() {
+    public static Professions getProfession() {
         return profession;
     }
 
@@ -30,16 +29,12 @@ public class Profession {
 
     public void addProfession(Professions professions) {
         this.PROFESSION_TEXTURE = getProfessionTexture(professions.getId());
-        this.profession = professions.getId();
+        this.profession = professions;
         this.professionKnown += 1;
     }
 
-    public static void setProfession(int newProfession){
-        profession = newProfession;
-    }
-
     public void resetProfession() {
-        this.profession = Professions.BASIC.getId();
+        this.profession = Professions.BASIC;
         this.professionKnown = 0;
         this.PROFESSION_TEXTURE = getProfessionTexture(Professions.BASIC.getId());
     }
@@ -51,12 +46,12 @@ public class Profession {
     }
 
     public void saveNBTData(CompoundTag nbt) {
-        nbt.putInt("profession", profession);
+        nbt.putInt("profession", profession.id);
         nbt.putInt("professionKnown", professionKnown);
     }
 
     public void loadNBTData(CompoundTag nbt) {
-        profession = nbt.getInt("profession");
+        profession = Professions.getProfessionFromId(nbt.getInt("profession"));
         professionKnown = nbt.getInt("professionKnown");
     }
 
@@ -74,16 +69,16 @@ public class Profession {
             this.name = name;
         }
 
-        public static String getNameFormId(int id) {
+        public static Professions getProfessionFromId(int id) {
             switch (id) {
                 case 1:
-                    return Professions.PALADIN.getName();
+                    return Professions.PALADIN;
                 case 2:
-                    return Professions.WIZARD.getName();
+                    return Professions.WIZARD;
                 case 3:
-                    return Professions.DRUID.getName();
+                    return Professions.DRUID;
                 default:
-                    return Professions.BASIC.getName();
+                    return Professions.BASIC;
             }
         }
 

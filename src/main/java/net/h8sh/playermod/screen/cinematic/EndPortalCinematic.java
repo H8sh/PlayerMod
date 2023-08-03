@@ -1,16 +1,13 @@
 package net.h8sh.playermod.screen.cinematic;
 
 import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.packet.travelling.OnChangedDimensionToWonderlandsHomeC2SPacket;
-import net.h8sh.playermod.sound.ModMusics;
-import net.h8sh.playermod.sound.ModSounds;
+import net.h8sh.playermod.networking.travelling.OnChangedDimensionToWonderlandsHomeC2SPacket;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,7 @@ public class EndPortalCinematic extends Screen {
     @Override
     public void tick() {
         this.minecraft.getMusicManager().tick();
-        this.minecraft.getSoundManager().tick(false);
+        this.minecraft.getSoundManager().tick(isPauseScreen());
 
     }
 
@@ -74,15 +71,15 @@ public class EndPortalCinematic extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics p_281274_, int p_283012_, int p_282072_, float p_282608_) {
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
 
         if (currentImageIndex < images.size()) {
 
-            p_281274_.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            p_281274_.blit(images.get(currentImageIndex), 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
-            p_281274_.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ScreenEvent.BackgroundRendered(this, p_281274_));
-            super.render(p_281274_, p_283012_, p_282072_, p_282608_);
+//            pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            pGuiGraphics.blit(images.get(currentImageIndex), 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
+//            pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ScreenEvent.BackgroundRendered(this, pGuiGraphics));
+            super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
             currentImageIndex++;
 
             try {
@@ -100,6 +97,6 @@ public class EndPortalCinematic extends Screen {
     @Override
     public void onClose() {
         this.minecraft.popGuiLayer();
-        //ModMessages.sendToServer(new OnChangedDimensionToWonderlandsHomeC2SPacket());
+        ModMessages.sendToServer(new OnChangedDimensionToWonderlandsHomeC2SPacket());
     }
 }
