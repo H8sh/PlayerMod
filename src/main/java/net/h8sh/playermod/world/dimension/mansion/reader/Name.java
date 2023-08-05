@@ -1,12 +1,13 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Name implements Serializable {
+public class Name {
 
-    @JsonProperty("name_type")
+    @SerializedName("name_type")
     public String name_type;
 
     public String getName_type() {

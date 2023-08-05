@@ -1,22 +1,23 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Neighbors implements Serializable {
+public class Neighbors  {
 
-    @JsonProperty("northNeighbor")
+    @SerializedName("northNeighbor")
     public List<String> northNeighbor;
 
-    @JsonProperty("southNeighbor")
+    @SerializedName("southNeighbor")
     public List<String> southNeighbor;
 
-    @JsonProperty("eastNeighbor")
+    @SerializedName("eastNeighbor")
     public List<String> eastNeighbor;
 
-    @JsonProperty("westNeighbor")
+    @SerializedName("westNeighbor")
     public List<String> westNeighbor;
 
     public Neighbors(){

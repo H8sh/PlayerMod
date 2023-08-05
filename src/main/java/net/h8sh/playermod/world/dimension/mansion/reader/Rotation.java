@@ -1,14 +1,15 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Rotation implements Serializable {
+public class Rotation {
 
-    @JsonProperty("rotation_type")
+    @SerializedName("rotation_type")
     public int rotation_type;
-    @JsonProperty("rotation_allowed")
+    @SerializedName("rotation_allowed")
     public int rotation_allowed;
 
     public int getRotation_allowed() {

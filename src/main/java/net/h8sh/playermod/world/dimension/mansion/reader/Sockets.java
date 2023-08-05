@@ -1,18 +1,19 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Sockets implements Serializable {
+public class Sockets {
 
-    @JsonProperty("north")
+    @SerializedName("north")
     public int north;
-    @JsonProperty("south")
+    @SerializedName("south")
     public int south;
-    @JsonProperty("east")
+    @SerializedName("east")
     public int east;
-    @JsonProperty("west")
+    @SerializedName("west")
     public int west;
 
     public int getEast() {

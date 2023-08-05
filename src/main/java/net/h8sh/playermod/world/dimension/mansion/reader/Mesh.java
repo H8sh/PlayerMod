@@ -1,11 +1,12 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Mesh implements Serializable {
-    @JsonProperty("mesh_type")
+public class Mesh {
+    @SerializedName("mesh_type")
     public String mesh_type;
 
     public String getMesh_type() {

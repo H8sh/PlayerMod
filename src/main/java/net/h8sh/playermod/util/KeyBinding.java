@@ -16,7 +16,7 @@ public class KeyBinding {
     public static final String KEY_RIDING = "key.playermod.riding";
 
     public static final KeyMapping FIRST_SPELL_KEY = new KeyMapping(KEY_SPELL_1,
-            KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_1, KEY_CATEGORY_PROFESSION);
+            KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, KEY_CATEGORY_PROFESSION);
 
     public static final KeyMapping SECOND_SPELL_KEY = new KeyMapping(KEY_SPELL_2,
             KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_2, KEY_CATEGORY_PROFESSION);

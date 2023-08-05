@@ -1,6 +1,5 @@
 package net.h8sh.playermod.networking.travelling;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -37,22 +36,22 @@ public class OnChangedDimensionToMansionHuntedC2SPacket {
             //TravelManager.teleport(player, newWorld, new BlockPos(0, 0, 0), true);
             //if (!TravelManager.get(player.serverLevel()).asAlreadyTravel("hunted_mansion")) {
 
-                //var mansion = MansionManager.createMansion(MansionManager.getSize(), MansionManager.getSize());
-                //var mansion = WaveCollapseManager.createMansion(MansionManager.getSize(), MansionManager.getSize());
-                //Random random = new Random();
+            //var mansion = MansionManager.createMansion(MansionManager.getSize(), MansionManager.getSize());
+            //var mansion = WaveCollapseManager.createMansion(MansionManager.getSize(), MansionManager.getSize());
+            //Random random = new Random();
 
         /*        for (int i = 0; i < MansionManager.getSize(); i++) {
                     for (int j = 0; j < MansionManager.getSize(); j++) {*/
 
-                        //mansion[i][j] = random.nextInt(MansionManager.MANSION_MAX_SIZE_STRUCTURE - MansionManager.MANSION_MIN_SIZE_STRUCTURE + 1) + MansionManager.MANSION_MIN_SIZE_STRUCTURE;
-                        //mansion[i][j] = 0;
+            //mansion[i][j] = random.nextInt(MansionManager.MANSION_MAX_SIZE_STRUCTURE - MansionManager.MANSION_MIN_SIZE_STRUCTURE + 1) + MansionManager.MANSION_MIN_SIZE_STRUCTURE;
+            //mansion[i][j] = 0;
 
-                        /*BlockPos pos = new BlockPos(player.blockPosition().getX() - j * 16, player.blockPosition().getY(), player.blockPosition().getZ() - i * 16);*/
+            /*BlockPos pos = new BlockPos(player.blockPosition().getX() - j * 16, player.blockPosition().getY(), player.blockPosition().getZ() - i * 16);*/
 
-                        //StructureTemplate template = newWorld.getStructureManager().getOrCreate(new ResourceLocation(PlayerMod.MODID, mansion[i][j]));
-                        //template.placeInWorld(newWorld, pos, pos, new StructurePlaceSettings(), newWorld.getRandom(), Block.UPDATE_ALL);
+            //StructureTemplate template = newWorld.getStructureManager().getOrCreate(new ResourceLocation(PlayerMod.MODID, mansion[i][j]));
+            //template.placeInWorld(newWorld, pos, pos, new StructurePlaceSettings(), newWorld.getRandom(), Block.UPDATE_ALL);
 
-                        //TravelManager.createPortal(newWorld, pos);
+            //TravelManager.createPortal(newWorld, pos);
 
                 /*    }
                 }*/

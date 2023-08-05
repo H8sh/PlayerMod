@@ -1,21 +1,22 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Structure implements Serializable {
+public class Structure {
 
-    @JsonProperty("mesh")
+    @SerializedName("mesh")
     public Mesh mesh;
-    @JsonProperty("rotation")
+    @SerializedName("rotation")
     public Rotation rotation;
-    @JsonProperty("sockets")
+    @SerializedName("sockets")
     public Sockets sockets;
-    @JsonProperty("name")
+    @SerializedName("name")
     public Name name;
-    @JsonProperty("neighbors")
+    @SerializedName("neighbors")
     public List<Neighbors> neighbors;
 
     public List<Neighbors> getNeighbors() {

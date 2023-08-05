@@ -1,5 +1,6 @@
 package net.h8sh.playermod.world.dimension.mansion;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mojang.datafixers.util.Pair;
 import net.h8sh.playermod.PlayerMod;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MansionManager {
-    private static final String INPUT_DIRECTORY = "src/main/java/net/h8sh/playermod/world/dimension/mansion/library";
+    public static final String INPUT_DIRECTORY = "src/main/resources/data/playermod/library";
     private static final Pair<Integer, Integer> RIGHT = new Pair<>(0, 1);
     private static final Pair<Integer, Integer> LEFT = new Pair<>(0, -1);
     private static final Pair<Integer, Integer> UP = new Pair<>(-1, 0);
@@ -30,14 +31,24 @@ public class MansionManager {
     private static final int ROW = 3;
     private static final int COLUMN = 3;
     private static final int MAX_ITERATIONS = 20;
+    private static List<Prototypes> prototypes;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
         getTemplatesLocationFromMap();
+    }
+
+    public static void setPrototypes(List<Prototypes> prototypes) {
+        MansionManager.prototypes = prototypes;
+    }
+
+    public static List<Prototypes> getPrototypes() {
+        return prototypes;
     }
 
     public static void createMansionInWorld(ServerLevel world, ServerPlayer player) {
 
         var templates = getTemplatesLocationFromMap();
+
 
         int counter = 0;
         for (int i = 0; i < ROW; i++) {
@@ -70,8 +81,9 @@ public class MansionManager {
         List<ArrayList<Object>> structures = new ArrayList<>();
         List<Pair<String, Integer>> textures = new ArrayList<>();
 
-        var prototypes = loadJsonInputFiles(INPUT_DIRECTORY);
-        int prototypesTypes = loadJsonInputFiles(INPUT_DIRECTORY).get(0).getPrototype().size();
+        //var prototypes = loadJsonInputFiles(INPUT_DIRECTORY);
+        var prototypes = getPrototypes();
+        int prototypesTypes = prototypes.get(0).getPrototype().size();
         for (int i = 0; i < prototypesTypes; i++) {
 
             var template = new ArrayList<>();
@@ -143,7 +155,8 @@ public class MansionManager {
     }
 
     private static int[][] createEntropy(int rowCount, int columnCount) {
-        int prototypesTypes = loadJsonInputFiles(INPUT_DIRECTORY).get(0).getPrototype().size();
+        //int prototypesTypes = loadJsonInputFiles(INPUT_DIRECTORY).get(0).getPrototype().size();
+        int prototypesTypes = getPrototypes().get(0).getPrototype().size();
         var entropy = new int[rowCount][columnCount];
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
@@ -219,10 +232,6 @@ public class MansionManager {
     }
 
     private static List<String> getStructuresAvailableInDirection(List<Prototypes> currentCell, Pair<Integer, Integer> direction) {
-
-        /**
-         * Check what the list of valid neighbors of the current cell in the direction
-         */
 
         List<List<String>> structuresAvailableInDirection = new ArrayList<>();
 
@@ -312,7 +321,7 @@ public class MansionManager {
         }
 
         if (coordinatesList.isEmpty()) {
-            return new Pair<>(0, 0); // No valid coordinates with entropy greater than 1
+            return new Pair<>(0, 0);
         }
 
         Random random = new Random();
@@ -339,7 +348,8 @@ public class MansionManager {
         List<Prototypes>[][] wave = new List[rowCount][columnCount];
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                wave[i][j] = loadJsonInputFiles(INPUT_DIRECTORY);
+                //wave[i][j] = loadJsonInputFiles(INPUT_DIRECTORY);
+                wave[i][j] = getPrototypes();
             }
         }
         return wave;
@@ -355,6 +365,10 @@ public class MansionManager {
     }
 
     public static List<Prototypes> loadJsonInputFiles(String path) {
+        /**
+         * Used only for testing into the main class
+         */
+
         List<Prototypes> inputJsonFiles = new ArrayList<>();
 
         try (Stream<Path> stream = Files.list(Paths.get(path))) {
@@ -365,10 +379,14 @@ public class MansionManager {
                 Prototypes Prototypes = objectMapper.readValue(file, Prototypes.class);
                 inputJsonFiles.add(Prototypes);
             }
+
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("No file found for mansion generation: json method");
         }
 
         return inputJsonFiles;
     }
+
+
 }
