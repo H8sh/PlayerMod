@@ -5,7 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Mesh {
+public class Mesh implements Cloneable{
+
+    @Override
+    public Mesh clone() throws CloneNotSupportedException {
+        return (Mesh) super.clone();
+    }
+
     @SerializedName("mesh_type")
     public String mesh_type;
 

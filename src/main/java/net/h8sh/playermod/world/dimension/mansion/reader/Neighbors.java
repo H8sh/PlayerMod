@@ -1,12 +1,14 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Neighbors  {
+public class Neighbors implements Cloneable {
+    @Override
+    public Neighbors clone() throws CloneNotSupportedException {
+        return (Neighbors) super.clone();
+    }
 
     @SerializedName("northNeighbor")
     public List<String> northNeighbor;
@@ -20,7 +22,7 @@ public class Neighbors  {
     @SerializedName("westNeighbor")
     public List<String> westNeighbor;
 
-    public Neighbors(){
+    public Neighbors() {
         super();
     }
 

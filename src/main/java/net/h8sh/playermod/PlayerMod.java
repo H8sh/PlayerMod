@@ -18,7 +18,6 @@ import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
-import net.h8sh.playermod.world.dimension.mansion.reader.Prototype;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -43,8 +42,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Mod(PlayerMod.MODID)
@@ -111,10 +108,7 @@ public class PlayerMod {
 
                         Gson gson = new Gson();
                         Prototypes prototypes = gson.fromJson(jsonObject, Prototypes.class);
-
-                        List<Prototypes> prototypeList = new ArrayList<>();
-                        prototypeList.add(prototypes);
-                        MansionManager.setPrototypes(prototypeList);
+                        MansionManager.setPrototypesFromJson(prototypes);
 
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();

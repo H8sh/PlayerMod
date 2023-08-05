@@ -5,7 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Name {
+public class Name implements Cloneable{
+
+    @Override
+    public Name clone() throws CloneNotSupportedException {
+        return (Name) super.clone();
+    }
 
     @SerializedName("name_type")
     public String name_type;

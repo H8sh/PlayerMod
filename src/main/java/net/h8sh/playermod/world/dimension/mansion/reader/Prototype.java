@@ -1,11 +1,16 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class Prototype implements Cloneable {
 
-public class Prototype{
+    @Override
+    public Prototype clone() throws CloneNotSupportedException {
+        Prototype cloned = (Prototype) super.clone();
+        cloned.setStructure(cloned.getStructure().clone());
+        return cloned;
+    }
+
     @SerializedName("structure")
     public Structure structure;
 

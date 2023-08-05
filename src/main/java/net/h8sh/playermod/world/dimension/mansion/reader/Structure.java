@@ -4,9 +4,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Structure {
+public class Structure implements Cloneable{
+
+    @Override
+    public Structure clone() throws CloneNotSupportedException {
+        Structure cloned = (Structure) super.clone();
+
+        cloned.setMesh(cloned.getMesh().clone());
+        cloned.setName(cloned.getName().clone());
+        cloned.setRotation(cloned.getRotation().clone());
+        cloned.setSockets(cloned.getSockets().clone());
+
+        List<Neighbors> clonedNeighbors = new ArrayList<>();
+
+        for (Neighbors neighbors : cloned.getNeighbors()) {
+            neighbors.clone();
+            clonedNeighbors.add(neighbors);
+        }
+        cloned.setNeighbors(clonedNeighbors);
+
+        return cloned;
+
+    }
 
     @SerializedName("mesh")
     public Mesh mesh;
@@ -21,6 +43,26 @@ public class Structure {
 
     public List<Neighbors> getNeighbors() {
         return neighbors;
+    }
+
+    public void setSockets(Sockets sockets) {
+        this.sockets = sockets;
+    }
+
+    public void setRotation(Rotation rotation) {
+        this.rotation = rotation;
+    }
+
+    public void setMesh(Mesh mesh) {
+        this.mesh = mesh;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public void setNeighbors(List<Neighbors> neighbors) {
+        this.neighbors = neighbors;
     }
 
     public Mesh getMesh() {

@@ -1,9 +1,9 @@
 package net.h8sh.playermod.world.dimension.mansion;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mojang.datafixers.util.Pair;
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.world.dimension.mansion.reader.Prototype;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -31,17 +31,24 @@ public class MansionManager {
     private static final int ROW = 3;
     private static final int COLUMN = 3;
     private static final int MAX_ITERATIONS = 20;
-    private static List<Prototypes> prototypes;
+    private static Prototypes PROTOTYPES;
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) {
         getTemplatesLocationFromMap();
     }
 
-    public static void setPrototypes(List<Prototypes> prototypes) {
-        MansionManager.prototypes = prototypes;
+    public static void setPrototypesFromJson(Prototypes prototypes) {
+        MansionManager.PROTOTYPES = prototypes;
     }
 
-    public static List<Prototypes> getPrototypes() {
+    public static Prototypes getPrototypes() {
+        Prototypes prototypes = null;
+        try {
+            prototypes = PROTOTYPES.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
         return prototypes;
     }
 
@@ -76,13 +83,14 @@ public class MansionManager {
         }
     }
 
-    private static List<Pair<String, Integer>> getTemplatesLocationFromMap() {
+    public static List<Pair<String, Integer>> getTemplatesLocationFromMap() {
         var mansion = createMansion();
         List<ArrayList<Object>> structures = new ArrayList<>();
         List<Pair<String, Integer>> textures = new ArrayList<>();
 
         //var prototypes = loadJsonInputFiles(INPUT_DIRECTORY);
-        var prototypes = getPrototypes();
+        List<Prototypes> prototypes = new ArrayList<>();
+        prototypes.add(getPrototypes());
         int prototypesTypes = prototypes.get(0).getPrototype().size();
         for (int i = 0; i < prototypesTypes; i++) {
 
@@ -110,7 +118,7 @@ public class MansionManager {
         return textures;
     }
 
-    private static List<Prototypes>[][] createMansion() {
+    public static List<Prototypes>[][] createMansion() {
         var wave = createWave(ROW, COLUMN);
         var entropy = createEntropy(ROW, COLUMN);
 
@@ -156,7 +164,9 @@ public class MansionManager {
 
     private static int[][] createEntropy(int rowCount, int columnCount) {
         //int prototypesTypes = loadJsonInputFiles(INPUT_DIRECTORY).get(0).getPrototype().size();
-        int prototypesTypes = getPrototypes().get(0).getPrototype().size();
+        List<Prototypes> list = new ArrayList<>();
+        list.add(getPrototypes());
+        int prototypesTypes = list.get(0).getPrototype().size();
         var entropy = new int[rowCount][columnCount];
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
@@ -342,6 +352,7 @@ public class MansionManager {
         entropy[minCoordinates.getFirst()][minCoordinates.getSecond()] = 1;
 
         cell.get(0).getPrototype().removeIf(prototype -> !prototype.getStructure().getName().getName_type().equals(prototypeToKeep));
+
     }
 
     private static List<Prototypes>[][] createWave(int rowCount, int columnCount) {
@@ -349,7 +360,8 @@ public class MansionManager {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 //wave[i][j] = loadJsonInputFiles(INPUT_DIRECTORY);
-                wave[i][j] = getPrototypes();
+                wave[i][j] = new ArrayList<>();
+                wave[i][j].add(getPrototypes());
             }
         }
         return wave;

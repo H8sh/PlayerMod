@@ -1,11 +1,13 @@
 package net.h8sh.playermod.world.dimension.mansion.reader;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class Sockets implements Cloneable{
 
-public class Sockets {
+    @Override
+    public Sockets clone() throws CloneNotSupportedException {
+        return (Sockets) super.clone();
+    }
 
     @SerializedName("north")
     public int north;

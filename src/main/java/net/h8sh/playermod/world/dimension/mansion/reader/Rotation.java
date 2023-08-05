@@ -5,7 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Rotation {
+public class Rotation implements Cloneable {
+
+    @Override
+    public Rotation clone() throws CloneNotSupportedException {
+        return (Rotation) super.clone();
+    }
 
     @SerializedName("rotation_type")
     public int rotation_type;
