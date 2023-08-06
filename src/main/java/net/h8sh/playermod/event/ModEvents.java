@@ -41,6 +41,7 @@ public class ModEvents {
     public static class ForgeEvents {
         private static final long EXECUTION_DELAY = 1000;
         public static BlockPos playerBlockPos;
+        public static Profession.Professions PROFESSION = Profession.Professions.BASIC;
 
         //TODO: on player death: kill every crystal + reset crystal data to 0
         private static long lastExecutionTime = 0;
@@ -145,10 +146,17 @@ public class ModEvents {
             return playerBlockPos;
         }
 
+        public static Profession.Professions getProfessionTick() {
+            return PROFESSION;
+        }
+
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
             Player player = event.player;
             playerBlockPos = player.blockPosition();
+            player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
+                PROFESSION = profession.getProfession();
+            });
         }
 
         @SubscribeEvent

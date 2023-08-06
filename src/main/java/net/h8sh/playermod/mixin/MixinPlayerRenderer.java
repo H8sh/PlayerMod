@@ -3,6 +3,7 @@ package net.h8sh.playermod.mixin;
 import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
+import net.h8sh.playermod.event.ModEvents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -94,7 +95,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
             // Profession ----------------------------------------------------------------------------------------------
 
-            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : ModEvents.ForgeEvents.getProfessionTick();
 
             switch (currentProfession) {
 
@@ -199,7 +200,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         // Profession texture ------------------------------------------------------------------------------------------
 
-        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
+        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :ModEvents.ForgeEvents.getProfessionTick();
         cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
 
 

@@ -28,7 +28,8 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :ModEvents.ForgeEvents.getProfessionTick();
+            //var currentProfession = ModEvents.ForgeEvents.getProfessionTick();
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
             }
