@@ -18,6 +18,7 @@ import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
+import net.h8sh.playermod.world.dimension.mansion.SuperMansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -109,6 +110,7 @@ public class PlayerMod {
                         Gson gson = new Gson();
                         Prototypes prototypes = gson.fromJson(jsonObject, Prototypes.class);
                         MansionManager.setPrototypesFromJson(prototypes);
+                        SuperMansionManager.setPrototypesFromJson(prototypes);
 
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();
