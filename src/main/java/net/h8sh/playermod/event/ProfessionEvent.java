@@ -61,77 +61,78 @@ public class ProfessionEvent {
     public static void onGuiRender(RenderGuiOverlayEvent event) {
         Player player = Minecraft.getInstance().player;
         player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
-            var currentProfession = Profession.getProfession();
+            if (Profession.getProfession() != null) {
+                var currentProfession = Profession.getProfession();
 
-            //TODO: correct overlay switch
+                //TODO: correct overlay switch
 
-            switch (currentProfession) {
-                case PALADIN:
-                    if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
-                        event.setCanceled(true);
-                    }
+                switch (currentProfession) {
+                    case PALADIN:
+                        if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
+                            event.setCanceled(true);
+                        }
 
-                    //Wizard HUD
-                    if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
-                        event.setCanceled(true);
-                    }
+                        //Wizard HUD
+                        if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
+                            event.setCanceled(true);
+                        }
 
-                case WIZARD:
-                    if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
-                        event.setCanceled(true);
-                    }
+                    case WIZARD:
+                        if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
+                            event.setCanceled(true);
+                        }
 
-                    //Wizard HUD
-                    if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
-                        event.getOverlay().overlay().render(
-                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
-                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
-                    }
-                    if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
-                        event.getOverlay().overlay().render(
-                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
-                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
-                    }
-                    if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
-                        event.getOverlay().overlay().render(
-                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
-                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
-                    }
+                        //Wizard HUD
+                        if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
+                            event.getOverlay().overlay().render(
+                                    new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                    event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                        }
+                        if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
+                            event.getOverlay().overlay().render(
+                                    new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                    event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                        }
+                        if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
+                            event.getOverlay().overlay().render(
+                                    new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                    event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                        }
 
-                case DRUID:
-                    if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
-                        event.setCanceled(true);
-                    }
+                    case DRUID:
+                        if (event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
+                            event.setCanceled(true);
+                        }
 
-                    //Wizard HUD
-                    if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
-                        event.setCanceled(true);
-                    }
-                case BASIC: //Vanilla
+                        //Wizard HUD
+                        if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
+                            event.setCanceled(true);
+                        }
+                    case BASIC: //Vanilla
 
-                    //Wizard HUD
-                    if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
-                        event.setCanceled(true);
-                    }
-                    if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
-                        event.setCanceled(true);
-                    }
-
+                        //Wizard HUD
+                        if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaBarOverlay.HUD_MANA_BAR) {
+                            event.setCanceled(true);
+                        }
+                        if (event.getOverlay().overlay() == ManaOverlay.HUD_MANA) {
+                            event.setCanceled(true);
+                        }
+                }
             }
         });
 

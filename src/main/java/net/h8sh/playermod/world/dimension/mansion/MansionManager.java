@@ -3,7 +3,6 @@ package net.h8sh.playermod.world.dimension.mansion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mojang.datafixers.util.Pair;
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.world.dimension.mansion.reader.Prototype;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -54,33 +53,8 @@ public class MansionManager {
 
     public static void createMansionInWorld(ServerLevel world, ServerPlayer player) {
 
-        var templates = getTemplatesLocationFromMap();
+       //TODO
 
-
-        int counter = 0;
-        for (int i = 0; i < ROW; i++) {
-            for (int j = 0; j < COLUMN; j++) {
-
-                String path = templates.get(counter).getFirst();
-                StructureTemplate template = world.getStructureManager().getOrCreate(new ResourceLocation(PlayerMod.MODID, path));
-
-                int rotation = templates.get(counter).getSecond();
-
-                BlockPos pos = new BlockPos(player.blockPosition().getX() - j * 16, player.blockPosition().getY(), player.blockPosition().getZ() - i * 16);
-
-                switch (rotation) {
-                    case 0:
-                        template.placeInWorld(world, pos, pos, new StructurePlaceSettings().setRotation(Rotation.NONE), world.getRandom(), Block.UPDATE_ALL);
-                    case 1:
-                        template.placeInWorld(world, pos, pos, new StructurePlaceSettings().setRotation(Rotation.CLOCKWISE_90), world.getRandom(), Block.UPDATE_ALL);
-                    case 2:
-                        template.placeInWorld(world, pos, pos, new StructurePlaceSettings().setRotation(Rotation.CLOCKWISE_180), world.getRandom(), Block.UPDATE_ALL);
-                    case 3:
-                        template.placeInWorld(world, pos, pos, new StructurePlaceSettings().setRotation(Rotation.COUNTERCLOCKWISE_90), world.getRandom(), Block.UPDATE_ALL);
-                }
-                counter++;
-            }
-        }
     }
 
     public static List<Pair<String, Integer>> getTemplatesLocationFromMap() {

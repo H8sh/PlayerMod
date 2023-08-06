@@ -94,7 +94,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
             // Profession ----------------------------------------------------------------------------------------------
 
-            var currentProfession = Profession.getProfession();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
 
             switch (currentProfession) {
 
@@ -199,8 +199,9 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         // Profession texture ------------------------------------------------------------------------------------------
 
-        var currentProfession = Profession.getProfession();
+        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
         cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
+
 
     }
 

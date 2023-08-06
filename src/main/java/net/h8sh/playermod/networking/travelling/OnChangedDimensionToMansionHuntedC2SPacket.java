@@ -33,7 +33,7 @@ public class OnChangedDimensionToMansionHuntedC2SPacket {
             ResourceKey<Level> destination = Level.OVERWORLD;
             ServerLevel newWorld = player.getServer().getLevel(destination);
 
-            MansionManager.createMansionInWorld(newWorld, player);
+            MansionManager.getTemplatesLocationFromMap();
 
 
         });

@@ -28,71 +28,70 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            var currentProfession = Profession.getProfession();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :Profession.getProfession();
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
             }
-            if (currentProfession != null) {
-                switch (currentProfession) {
-                    case PALADIN:
-                        if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
-                        }
-                        if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+            switch (currentProfession) {
+                case PALADIN:
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.RIDING_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
 
-                        }
-                    case WIZARD:
-                        if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new GatherManaC2SPacket());
-                        }
-                        if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                            // Done with mod events with tick method
-                        }
-                        if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.RIDING_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+                    }
+                case WIZARD:
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new GatherManaC2SPacket());
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+                        // Done with mod events with tick method
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.RIDING_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
 
-                        }
-                    case DRUID:
-                        //TODO: change sells between each metamorphoses
-                        if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new MetamorphoseAquaC2SPacket());
-                        }
-                        if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new MetamorphoseFireC2SPacket());
-                        }
-                        if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new MetamorphoseWindC2SPacket());
-                        }
-                        if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
-                            ModMessages.sendToServer(new MetamorphoseSpiritusC2SPacket());
-                        }
-                        if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+                    }
+                    if (KeyBinding.RIDING_KEY.consumeClick()) {
 
-                        }
-                        if (KeyBinding.RIDING_KEY.consumeClick()) {
+                    }
+                case DRUID:
+                    //TODO: change sells between each metamorphoses
+                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new MetamorphoseAquaC2SPacket());
+                    }
+                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new MetamorphoseFireC2SPacket());
+                    }
+                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new MetamorphoseWindC2SPacket());
+                    }
+                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+                        ModMessages.sendToServer(new MetamorphoseSpiritusC2SPacket());
+                    }
+                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
 
-                        }
-                }
+                    }
+                    if (KeyBinding.RIDING_KEY.consumeClick()) {
+
+                    }
             }
         }
 
