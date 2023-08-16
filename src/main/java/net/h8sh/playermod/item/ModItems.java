@@ -45,6 +45,9 @@ public class ModItems {
     public static final RegistryObject<Item> DRUID_BOOK = ITEMS.register("druid_book",
             () -> new BookItem(new Item.Properties()));
 
+    public static final RegistryObject<Item> BASIC_BOOK = ITEMS.register("basic_book",
+            () -> new BookItem(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

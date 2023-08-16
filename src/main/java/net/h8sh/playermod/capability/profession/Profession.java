@@ -4,7 +4,6 @@ import net.h8sh.playermod.PlayerMod;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-
 @AutoRegisterCapability
 public class Profession {
     private static Professions profession;
@@ -46,7 +45,7 @@ public class Profession {
     }
 
     public void saveNBTData(CompoundTag nbt) {
-        nbt.putInt("profession", profession.id);
+        nbt.putInt("profession", profession.getId());
         nbt.putInt("professionKnown", professionKnown);
     }
 

@@ -5,7 +5,11 @@
   "client": [
     "MixinPiglinModel",
     "MixinPlayerRenderer",
-    "MixinPlayerModel"
+    "MixinPlayerModel",
+    "MixinFoodData",
+    "MixinPlayer",
+    "MixinItem",
+    "MixinBlock"
   ],
   "injectors": {
     "defaultRequire": 1

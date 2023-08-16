@@ -29,6 +29,7 @@ public class ModTabs {
                         pOutput.accept(ModItems.PALADIN_BOOK.get());
                         pOutput.accept(ModItems.DRUID_BOOK.get());
                         pOutput.accept(ModItems.WIZARD_BOOK.get());
+                        pOutput.accept(ModItems.BASIC_BOOK.get());
                     })
                     .build());
 

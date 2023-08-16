@@ -4,6 +4,7 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoEManager;
 import net.h8sh.playermod.ability.wizard.mana.ManaManager;
 import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalManager;
+import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
 import net.h8sh.playermod.capability.ability.druid.metamorphose.MetamorphoseProvider;
 import net.h8sh.playermod.capability.ability.wizard.aoe.MagicAoECapabilityProvider;
 import net.h8sh.playermod.capability.ability.wizard.mana.ManaCapabilityProvider;
@@ -13,14 +14,18 @@ import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.questing.QuestingProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
+import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseResetC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoepacket.MagicAoES2CPacket;
 import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.KillAllCrystalS2CPacket;
+import net.h8sh.playermod.networking.profession.ProfessionBasicC2SPacket;
+import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -31,6 +36,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,7 +47,6 @@ public class ModEvents {
     public static class ForgeEvents {
         private static final long EXECUTION_DELAY = 1000;
         public static BlockPos playerBlockPos;
-        public static Profession.Professions PROFESSION = Profession.Professions.BASIC;
 
         //TODO: on player death: kill every crystal + reset crystal data to 0
         private static long lastExecutionTime = 0;
@@ -142,21 +147,10 @@ public class ModEvents {
             }
         }
 
-        public static BlockPos getPlayerBlockPos() {
-            return playerBlockPos;
-        }
-
-        public static Profession.Professions getProfessionTick() {
-            return PROFESSION;
-        }
-
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
             Player player = event.player;
             playerBlockPos = player.blockPosition();
-            player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
-                PROFESSION = profession.getProfession();
-            });
         }
 
         @SubscribeEvent
@@ -167,6 +161,12 @@ public class ModEvents {
             if (event.phase == TickEvent.Phase.START) {
                 return;
             }
+
+            //Gui ------------------------------------------------------------------------------------------------------
+            if (Profession.getProfession() == Profession.Professions.BASIC) {
+                ClientEvents.setIsHotBar(true);
+            }
+
             //Skills ---------------------------------------------------------------------------------------------------
 
             //Wizard ---------------------------------------------------------------------------------------------------
@@ -195,14 +195,18 @@ public class ModEvents {
         }
 
         @SubscribeEvent
-        public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-            var currentProfession = Profession.getProfession();
-            if (currentProfession != Profession.Professions.BASIC) {
-                Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        public static void onPlayerLoggedIn(EntityJoinLevelEvent event) {
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
+            if (event.getEntity() instanceof Player player) {
+                if(currentProfession == Profession.Professions.BASIC) {
+                    player.getCapability(ProfessionProvider.PROFESSION).ifPresent(Profession::resetProfession);
+                    player.getCapability(RidingProvider.RIDING).ifPresent(Riding::resetRiding);
+                    player.getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(Metamorphose::resetMetamorphose);
+                } else {
+                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
             }
-
         }
-
 
     }
 

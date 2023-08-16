@@ -1,7 +1,7 @@
-package net.h8sh.playermod.networking.classes.druid.metamorphose;
+package net.h8sh.playermod.networking.profession;
 
-import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
-import net.h8sh.playermod.capability.ability.druid.metamorphose.MetamorphoseProvider;
+import net.h8sh.playermod.capability.profession.Profession;
+import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -13,12 +13,12 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MetamorphoseResetC2SPacket {
+public class ProfessionBasicC2SPacket {
 
-    public MetamorphoseResetC2SPacket() {
+    public ProfessionBasicC2SPacket() {
     }
 
-    public MetamorphoseResetC2SPacket(FriendlyByteBuf byteBuf) {
+    public ProfessionBasicC2SPacket(FriendlyByteBuf byteBuf) {
 
     }
 
@@ -38,12 +38,12 @@ public class MetamorphoseResetC2SPacket {
             level.playSound(null, player.getOnPos(), SoundEvents.TNT_PRIMED, SoundSource.PLAYERS,
                     0.5F, level.random.nextFloat() * 1.0F + 0.9F);
 
-            player.getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(metamorphose -> {
+            player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
 
-                    metamorphose.resetMetamorphose();
-                    player.sendSystemMessage(Component.literal("metamorphoses: "
-                            + metamorphose.getMetamorphoseKnown()
-                            + " and the metamorphose id: " + metamorphose.getMetamorphose()).withStyle(ChatFormatting.RED));
+                profession.resetProfession();
+                player.sendSystemMessage(Component.literal("profession: "
+                        + profession.getProfessionName()
+                        + " and the profession id: " + profession.getProfession()).withStyle(ChatFormatting.RED));
 
             });
 

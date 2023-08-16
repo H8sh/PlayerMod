@@ -45,7 +45,6 @@ public class ScreenEvent {
                 shouldOpenEndPortalCinematicScreen = false;
             }
 
-
             if (shouldOpenPaladinBookScreen) {
                 Minecraft.getInstance().setScreen(new PaladinBookScreen());
             }

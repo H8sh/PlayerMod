@@ -1,5 +1,6 @@
-package net.h8sh.playermod.networking.riding;
+package net.h8sh.playermod.networking.reputation;
 
+import net.h8sh.playermod.capability.reputation.ReputationProvider;
 import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.minecraft.ChatFormatting;
@@ -13,12 +14,12 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RidingResetC2SPacket {
+public class ReputationNormalC2SPacket {
 
-    public RidingResetC2SPacket() {
+    public ReputationNormalC2SPacket() {
     }
 
-    public RidingResetC2SPacket(FriendlyByteBuf byteBuf) {
+    public ReputationNormalC2SPacket(FriendlyByteBuf byteBuf) {
 
     }
 
@@ -34,17 +35,9 @@ public class RidingResetC2SPacket {
             ServerPlayer player = context.getSender();
             ServerLevel level = player.serverLevel();
 
+            player.getCapability(ReputationProvider.REPUTATION).ifPresent(reputation -> {
 
-            level.playSound(null, player.getOnPos(), SoundEvents.TNT_PRIMED, SoundSource.PLAYERS,
-                    0.5F, level.random.nextFloat() * 1.0F + 0.9F);
-
-            player.getCapability(RidingProvider.RIDING).ifPresent(riding -> {
-
-                    riding.resetRiding();
-                    player.sendSystemMessage(Component.literal("ridings: "
-                            + riding.getRidingKnown()
-                            + " and the riding id: " + riding.getRiding()).withStyle(ChatFormatting.AQUA));
-
+                //TODO
 
             });
 

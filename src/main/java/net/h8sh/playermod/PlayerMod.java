@@ -110,7 +110,6 @@ public class PlayerMod {
                         Gson gson = new Gson();
                         Prototypes prototypes = gson.fromJson(jsonObject, Prototypes.class);
                         MansionManager.setPrototypesFromJson(prototypes);
-                        SuperMansionManager.setPrototypesFromJson(prototypes);
 
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();

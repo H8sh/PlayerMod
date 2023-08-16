@@ -9,9 +9,12 @@ import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.KillAllCr
 import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.ResetCrystalS2CPacket;
 import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.SyncCrystalToClientC2SPacket;
 import net.h8sh.playermod.networking.narrator.*;
+import net.h8sh.playermod.networking.profession.ProfessionBasicC2SPacket;
 import net.h8sh.playermod.networking.profession.ProfessionDruidC2SPacket;
 import net.h8sh.playermod.networking.profession.ProfessionPaladinC2SPacket;
 import net.h8sh.playermod.networking.profession.ProfessionWizardC2SPacket;
+import net.h8sh.playermod.networking.reputation.ReputationNormalC2SPacket;
+import net.h8sh.playermod.networking.reputation.SyncReputationToClientS2CPacket;
 import net.h8sh.playermod.networking.riding.RidingDruidC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingPaladinC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
@@ -45,7 +48,7 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        //Metamorphose ---------------------------------------------------------------------------------------------------
+        //Profession ---------------------------------------------------------------------------------------------------
 
         net.messageBuilder(ProfessionDruidC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(ProfessionDruidC2SPacket::new)
@@ -63,6 +66,12 @@ public class ModMessages {
                 .decoder(ProfessionWizardC2SPacket::new)
                 .encoder(ProfessionWizardC2SPacket::toBytes)
                 .consumerMainThread(ProfessionWizardC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionBasicC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionBasicC2SPacket::new)
+                .encoder(ProfessionBasicC2SPacket::toBytes)
+                .consumerMainThread(ProfessionBasicC2SPacket::handle)
                 .add();
 
         //Travelling ---------------------------------------------------------------------------------------------------
@@ -153,27 +162,27 @@ public class ModMessages {
                 .consumerMainThread(NarratorDataSyncS2CPacket::handle)
                 .add();
 
-        // Metamorphose ------------------------------------------------------------------------------------------------------
+        // Riding ------------------------------------------------------------------------------------------------------
 
-        net.messageBuilder(RidingDruidC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        net.messageBuilder(RidingDruidC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RidingDruidC2SPacket::new)
                 .encoder(RidingDruidC2SPacket::toBytes)
                 .consumerMainThread(RidingDruidC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(RidingPaladinC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        net.messageBuilder(RidingPaladinC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RidingPaladinC2SPacket::new)
                 .encoder(RidingPaladinC2SPacket::toBytes)
                 .consumerMainThread(RidingPaladinC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(RidingWizardC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        net.messageBuilder(RidingWizardC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RidingWizardC2SPacket::new)
                 .encoder(RidingWizardC2SPacket::toBytes)
                 .consumerMainThread(RidingWizardC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(RidingResetC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        net.messageBuilder(RidingResetC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RidingResetC2SPacket::new)
                 .encoder(RidingResetC2SPacket::toBytes)
                 .consumerMainThread(RidingResetC2SPacket::handle)
@@ -258,6 +267,19 @@ public class ModMessages {
                 .decoder(OnChangedDimensionToMansionHuntedC2SPacket::new)
                 .encoder(OnChangedDimensionToMansionHuntedC2SPacket::toBytes)
                 .consumerMainThread(OnChangedDimensionToMansionHuntedC2SPacket::handle)
+                .add();
+
+        //Reputation ---------------------------------------------------------------------------------------------------
+        net.messageBuilder(SyncReputationToClientS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncReputationToClientS2CPacket::new)
+                .encoder(SyncReputationToClientS2CPacket::toBytes)
+                .consumerMainThread(SyncReputationToClientS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(ReputationNormalC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ReputationNormalC2SPacket::new)
+                .encoder(ReputationNormalC2SPacket::toBytes)
+                .consumerMainThread(ReputationNormalC2SPacket::handle)
                 .add();
 
     }

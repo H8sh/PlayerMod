@@ -1,23 +1,33 @@
 package net.h8sh.playermod.mixin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
+import net.h8sh.playermod.event.ClientEvents;
 import net.h8sh.playermod.event.ModEvents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,7 +35,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerRenderer.class)
 public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-
 
     //Use to control the skin location, the hand animation and rendering
 
@@ -79,6 +88,23 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     }
 
     @Inject(
+            method = {"renderRightHand"},
+            at = {@At("HEAD")},
+            cancellable = true
+    )
+    private void renderRightHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, CallbackInfo ci) {
+        ci.cancel();
+        boolean shouldRenderHotBar = ClientEvents.getHotBar();
+        PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
+        if(!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.RIGHT) && shouldRenderHotBar)
+            this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild("druid_right_arm"), playermodel.body.getChild("druid_right_arm"));
+    }
+
+    @Shadow
+    protected abstract void renderHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm, ModelPart pRendererArmwear);
+
+
+    @Inject(
             method = {"setModelProperties"},
             at = {@At("RETURN")},
             cancellable = true
@@ -95,7 +121,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
             // Profession ----------------------------------------------------------------------------------------------
 
-            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : ModEvents.ForgeEvents.getProfessionTick();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
             switch (currentProfession) {
 
@@ -175,8 +201,10 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             playermodel.leftSleeve.visible = p_117819_.isModelPartShown(PlayerModelPart.LEFT_SLEEVE);
             playermodel.rightSleeve.visible = p_117819_.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE);
             playermodel.crouching = p_117819_.isCrouching();
+
             HumanoidModel.ArmPose humanoidmodel$armpose = getArmPose(p_117819_, InteractionHand.MAIN_HAND);
             HumanoidModel.ArmPose humanoidmodel$armpose1 = getArmPose(p_117819_, InteractionHand.OFF_HAND);
+
             if (humanoidmodel$armpose.isTwoHanded()) {
                 humanoidmodel$armpose1 = p_117819_.getOffhandItem().isEmpty() ? HumanoidModel.ArmPose.EMPTY : HumanoidModel.ArmPose.ITEM;
             }
@@ -200,7 +228,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         // Profession texture ------------------------------------------------------------------------------------------
 
-        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :ModEvents.ForgeEvents.getProfessionTick();
+        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
         cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
 
 

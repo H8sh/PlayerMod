@@ -77,7 +77,7 @@ public class LivingLamppost extends Animal implements GeoEntity {
     @Override
     public void tick() {
 
-            BlockPos playerPos = ModEvents.ForgeEvents.getPlayerBlockPos();
+            BlockPos playerPos = null;
             if (playerPos != null) {
                 BlockPos livingLamppostPos = this.blockPosition();
 

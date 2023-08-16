@@ -3,10 +3,7 @@ package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.profession.Profession;
-import net.h8sh.playermod.gui.CrystalOverlay;
-import net.h8sh.playermod.gui.ManaBarOverlay;
-import net.h8sh.playermod.gui.ManaOverlay;
-import net.h8sh.playermod.gui.NarratorOverlay;
+import net.h8sh.playermod.gui.*;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseAquaC2SPacket;
 import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseFireC2SPacket;
@@ -14,7 +11,10 @@ import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseSpir
 import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseWindC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.manapacket.GatherManaC2SPacket;
 import net.h8sh.playermod.networking.travelling.OnChangedDimensionToMansionHuntedC2SPacket;
+import net.h8sh.playermod.screen.profession.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -23,19 +23,55 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 public class ClientEvents {
+    private static boolean isHotBar = true;
+
+    public static boolean getHotBar() {
+        return isHotBar;
+    }
+
+    public static void setIsHotBar(boolean isHotBar) {
+        ClientEvents.isHotBar = isHotBar;
+    }
+
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC :ModEvents.ForgeEvents.getProfessionTick();
-            //var currentProfession = ModEvents.ForgeEvents.getProfessionTick();
-            if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
+            Minecraft minecraft = Minecraft.getInstance();
+            boolean shouldRenderHotBar = ClientEvents.getHotBar();
+            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
+
+            if (!shouldRenderHotBar && minecraft.options.keySwapOffhand.consumeClick()) {
+                /**
+                 * This is required otherwise if a swap is executed on the spell bar menu, this can make the item on the hot bar disappeared
+                 */
+                minecraft.options.keySwapOffhand.setDown(false);
+            }
+
+            if (!shouldRenderHotBar && minecraft.options.keyInventory.consumeClick()) {
+                /**
+                 * We don't want to display the name of items and blocks if in spell bar, but this can be seen if inventory is open
+                 */
+                minecraft.options.keyInventory.setDown(false);
+            }
+
+            if (currentProfession == Profession.Professions.BASIC && KeyBinding.INVENTORY_SWITCH_KEY.consumeClick()) {
+                /**
+                 * As Basic, the player is not allowed to get any spell
+                 */
+                KeyBinding.INVENTORY_SWITCH_KEY.setDown(false);
+            }
+
+            if (KeyBinding.INVENTORY_SWITCH_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
+                isHotBar = !isHotBar;
             }
 
             switch (currentProfession) {
                 case PALADIN:
+                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
+                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Paladin Skills")));
+                    }
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                         ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
                     }
@@ -55,6 +91,9 @@ public class ClientEvents {
 
                     }
                 case WIZARD:
+                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
+                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Wizard Skills")));
+                    }
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                         ModMessages.sendToServer(new GatherManaC2SPacket());
                     }
@@ -74,7 +113,10 @@ public class ClientEvents {
 
                     }
                 case DRUID:
-                    //TODO: change sells between each metamorphoses
+                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
+                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Druid Skills")));
+                    }
+                    //TODO: change spells between each metamorphoses
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                         ModMessages.sendToServer(new MetamorphoseAquaC2SPacket());
                     }
@@ -108,6 +150,8 @@ public class ClientEvents {
             event.register(KeyBinding.ULTIMATE_SPELL_KEY);
             event.register(KeyBinding.INTERACTION_KEY);
             event.register(KeyBinding.RIDING_KEY);
+            event.register(KeyBinding.INVENTORY_SWITCH_KEY);
+            event.register(KeyBinding.SKILL_SCREEN_KEY);
         }
 
         @SubscribeEvent
@@ -116,6 +160,8 @@ public class ClientEvents {
             event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
             event.registerAboveAll("crystal", CrystalOverlay.HUD_CRYSTAL);
             event.registerAboveAll("mana_bar", ManaBarOverlay.HUD_MANA_BAR);
+            event.registerAboveAll("reputation_bar", ReputationOverlay.HUD_REPUTATION);
+            event.registerAboveAll("spell_bar", SpellBarOverlay.HUD_SPELL_BAR);
         }
 
     }
