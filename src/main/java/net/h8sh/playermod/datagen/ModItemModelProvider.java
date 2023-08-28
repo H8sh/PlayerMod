@@ -17,11 +17,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(ModItems.SWOUIFFI_SPAWN_EGG);
-        simpleItem(ModItems.CRYSTAL_SPAWN_EGG);
-        simpleItem(ModItems.LIVING_LAMPPOST_SPAWN_EGG);
-
-        simpleItem(ModItems.PALADIN_LECTERN_ITEM);
         simpleItem(ModItems.PALADIN_BOOK);
         simpleItem(ModItems.WIZARD_BOOK);
         simpleItem(ModItems.DRUID_BOOK);
