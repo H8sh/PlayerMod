@@ -71,6 +71,8 @@ public class ProfessionEvent {
         player.getCapability(ProfessionProvider.PROFESSION).ifPresent(profession -> {
             var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
+
+
             switch (currentProfession) {
                 case PALADIN:
                     renderHotBarOrSpellBar(event);
@@ -81,6 +83,11 @@ public class ProfessionEvent {
                         event.setCanceled(true);
                     }
                     if (event.getOverlay().overlay() == ReputationOverlay.HUD_REPUTATION) {
+                        event.getOverlay().overlay().render(
+                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                    }
+                    if (event.getOverlay().overlay() == ArrowOverlay.HUD_ARROW) {
                         event.getOverlay().overlay().render(
                                 new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
                                 event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
@@ -110,6 +117,11 @@ public class ProfessionEvent {
                                 new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
                                 event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
                     }
+                    if (event.getOverlay().overlay() == ArrowOverlay.HUD_ARROW) {
+                        event.getOverlay().overlay().render(
+                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                    }
 
                     //Wizard HUD
                     if (event.getOverlay().overlay() == CrystalOverlay.HUD_CRYSTAL) {
@@ -129,6 +141,11 @@ public class ProfessionEvent {
                         event.setCanceled(true);
                     }
                     if (event.getOverlay().overlay() == ReputationOverlay.HUD_REPUTATION) {
+                        event.getOverlay().overlay().render(
+                                new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                                event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+                    }
+                    if (event.getOverlay().overlay() == ArrowOverlay.HUD_ARROW) {
                         event.getOverlay().overlay().render(
                                 new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
                                 event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
@@ -172,6 +189,9 @@ public class ProfessionEvent {
                                 event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
                     }
                     if (event.getOverlay().overlay() == SpellBarOverlay.HUD_SPELL_BAR) {
+                        event.setCanceled(true);
+                    }
+                    if (event.getOverlay().overlay() == ArrowOverlay.HUD_ARROW) {
                         event.setCanceled(true);
                     }
 

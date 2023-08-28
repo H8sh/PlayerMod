@@ -126,6 +126,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             switch (currentProfession) {
 
                 case BASIC -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
                     playermodel.body.getChild("druid_tail").visible = false;
                     playermodel.body.getChild("druid_right_arm").visible = true;
                     playermodel.body.getChild("druid_left_arm").visible = true;
@@ -136,22 +138,24 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                     playermodel.body.getChild("wizard_right_leg").visible = false;
                     playermodel.body.getChild("wizard_left_leg").visible = false;
                     playermodel.head.getChild("wizard_hat").visible = false;
-                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
                 }
                 case PALADIN -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = true;
+                    playermodel.body.getChild("paladin_left_leg").visible = true;
                     playermodel.body.getChild("druid_tail").visible = false;
                     playermodel.body.getChild("druid_right_arm").visible = true;
                     playermodel.body.getChild("druid_left_arm").visible = true;
-                    playermodel.body.getChild("druid_right_leg").visible = true;
-                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = false;
+                    playermodel.body.getChild("druid_left_leg").visible = false;
                     playermodel.body.getChild("wizard_right_arm").visible = false;
                     playermodel.body.getChild("wizard_left_arm").visible = false;
                     playermodel.body.getChild("wizard_right_leg").visible = false;
                     playermodel.body.getChild("wizard_left_leg").visible = false;
                     playermodel.head.getChild("wizard_hat").visible = false;
-                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
                 }
                 case WIZARD -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
                     playermodel.body.getChild("druid_tail").visible = false;
                     playermodel.body.getChild("druid_right_arm").visible = false;
                     playermodel.body.getChild("druid_left_arm").visible = false;
@@ -162,9 +166,10 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                     playermodel.body.getChild("wizard_right_leg").visible = true;
                     playermodel.body.getChild("wizard_left_leg").visible = true;
                     playermodel.head.getChild("wizard_hat").visible = true;
-                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = true;
                 }
                 case DRUID -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
                     playermodel.body.getChild("druid_tail").visible = true;
                     playermodel.body.getChild("druid_right_arm").visible = true;
                     playermodel.body.getChild("druid_left_arm").visible = true;
@@ -175,7 +180,6 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                     playermodel.body.getChild("wizard_right_leg").visible = false;
                     playermodel.body.getChild("wizard_left_leg").visible = false;
                     playermodel.head.getChild("wizard_hat").visible = false;
-                    playermodel.head.getChild("wizard_hat").getChild("wizard_hat_r1").visible = false;
                 }
             }
 

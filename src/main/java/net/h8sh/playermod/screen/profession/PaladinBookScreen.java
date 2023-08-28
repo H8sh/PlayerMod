@@ -1,29 +1,22 @@
 package net.h8sh.playermod.screen.profession;
 
 import com.google.common.collect.ImmutableList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.IntFunction;
-import javax.annotation.Nullable;
-
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.block.entity.PaladinLecternEntity;
-import net.h8sh.playermod.event.ScreenEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -32,52 +25,84 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.WrittenBookItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Matrix4f;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
 
 @OnlyIn(Dist.CLIENT)
 public class PaladinBookScreen extends Screen {
-    public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
-    public static final int PAGE_TEXT_X_OFFSET = 36;
-    public static final int PAGE_TEXT_Y_OFFSET = 30;
     public static final BookAccess EMPTY_ACCESS = new BookAccess() {
         /**
          * Returns the size of the book
          */
         public int getPageCount() {
-            return 0;
+            return 5;
         }
 
         public FormattedText getPageRaw(int p_98306_) {
             return FormattedText.EMPTY;
         }
     };
-    public static final ResourceLocation BOOK_LOCATION = new ResourceLocation(PlayerMod.MODID,"textures/screen/paladinscreen.png");
-    protected static final int TEXT_WIDTH = 114;
-    protected static final int TEXT_HEIGHT = 128;
-    protected static final int IMAGE_WIDTH = 280;
+    public static final ResourceLocation BOOK_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/screen/paladinscreen.png");
+    public static final ResourceLocation WOOD_FRAME_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/screen/wood_frame.png");
+    protected static final int IMAGE_WIDTH = 250;
     protected static final int IMAGE_HEIGHT = 250;
+    /**
+     * Determines if a sound is played when the page is turned
+     */
+    private final boolean playTurnSound;
     private BookAccess bookAccess;
     private int currentPage;
-    /** Holds a copy of the page text, split into page width lines */
+    /**
+     * Holds a copy of the page text, split into page width lines
+     */
     private List<FormattedCharSequence> cachedPageComponents = Collections.emptyList();
     private int cachedPage = -1;
     private Component pageMsg = CommonComponents.EMPTY;
     private PageButton forwardButton;
     private PageButton backButton;
-    /** Determines if a sound is played when the page is turned */
-    private final boolean playTurnSound;
 
     public PaladinBookScreen(BookAccess pBookAccess) {
         this(pBookAccess, true);
     }
 
     public PaladinBookScreen() {
-        this(EMPTY_ACCESS, false);
+        this(EMPTY_ACCESS, true);
     }
 
     private PaladinBookScreen(BookAccess pBookAccess, boolean pPlayTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.bookAccess = pBookAccess;
         this.playTurnSound = pPlayTurnSound;
+    }
+
+    static List<String> loadPages(CompoundTag pTag) {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        loadPages(pTag, builder::add);
+        return builder.build();
+    }
+
+    public static void loadPages(CompoundTag pTag, Consumer<String> pConsumer) {
+        ListTag listtag = pTag.getList("pages", 8).copy();
+        IntFunction<String> intfunction;
+        if (Minecraft.getInstance().isTextFilteringEnabled() && pTag.contains("filtered_pages", 10)) {
+            CompoundTag compoundtag = pTag.getCompound("filtered_pages");
+            intfunction = (p_169702_) -> {
+                String s = String.valueOf(p_169702_);
+                return compoundtag.contains(s) ? compoundtag.getString(s) : listtag.getString(p_169702_);
+            };
+        } else {
+            intfunction = listtag::getString;
+        }
+
+        for (int i = 0; i < listtag.size(); ++i) {
+            pConsumer.accept(intfunction.apply(i));
+        }
+
     }
 
     public void setBookAccess(BookAccess pBookAccess) {
@@ -115,18 +140,18 @@ public class PaladinBookScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (p_289629_) -> {
+        this.addRenderableWidget(Button.builder(Component.literal("Close"), (p_289629_) -> {
             this.onClose();
-        }).bounds(this.width / 2 - 100, 196, 200, 20).build());
+        }).bounds(this.width - 75, 225, 60, 20).build());
     }
 
     protected void createPageControlButtons() {
         int i = (this.width - 192) / 2;
         int j = 2;
-        this.forwardButton = this.addRenderableWidget(new PageButton(i + 116, 159, true, (p_98297_) -> {
+        this.forwardButton = this.addRenderableWidget(new PageButton(i + 215, 207, true, (p_98297_) -> {
             this.pageForward();
         }, this.playTurnSound));
-        this.backButton = this.addRenderableWidget(new PageButton(i + 43, 159, false, (p_98287_) -> {
+        this.backButton = this.addRenderableWidget(new PageButton(i, 207, false, (p_98287_) -> {
             this.pageBack();
         }, this.playTurnSound));
         this.updateButtonVisibility();
@@ -181,29 +206,51 @@ public class PaladinBookScreen extends Screen {
     }
 
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        /*
+         * INIT RENDERING ----------------------------------------------------------------------------------------------
+         */
         this.renderBackground(pGuiGraphics);
+
         int i = (this.width - 192) / 2;
-        int j = 2;
-        pGuiGraphics.blit(BOOK_LOCATION, i, 2, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        pGuiGraphics.blit(BOOK_LOCATION, i, -10, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedtext = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedtext, 114);
-            this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
+            this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1)).withStyle(ChatFormatting.DARK_GRAY);
         }
 
         this.cachedPage = this.currentPage;
         int i1 = this.font.width(this.pageMsg);
-        pGuiGraphics.drawString(this.font, this.pageMsg, i - i1 + 192 - 44, 18, 0, false);
+        pGuiGraphics.drawString(this.font, this.pageMsg, i - i1 + 95, 207, 0, false);
         int k = Math.min(128 / 9, this.cachedPageComponents.size());
 
-        for(int l = 0; l < k; ++l) {
+        for (int l = 0; l < k; ++l) {
             FormattedCharSequence formattedcharsequence = this.cachedPageComponents.get(l);
             pGuiGraphics.drawString(this.font, formattedcharsequence, i + 36, 32 + l * 9, 0, false);
         }
 
-        Style style = this.getClickedComponentStyleAt((double)pMouseX, (double)pMouseY);
+        Style style = this.getClickedComponentStyleAt((double) pMouseX, (double) pMouseY);
         if (style != null) {
             pGuiGraphics.renderComponentHoverEffect(this.font, style, pMouseX, pMouseY);
+        }
+
+        /*
+         * MAIN BOOK ---------------------------------------------------------------------------------------------------
+         */
+        switch (this.currentPage) {
+            case 0:
+                InventoryScreen.renderEntityInInventoryFollowsMouse(pGuiGraphics, this.width / 4 + 92, this.height / 4 + 25, 20, (float) 51 - pMouseX, (float) 25 - pMouseY, this.minecraft.player);
+                /*pGuiGraphics.blit(WOOD_FRAME_LOCATION, this.width / 4+45, this.height / 4 - 45, 0,0,128, 128, 128, 128);*/
+
+
+            case 1:
+                //TODO
+            case 2:
+                //TODO
+            case 3:
+                //TODO
+            case 4:
+                //TODO
         }
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
@@ -244,7 +291,7 @@ public class PaladinBookScreen extends Screen {
     }
 
     protected void closeScreen() {
-        this.minecraft.setScreen((Screen)null);
+        this.minecraft.setScreen((Screen) null);
     }
 
     @Override
@@ -255,7 +302,6 @@ public class PaladinBookScreen extends Screen {
     @Override
     public void onClose() {
         this.minecraft.popGuiLayer();
-        ScreenEvent.closePaladinBookScreen();
         PaladinLecternEntity.closeScreen();
     }
 
@@ -264,7 +310,7 @@ public class PaladinBookScreen extends Screen {
         if (this.cachedPageComponents.isEmpty()) {
             return null;
         } else {
-            int i = Mth.floor(pMouseX - (double)((this.width - 192) / 2) - 36.0D);
+            int i = Mth.floor(pMouseX - (double) ((this.width - 192) / 2) - 36.0D);
             int j = Mth.floor(pMouseY - 2.0D - 30.0D);
             if (i >= 0 && j >= 0) {
                 int k = Math.min(128 / 9, this.cachedPageComponents.size());
@@ -285,33 +331,16 @@ public class PaladinBookScreen extends Screen {
         }
     }
 
-    static List<String> loadPages(CompoundTag pTag) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        loadPages(pTag, builder::add);
-        return builder.build();
-    }
-
-    public static void loadPages(CompoundTag pTag, Consumer<String> pConsumer) {
-        ListTag listtag = pTag.getList("pages", 8).copy();
-        IntFunction<String> intfunction;
-        if (Minecraft.getInstance().isTextFilteringEnabled() && pTag.contains("filtered_pages", 10)) {
-            CompoundTag compoundtag = pTag.getCompound("filtered_pages");
-            intfunction = (p_169702_) -> {
-                String s = String.valueOf(p_169702_);
-                return compoundtag.contains(s) ? compoundtag.getString(s) : listtag.getString(p_169702_);
-            };
-        } else {
-            intfunction = listtag::getString;
-        }
-
-        for(int i = 0; i < listtag.size(); ++i) {
-            pConsumer.accept(intfunction.apply(i));
-        }
-
-    }
-
     @OnlyIn(Dist.CLIENT)
     public interface BookAccess {
+        static BookAccess fromItem(ItemStack pStack) {
+            if (pStack.is(Items.WRITTEN_BOOK)) {
+                return new WrittenBookAccess(pStack);
+            } else {
+                return (BookAccess) (pStack.is(Items.WRITABLE_BOOK) ? new WritableBookAccess(pStack) : EMPTY_ACCESS);
+            }
+        }
+
         /**
          * Returns the size of the book
          */
@@ -321,14 +350,6 @@ public class PaladinBookScreen extends Screen {
 
         default FormattedText getPage(int pPage) {
             return pPage >= 0 && pPage < this.getPageCount() ? this.getPageRaw(pPage) : FormattedText.EMPTY;
-        }
-
-        static BookAccess fromItem(ItemStack pStack) {
-            if (pStack.is(Items.WRITTEN_BOOK)) {
-                return new WrittenBookAccess(pStack);
-            } else {
-                return (BookAccess)(pStack.is(Items.WRITABLE_BOOK) ? new WritableBookAccess(pStack) : EMPTY_ACCESS);
-            }
         }
     }
 
@@ -342,7 +363,7 @@ public class PaladinBookScreen extends Screen {
 
         private static List<String> readPages(ItemStack pWrittenBookStack) {
             CompoundTag compoundtag = pWrittenBookStack.getTag();
-            return (List<String>)(compoundtag != null ? loadPages(compoundtag) : ImmutableList.of());
+            return (List<String>) (compoundtag != null ? loadPages(compoundtag) : ImmutableList.of());
         }
 
         /**
@@ -367,7 +388,7 @@ public class PaladinBookScreen extends Screen {
 
         private static List<String> readPages(ItemStack pWrittenBookStack) {
             CompoundTag compoundtag = pWrittenBookStack.getTag();
-            return (List<String>)(compoundtag != null && WrittenBookItem.makeSureTagIsValid(compoundtag) ? loadPages(compoundtag) : ImmutableList.of(Component.Serializer.toJson(Component.translatable("book.invalid.tag").withStyle(ChatFormatting.DARK_RED))));
+            return (List<String>) (compoundtag != null && WrittenBookItem.makeSureTagIsValid(compoundtag) ? loadPages(compoundtag) : ImmutableList.of(Component.Serializer.toJson(Component.translatable("book.invalid.tag").withStyle(ChatFormatting.DARK_RED))));
         }
 
         /**

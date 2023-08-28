@@ -6,6 +6,7 @@ import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.item.custom.PaladinLecternItem;
 import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PotionItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -47,6 +48,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> BASIC_BOOK = ITEMS.register("basic_book",
             () -> new BookItem(new Item.Properties()));
+
+    // Reputation Upgrade Skill ----------------------------------------------------------------------------------------
+    public static final RegistryObject<Item> REPUTATION_POTION = ITEMS.register("reputation_potion",
+            () -> new PotionItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

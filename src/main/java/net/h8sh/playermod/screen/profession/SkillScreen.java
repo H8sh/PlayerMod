@@ -1,23 +1,11 @@
 package net.h8sh.playermod.screen.profession;
 
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.multiplayer.ClientAdvancements;
 
-public class SkillScreen extends Screen {
+public class SkillScreen extends AdvancementsScreen {
 
-    public SkillScreen(Component pTitle) {
-        super(pTitle);
-    }
-
-    @Override
-    public boolean shouldCloseOnEsc() {
-        return true;
-    }
-
-    @Override
-    public void render(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(pGuiGraphics);
+    public SkillScreen(ClientAdvancements pAdvancements) {
+        super(pAdvancements);
     }
 }

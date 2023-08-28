@@ -350,11 +350,7 @@ public class MansionManager {
         return structures;
     }
 
-    /*public static List<Prototypes> loadJsonInputFiles(String path) {
-        *//**
-         * Used only for testing into the main class
-         *//*
-
+    public static List<Prototypes> loadJsonInputFiles(String path) {
         List<Prototypes> inputJsonFiles = new ArrayList<>();
 
         try (Stream<Path> stream = Files.list(Paths.get(path))) {
@@ -372,7 +368,7 @@ public class MansionManager {
         }
 
         return inputJsonFiles;
-    }*/
+    }
 
 
 }

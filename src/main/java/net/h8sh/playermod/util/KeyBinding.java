@@ -17,6 +17,7 @@ public class KeyBinding {
     public static final String KEY_RIDING = "key.playermod.riding";
     public static final String KEY_INVENTORY_SWITCH = "key.playermod.inventory_switch";
     public static final String KEY_SKILL_SCREEN = "key.playermod.skill_screen";
+    public static final String KEY_SHOW_KEYS = "key.playermod.show_keys";
 
     public static final KeyMapping FIRST_SPELL_KEY = new KeyMapping(KEY_SPELL_1,
             KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, KEY_CATEGORY_PROFESSION);
@@ -41,5 +42,7 @@ public class KeyBinding {
 
     public static final KeyMapping SKILL_SCREEN_KEY = new KeyMapping(KEY_SKILL_SCREEN,
             KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, KEY_CATEGORY_UTILS);
+    public static final KeyMapping SHOW_KEYS_KEY = new KeyMapping(KEY_SHOW_KEYS,
+            KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, KEY_CATEGORY_UTILS);
 
 }

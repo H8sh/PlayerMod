@@ -14,6 +14,7 @@ import net.h8sh.playermod.networking.travelling.OnChangedDimensionToMansionHunte
 import net.h8sh.playermod.screen.profession.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -24,14 +25,20 @@ import net.minecraftforge.fml.common.Mod;
 
 public class ClientEvents {
     private static boolean isHotBar = true;
+    private static boolean isKeysShown = true;
 
     public static boolean getHotBar() {
         return isHotBar;
     }
 
+    public static boolean getKeysShown() {
+        return isKeysShown;
+    }
+
     public static void setIsHotBar(boolean isHotBar) {
         ClientEvents.isHotBar = isHotBar;
     }
+
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
@@ -43,21 +50,21 @@ public class ClientEvents {
             var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
             if (!shouldRenderHotBar && minecraft.options.keySwapOffhand.consumeClick()) {
-                /**
+                /*
                  * This is required otherwise if a swap is executed on the spell bar menu, this can make the item on the hot bar disappeared
                  */
                 minecraft.options.keySwapOffhand.setDown(false);
             }
 
             if (!shouldRenderHotBar && minecraft.options.keyInventory.consumeClick()) {
-                /**
+                /*
                  * We don't want to display the name of items and blocks if in spell bar, but this can be seen if inventory is open
                  */
                 minecraft.options.keyInventory.setDown(false);
             }
 
             if (currentProfession == Profession.Professions.BASIC && KeyBinding.INVENTORY_SWITCH_KEY.consumeClick()) {
-                /**
+                /*
                  * As Basic, the player is not allowed to get any spell
                  */
                 KeyBinding.INVENTORY_SWITCH_KEY.setDown(false);
@@ -66,11 +73,15 @@ public class ClientEvents {
             if (KeyBinding.INVENTORY_SWITCH_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
                 isHotBar = !isHotBar;
             }
+            if (KeyBinding.SHOW_KEYS_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
+                isKeysShown = !isKeysShown;
+            }
 
             switch (currentProfession) {
                 case PALADIN:
                     if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Paladin Skills")));
+                        //Minecraft.getInstance().setScreen(new SkillScreen(minecraft.player, Component.literal("Paladin Skills")));
+                        Minecraft.getInstance().setScreen(new SkillScreen(minecraft.player.connection.getAdvancements()));
                     }
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                         ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
@@ -92,7 +103,7 @@ public class ClientEvents {
                     }
                 case WIZARD:
                     if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Wizard Skills")));
+
                     }
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                         ModMessages.sendToServer(new GatherManaC2SPacket());
@@ -114,7 +125,7 @@ public class ClientEvents {
                     }
                 case DRUID:
                     if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-                        Minecraft.getInstance().setScreen(new SkillScreen(Component.literal("Druid Skills")));
+
                     }
                     //TODO: change spells between each metamorphoses
                     if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
@@ -152,6 +163,7 @@ public class ClientEvents {
             event.register(KeyBinding.RIDING_KEY);
             event.register(KeyBinding.INVENTORY_SWITCH_KEY);
             event.register(KeyBinding.SKILL_SCREEN_KEY);
+            event.register(KeyBinding.SHOW_KEYS_KEY);
         }
 
         @SubscribeEvent
@@ -162,6 +174,7 @@ public class ClientEvents {
             event.registerAboveAll("mana_bar", ManaBarOverlay.HUD_MANA_BAR);
             event.registerAboveAll("reputation_bar", ReputationOverlay.HUD_REPUTATION);
             event.registerAboveAll("spell_bar", SpellBarOverlay.HUD_SPELL_BAR);
+            event.registerAboveAll("arrow_bar", ArrowOverlay.HUD_ARROW);
         }
 
     }

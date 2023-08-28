@@ -2,13 +2,16 @@ package net.h8sh.playermod.gui;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.profession.Profession;
+import net.h8sh.playermod.event.ClientEvents;
 import net.h8sh.playermod.item.ModItems;
+import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import org.lwjgl.glfw.GLFW;
 
 public class SpellBarOverlay {
     public static final IGuiOverlay HUD_SPELL_BAR = (ForgeGui gui, GuiGraphics pGuiGraphics, float pPartialTick, int screenWidth, int screenHeight) -> {
@@ -37,7 +40,16 @@ public class SpellBarOverlay {
         pGuiGraphics.pose().translate(0.0F, 0.0F, -90.0F);
         pGuiGraphics.blit(WIDGETS_LOCATION, i - 91, screenHeight - 22, 0, 0, 182, 22);
         pGuiGraphics.blit(WIDGETS_LOCATION, i - 91 - 29, screenHeight - 23, 24, 22, 29, 24); // left case
-        pGuiGraphics.drawString(gui.getFont(), "K", i - 91 - 29, screenHeight - 23, 8421504);
+
+        if (ClientEvents.getKeysShown()) {
+
+            pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.SKILL_SCREEN_KEY.getKey().getValue(), 0), i - 91 - 29, screenHeight - 23, 8421504);
+            pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.FIRST_SPELL_KEY.getKey().getValue(), 0), i - 91, screenHeight - 23, 8421504);
+            pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.SECOND_SPELL_KEY.getKey().getValue(), 0), i - 91 + 21, screenHeight - 23, 8421504);
+            pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.THIRD_SPELL_KEY.getKey().getValue(), 0), i - 91 + 42, screenHeight - 23, 8421504);
+            pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.ULTIMATE_SPELL_KEY.getKey().getValue(), 0), i - 91 + 63, screenHeight - 23, 8421504);
+        }
+
         renderSlot(pGuiGraphics, i - 91 - 26, i2, pPartialTick, player, itemStack, l++, gui);
 
     };
