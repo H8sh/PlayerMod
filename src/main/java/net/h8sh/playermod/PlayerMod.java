@@ -134,9 +134,9 @@ public class PlayerMod {
         event.addListener(new SimpleJsonResourceReloadListener((new GsonBuilder()).create(), "profession") {
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
-                pObject.forEach((resourceLocation, jsonStructureElement) -> {
+                pObject.forEach((resourceLocation, jsonProfessionElement) -> {
                     try {
-                        JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonStructureElement, "professions");
+                        JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonProfessionElement, "professions");
 
                         Gson gson = new Gson();
                         ProfessionTypes professionsType = gson.fromJson(jsonObject, ProfessionTypes.class);

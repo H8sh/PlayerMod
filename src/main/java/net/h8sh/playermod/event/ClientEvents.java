@@ -66,20 +66,24 @@ public class ClientEvents {
                 isKeysShown = !isKeysShown;
             }
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(0).getProfessionType().getSkills().get(0).getFirstSpell();
-                SpellManager.activeSpell(firstSpell, minecraft);
+                String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getFirstSpell();
+                System.out.println(firstSpell);
+                //SpellManager.activeSpell(firstSpell, minecraft);
             }
             if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                String secondSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(1).getFirstSpell();
-                SpellManager.activeSpell(secondSpell, minecraft);
+                String secondSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getSecondSpell();
+                System.out.println(secondSpell);
+                //SpellManager.activeSpell(secondSpell, minecraft);
             }
             if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-                String thirdSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(2).getFirstSpell();
-                SpellManager.activeSpell(thirdSpell, minecraft);
+                String thirdSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getThirdSpell();
+                System.out.println(thirdSpell);
+                //SpellManager.activeSpell(thirdSpell, minecraft);
             }
             if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
-                String ultimateSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(3).getFirstSpell();
-                SpellManager.activeSpell(ultimateSpell, minecraft);
+                String ultimateSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getUltimate();
+                System.out.println(ultimateSpell);
+                //SpellManager.activeSpell(ultimateSpell, minecraft);
             }
             if (KeyBinding.INTERACTION_KEY.consumeClick()) {
                 //TODO

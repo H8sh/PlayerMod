@@ -1,6 +1,5 @@
 package net.h8sh.playermod.mixin;
 
-import net.h8sh.playermod.capability.profession.Profession;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -392,26 +391,24 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
     @Inject(method = "Lnet/minecraft/client/model/PlayerModel;setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
             at = @At("HEAD"), cancellable = true)
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
-        if (currentProfession != Profession.Professions.BASIC) {
-            ci.cancel();
+        ci.cancel();
 
-            boolean flag = entity.getFallFlyingTicks() > 4;
-            boolean flag1 = entity.isVisuallySwimming();
-            this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-            if (flag) {
-                this.head.xRot = (-(float) Math.PI / 4F);
-            } else if (this.swimAmount > 0.0F) {
-                if (flag1) {
-                    this.head.xRot = this.rotlerpRad(this.swimAmount, this.head.xRot, (-(float) Math.PI / 4F));
-                } else {
-                    this.head.xRot = this.rotlerpRad(this.swimAmount, this.head.xRot, headPitch * ((float) Math.PI / 180F));
-                }
+        boolean flag = entity.getFallFlyingTicks() > 4;
+        boolean flag1 = entity.isVisuallySwimming();
+        this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+        if (flag) {
+            this.head.xRot = (-(float) Math.PI / 4F);
+        } else if (this.swimAmount > 0.0F) {
+            if (flag1) {
+                this.head.xRot = this.rotlerpRad(this.swimAmount, this.head.xRot, (-(float) Math.PI / 4F));
             } else {
-                this.head.xRot = headPitch * ((float) Math.PI / 180F);
+                this.head.xRot = this.rotlerpRad(this.swimAmount, this.head.xRot, headPitch * ((float) Math.PI / 180F));
             }
+        } else {
+            this.head.xRot = headPitch * ((float) Math.PI / 180F);
         }
+
     }
 
 }

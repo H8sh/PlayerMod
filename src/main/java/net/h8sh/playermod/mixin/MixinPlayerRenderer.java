@@ -79,18 +79,29 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         }
     }
 
+    private static String armToDraw(Profession.Professions currentProfession, boolean isLeftArm) {
+        if (isLeftArm) {
+            return currentProfession.getName() + "_left_arm";
+        } else {
+            return currentProfession.getName() + "_right_arm";
+        }
+    }
+
     @Inject(
             method = {"renderRightHand"},
             at = {@At("HEAD")},
             cancellable = true
     )
     private void renderRightHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, CallbackInfo ci) {
-        ci.cancel();
         var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
-        boolean shouldRenderHotBar = ClientEvents.getHotBar();
-        PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
-        if (!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.RIGHT) && shouldRenderHotBar)
-            this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, false)), playermodel.body.getChild(armToDraw(currentProfession, false)));
+        if (currentProfession != Profession.Professions.BASIC) {
+            ci.cancel();
+
+            boolean shouldRenderHotBar = ClientEvents.getHotBar();
+            PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
+            if (!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.RIGHT) && shouldRenderHotBar)
+                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, false)), playermodel.body.getChild(armToDraw(currentProfession, false)));
+        }
     }
 
     @Inject(
@@ -99,20 +110,16 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             cancellable = true
     )
     private void renderLeftHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, CallbackInfo ci) {
-        ci.cancel();
         var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
-        boolean shouldRenderHotBar = ClientEvents.getHotBar();
-        PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
-        if(!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.LEFT) && shouldRenderHotBar)
-            this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, true)), playermodel.body.getChild(armToDraw(currentProfession, true)));
-    }
+        if (currentProfession != Profession.Professions.BASIC) {
+            ci.cancel();
 
-    private static String armToDraw(Profession.Professions currentProfession, boolean isLeftArm) {
-        if (isLeftArm) {
-            return currentProfession.getName() + "_left_arm";
-        } else {
-            return currentProfession.getName() + "_right_arm";
+            boolean shouldRenderHotBar = ClientEvents.getHotBar();
+            PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
+            if (!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.LEFT) && shouldRenderHotBar)
+                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, true)), playermodel.body.getChild(armToDraw(currentProfession, true)));
         }
+
     }
 
     @Shadow
