@@ -14,6 +14,10 @@ public class Profession {
         return new ResourceLocation(PlayerMod.MODID, "textures/profession/" + professionId + "_texture.png");
     }
 
+    public static ResourceLocation getAbilityTexture(String abilityId) {
+        return new ResourceLocation(PlayerMod.MODID, "textures/ability/" + abilityId + ".png");
+    }
+
     public static String getProfessionName() {
         return profession.getName();
     }
@@ -55,10 +59,17 @@ public class Profession {
     }
 
     public enum Professions {
-        BASIC(0, "Basic"),
-        PALADIN(1, "Paladin"),
-        WIZARD(2, "Wizard"),
-        DRUID(3, "Druid");
+        BASIC(0, "basic"),
+        PALADIN(1, "paladin"),
+        WIZARD(2, "wizard"),
+        DRUID(3, "druid"),
+        FIREMETA(4, "fireMeta"),
+        AQUAMETA(5, "aquaMeta"),
+        WINDMETA(6, "windMeta"),
+        SPIRITUSMETA(7, "spiritusMeta"),
+        ROGUE(8, "rogue"),
+        BERSERK(9, "berserk"),
+        INVOCATOR(10, "invocator");
 
         private final int id;
         private final String name;
@@ -69,16 +80,19 @@ public class Profession {
         }
 
         public static Professions getProfessionFromId(int id) {
-            switch (id) {
-                case 1:
-                    return Professions.PALADIN;
-                case 2:
-                    return Professions.WIZARD;
-                case 3:
-                    return Professions.DRUID;
-                default:
-                    return Professions.BASIC;
-            }
+            return switch (id) {
+                case 1 -> Professions.PALADIN;
+                case 2 -> Professions.WIZARD;
+                case 3 -> Professions.DRUID;
+                case 4 -> Professions.FIREMETA;
+                case 5 -> Professions.AQUAMETA;
+                case 6 -> Professions.WINDMETA;
+                case 7 -> Professions.SPIRITUSMETA;
+                case 8 -> Professions.ROGUE;
+                case 9 -> Professions.BERSERK;
+                case 10 -> Professions.INVOCATOR;
+                default -> Professions.BASIC;
+            };
         }
 
         public int getId() {

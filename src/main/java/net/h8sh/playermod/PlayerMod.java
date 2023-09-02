@@ -1,13 +1,18 @@
 package net.h8sh.playermod;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.block.entity.ModBlockEntities;
 import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
+import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.h8sh.playermod.config.WonderlandsModCommonConfigs;
 import net.h8sh.playermod.config.WonderlandsModServerConfigs;
+import net.h8sh.playermod.effect.ModEffects;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.client.CrystalRenderer;
 import net.h8sh.playermod.entity.client.LivingLamppostRenderer;
@@ -15,10 +20,10 @@ import net.h8sh.playermod.entity.client.SwouiffiRenderer;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.potion.ModPotions;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
-import net.h8sh.playermod.world.dimension.mansion.SuperMansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -57,10 +62,15 @@ public class PlayerMod {
         final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         forgeBus.addListener(this::jsonStructureReader);
+        forgeBus.addListener(this::jsonProfessionReader);
 
         modEventBus.addListener(this::commonSetup);
 
         ModTabs.register(modEventBus);
+
+        ModPotions.register(modEventBus);
+
+        ModEffects.register(modEventBus);
 
         ModBlocks.register(modEventBus);
 
@@ -114,6 +124,27 @@ public class PlayerMod {
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();
                         System.out.println("Json file failed to load for mansion generation");
+                    }
+                });
+            }
+        });
+    }
+
+    private void jsonProfessionReader(AddReloadListenerEvent event) {
+        event.addListener(new SimpleJsonResourceReloadListener((new GsonBuilder()).create(), "profession") {
+            @Override
+            protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+                pObject.forEach((resourceLocation, jsonStructureElement) -> {
+                    try {
+                        JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonStructureElement, "professions");
+
+                        Gson gson = new Gson();
+                        ProfessionTypes professionsType = gson.fromJson(jsonObject, ProfessionTypes.class);
+                        ProfessionTypes.setPrototypesFromJson(professionsType);
+
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                        System.out.println("Json file failed to load for profession");
                     }
                 });
             }

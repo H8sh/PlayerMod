@@ -20,9 +20,6 @@ import static net.minecraft.client.model.PiglinModel.addHead;
 
 @Mixin(PiglinModel.class)
 public abstract class MixinPiglinModel {
-
-    //Piglin model class is modified cause the piglin model depends on the player class that is modified as well
-
     @Inject(
             method = {"Lnet/minecraft/client/model/PiglinModel;createMesh(Lnet/minecraft/client/model/geom/builders/CubeDeformation;)Lnet/minecraft/client/model/geom/builders/MeshDefinition;"},
             at = {@At("RETURN")},

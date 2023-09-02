@@ -2,10 +2,13 @@ package net.h8sh.playermod.item;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.block.ModBlocks;
+import net.h8sh.playermod.potion.ModPotions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

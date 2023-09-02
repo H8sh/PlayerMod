@@ -2,20 +2,12 @@ package net.h8sh.playermod.event;
 
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.ability.SpellManager;
 import net.h8sh.playermod.capability.profession.Profession;
+import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
 import net.h8sh.playermod.gui.*;
-import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseAquaC2SPacket;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseFireC2SPacket;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseSpiritusC2SPacket;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseWindC2SPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.GatherManaC2SPacket;
-import net.h8sh.playermod.networking.travelling.OnChangedDimensionToMansionHuntedC2SPacket;
-import net.h8sh.playermod.screen.profession.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -55,98 +47,47 @@ public class ClientEvents {
                  */
                 minecraft.options.keySwapOffhand.setDown(false);
             }
-
             if (!shouldRenderHotBar && minecraft.options.keyInventory.consumeClick()) {
                 /*
-                 * We don't want to display the name of items and blocks if in spell bar, but this can be seen if inventory is open
+                 * We don't want to display the name of items and blocks if in spell bar, but this must be seen if inventory is open
                  */
                 minecraft.options.keyInventory.setDown(false);
             }
-
             if (currentProfession == Profession.Professions.BASIC && KeyBinding.INVENTORY_SWITCH_KEY.consumeClick()) {
                 /*
                  * As Basic, the player is not allowed to get any spell
                  */
                 KeyBinding.INVENTORY_SWITCH_KEY.setDown(false);
             }
-
             if (KeyBinding.INVENTORY_SWITCH_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
                 isHotBar = !isHotBar;
             }
             if (KeyBinding.SHOW_KEYS_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
                 isKeysShown = !isKeysShown;
             }
-
-            switch (currentProfession) {
-                case PALADIN:
-                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-                        //Minecraft.getInstance().setScreen(new SkillScreen(minecraft.player, Component.literal("Paladin Skills")));
-                        Minecraft.getInstance().setScreen(new SkillScreen(minecraft.player.connection.getAdvancements()));
-                    }
-                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new OnChangedDimensionToMansionHuntedC2SPacket());
-                    }
-                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.RIDING_KEY.consumeClick()) {
-
-                    }
-                case WIZARD:
-                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new GatherManaC2SPacket());
-                    }
-                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                        // Done with mod events with tick method
-                    }
-                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.RIDING_KEY.consumeClick()) {
-
-                    }
-                case DRUID:
-                    if (KeyBinding.SKILL_SCREEN_KEY.consumeClick()) {
-
-                    }
-                    //TODO: change spells between each metamorphoses
-                    if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new MetamorphoseAquaC2SPacket());
-                    }
-                    if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new MetamorphoseFireC2SPacket());
-                    }
-                    if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new MetamorphoseWindC2SPacket());
-                    }
-                    if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
-                        ModMessages.sendToServer(new MetamorphoseSpiritusC2SPacket());
-                    }
-                    if (KeyBinding.INTERACTION_KEY.consumeClick()) {
-
-                    }
-                    if (KeyBinding.RIDING_KEY.consumeClick()) {
-
-                    }
+            if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
+                String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(0).getProfessionType().getSkills().get(0).getFirstSpell();
+                SpellManager.activeSpell(firstSpell, minecraft);
             }
+            if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
+                String secondSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(1).getFirstSpell();
+                SpellManager.activeSpell(secondSpell, minecraft);
+            }
+            if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
+                String thirdSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(2).getFirstSpell();
+                SpellManager.activeSpell(thirdSpell, minecraft);
+            }
+            if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
+                String ultimateSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(3).getFirstSpell();
+                SpellManager.activeSpell(ultimateSpell, minecraft);
+            }
+            if (KeyBinding.INTERACTION_KEY.consumeClick()) {
+                //TODO
+            }
+            if (KeyBinding.RIDING_KEY.consumeClick()) {
+                //TODO
+            }
+
         }
 
     }

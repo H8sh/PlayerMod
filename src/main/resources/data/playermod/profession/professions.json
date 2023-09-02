@@ -1,0 +1,147 @@
+{
+  "profession_types": [
+    {
+      "profession_type": {
+        "name": "basic",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "paladin",
+        "skills": [
+          {
+            "first_spell": "heal",
+            "second_spell": "armor",
+            "third_spell": "damage_boost",
+            "ultimate_spell": "lightning_strike"
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "wizard",
+        "skills": [
+          {
+            "first_spell": "mana_drain",
+            "second_spell": "aoe",
+            "third_spell": "freeze",
+            "ultimate_spell": "laser"
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "druid",
+        "skills": [
+          {
+            "first_spell": "fireMeta",
+            "second_spell": "aquaMeta",
+            "third_spell": "windMeta",
+            "ultimate_spell": "spiritusMeta"
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "fireMeta",
+        "skills": [
+          {
+            "first_spell": "structure_0R3",
+            "second_spell": "structure_0R3",
+            "third_spell": "structure_0R3",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "aquaMeta",
+        "skills": [
+          {
+            "first_spell": "grab",
+            "second_spell": "shield",
+            "third_spell": "waterAoe",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "windMeta",
+        "skills": [
+          {
+            "first_spell": "structure_0R3",
+            "second_spell": "structure_0R3",
+            "third_spell": "structure_0R3",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "spiritusMeta",
+        "skills": [
+          {
+            "first_spell": "structure_0R3",
+            "second_spell": "structure_0R3",
+            "third_spell": "structure_0R3",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "rogue",
+        "skills": [
+          {
+            "first_spell": "smog",
+            "second_spell": "teleportation",
+            "third_spell": "shot",
+            "ultimate_spell": "double"
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "berserk",
+        "skills": [
+          {
+            "first_spell": "healthSacrifice",
+            "second_spell": "charge",
+            "third_spell": "slam",
+            "ultimate_spell": "rage"
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "invocator",
+        "skills": [
+          {
+            "first_spell": "target",
+            "second_spell": "invocation",
+            "third_spell": "boost",
+            "ultimate_spell": "assemble"
+          }
+        ]
+      }
+    }
+  ]
+}
