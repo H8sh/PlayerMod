@@ -35,7 +35,8 @@ public class ProfessionEvent {
             }
             if (currentProfession != Profession.Professions.DRUID) {
                 player.getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(Metamorphose::resetMetamorphose);
-            } else {
+            }
+            if (Profession.getProfession() != Profession.Professions.BASIC) {
                 Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
             }
         }
