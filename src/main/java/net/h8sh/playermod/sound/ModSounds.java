@@ -19,6 +19,9 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> LIVING_LAMPPOST_MOVING = registerSoundEvent("living_lamppost_moving");
 
 
+    public static final RegistryObject<SoundEvent> ROGUE_LAUGH = registerSoundEvent("rogue_laugh");
+
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = new ResourceLocation(PlayerMod.MODID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

@@ -1,4 +1,4 @@
-package net.h8sh.playermod.capability.ability.druid.metamorphose;
+package net.h8sh.playermod.ability.druid.metamorphose;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

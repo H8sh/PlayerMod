@@ -1,4 +1,4 @@
-package net.h8sh.playermod.capability.ability.wizard.mana;
+package net.h8sh.playermod.ability.wizard.mana;
 
 import net.minecraft.nbt.CompoundTag;
 

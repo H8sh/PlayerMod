@@ -1,7 +1,6 @@
 package net.h8sh.playermod.datagen.loot;
 
 import net.h8sh.playermod.block.ModBlocks;
-import net.h8sh.playermod.item.ModItems;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -25,6 +24,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected void generate() {
         this.dropSelf(ModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(ModBlocks.PALADIN_LECTERN.get());
+        this.dropSelf(ModBlocks.AOE_MARKER_BLOCK.get());
+        this.dropSelf(ModBlocks.AOE_BLOCK.get());
    /*     this.dropSelf(ModBlocks.SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.RAW_SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.SOUND_BLOCK.get());

@@ -1,4 +1,5 @@
-package net.h8sh.playermod.capability.ability.wizard.mana;
+package net.h8sh.playermod.ability.wizard.aoe;
+
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -12,27 +13,27 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ManaCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class MagicAoECapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<ManaCapability> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<MagicAoECapability> PLAYER_MAGIC_AOE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private ManaCapability playerMana = null;
+    private MagicAoECapability playerMagicAoE = null;
 
-    private final LazyOptional<ManaCapability> optional = LazyOptional.of(this::createPlayerMana);
+    private final LazyOptional<MagicAoECapability> optional = LazyOptional.of(this::createPlayerMagicAoE);
 
     @NonNull
-    private ManaCapability createPlayerMana() {
-        if (this.playerMana == null) {
-            this.playerMana = new ManaCapability();
+    private MagicAoECapability createPlayerMagicAoE() {
+        if (this.playerMagicAoE == null) {
+            this.playerMagicAoE = new MagicAoECapability();
         }
-        return this.playerMana;
+        return this.playerMagicAoE;
     }
 
     @NonNull
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if (cap == PLAYER_MANA) {
+        if (cap == PLAYER_MAGIC_AOE) {
             return optional.cast();
         }
         return LazyOptional.empty();
@@ -47,12 +48,12 @@ public class ManaCapabilityProvider implements ICapabilityProvider, INBTSerializ
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        createPlayerMana().savedNBTData(nbt);
+        createPlayerMagicAoE().savedNBTData(nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        createPlayerMana().loadNBTData(nbt);
+        createPlayerMagicAoE().loadNBTData(nbt);
     }
 }

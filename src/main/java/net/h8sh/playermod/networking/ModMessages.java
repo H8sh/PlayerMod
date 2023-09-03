@@ -1,13 +1,7 @@
 package net.h8sh.playermod.networking;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.*;
-import net.h8sh.playermod.networking.classes.wizard.aoepacket.MagicAoES2CPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.GatherManaC2SPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.SyncManaToClientS2CPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.KillAllCrystalS2CPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.ResetCrystalS2CPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.SyncCrystalToClientC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.AoEC2SPacket;
 import net.h8sh.playermod.networking.narrator.*;
 import net.h8sh.playermod.networking.profession.ProfessionBasicC2SPacket;
 import net.h8sh.playermod.networking.profession.ProfessionDruidC2SPacket;
@@ -190,77 +184,15 @@ public class ModMessages {
 
         // Wizard ------------------------------------------------------------------------------------------------------
 
-        //Mana
-        net.messageBuilder(GatherManaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(GatherManaC2SPacket::new)
-                .encoder(GatherManaC2SPacket::toBytes)
-                .consumerMainThread(GatherManaC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(SyncManaToClientS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(SyncManaToClientS2CPacket::new)
-                .encoder(SyncManaToClientS2CPacket::toBytes)
-                .consumerMainThread(SyncManaToClientS2CPacket::handle)
-                .add();
-
-        //Crystal
-        net.messageBuilder(SyncCrystalToClientC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(SyncCrystalToClientC2SPacket::new)
-                .encoder(SyncCrystalToClientC2SPacket::toBytes)
-                .consumerMainThread(SyncCrystalToClientC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(KillAllCrystalS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(KillAllCrystalS2CPacket::new)
-                .encoder(KillAllCrystalS2CPacket::toBytes)
-                .consumerMainThread(KillAllCrystalS2CPacket::handle)
-                .add();
-
-        net.messageBuilder(ResetCrystalS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ResetCrystalS2CPacket::new)
-                .encoder(ResetCrystalS2CPacket::toBytes)
-                .consumerMainThread(ResetCrystalS2CPacket::handle)
-                .add();
-
-        //Magic AoE
-        net.messageBuilder(MagicAoES2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MagicAoES2CPacket::new)
-                .encoder(MagicAoES2CPacket::toBytes)
-                .consumerMainThread(MagicAoES2CPacket::handle)
+        net.messageBuilder(AoEC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AoEC2SPacket::new)
+                .encoder(AoEC2SPacket::toBytes)
+                .consumerMainThread(AoEC2SPacket::handle)
                 .add();
 
         // Druid -------------------------------------------------------------------------------------------------------
 
-        // Metamorphose
-        net.messageBuilder(MetamorphoseAquaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MetamorphoseAquaC2SPacket::new)
-                .encoder(MetamorphoseAquaC2SPacket::toBytes)
-                .consumerMainThread(MetamorphoseAquaC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(MetamorphoseFireC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MetamorphoseFireC2SPacket::new)
-                .encoder(MetamorphoseFireC2SPacket::toBytes)
-                .consumerMainThread(MetamorphoseFireC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(MetamorphoseWindC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MetamorphoseWindC2SPacket::new)
-                .encoder(MetamorphoseWindC2SPacket::toBytes)
-                .consumerMainThread(MetamorphoseWindC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(MetamorphoseSpiritusC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MetamorphoseSpiritusC2SPacket::new)
-                .encoder(MetamorphoseSpiritusC2SPacket::toBytes)
-                .consumerMainThread(MetamorphoseSpiritusC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(MetamorphoseResetC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MetamorphoseResetC2SPacket::new)
-                .encoder(MetamorphoseResetC2SPacket::toBytes)
-                .consumerMainThread(MetamorphoseResetC2SPacket::handle)
-                .add();
+        //TODO
 
         // Mansion -----------------------------------------------------------------------------------------------------
         net.messageBuilder(OnChangedDimensionToMansionHuntedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)

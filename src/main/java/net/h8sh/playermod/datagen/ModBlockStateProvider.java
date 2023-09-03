@@ -1,6 +1,7 @@
 package net.h8sh.playermod.datagen;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.block.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -14,17 +15,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        /*blockWithItem(ModBlocks.SAPPHIRE_BLOCK);
-        blockWithItem(ModBlocks.RAW_SAPPHIRE_BLOCK);
 
-        blockWithItem(ModBlocks.SAPPHIRE_ORE);
-        blockWithItem(ModBlocks.DEEPSLATE_SAPPHIRE_ORE);
-        blockWithItem(ModBlocks.END_STONE_SAPPHIRE_ORE);
-        blockWithItem(ModBlocks.NETHER_SAPPHIRE_ORE);
-
-        blockWithItem(ModBlocks.SOUND_BLOCK);*/
-
-        //TODO: place normal blocks here
+        blockWithItem(ModBlocks.AOE_MARKER_BLOCK);
+        blockWithItem(ModBlocks.AOE_BLOCK);
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

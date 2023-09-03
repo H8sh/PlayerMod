@@ -3,6 +3,8 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
+import net.h8sh.playermod.capability.riding.Riding;
+import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.gui.*;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.networking.ModMessages;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,6 +26,19 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class ProfessionEvent {
+
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(EntityJoinLevelEvent event) {
+        var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
+        if (event.getEntity() instanceof Player player) {
+            if (currentProfession == Profession.Professions.BASIC) {
+                player.getCapability(ProfessionProvider.PROFESSION).ifPresent(Profession::resetProfession);
+                player.getCapability(RidingProvider.RIDING).ifPresent(Riding::resetRiding);
+            } else {
+                Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerGettingProfessionBook(PlayerEvent.ItemPickupEvent event) {

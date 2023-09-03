@@ -1,4 +1,4 @@
-package net.h8sh.playermod.capability.ability.wizard.mana.crystal;
+package net.h8sh.playermod.ability.wizard.mana.crystal;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;

@@ -1,33 +1,23 @@
 package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.ability.wizard.aoe.MagicAoEManager;
-import net.h8sh.playermod.ability.wizard.mana.ManaManager;
-import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalManager;
-import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
-import net.h8sh.playermod.capability.ability.druid.metamorphose.MetamorphoseProvider;
-import net.h8sh.playermod.capability.ability.wizard.aoe.MagicAoECapabilityProvider;
-import net.h8sh.playermod.capability.ability.wizard.mana.ManaCapabilityProvider;
-import net.h8sh.playermod.capability.ability.wizard.mana.crystal.CrystalCapabilityProvider;
+import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
+import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapabilityProvider;
+import net.h8sh.playermod.ability.wizard.mana.ManaCapabilityProvider;
+import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.questing.QuestingProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
-import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
 import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.classes.druid.metamorphose.MetamorphoseResetC2SPacket;
-import net.h8sh.playermod.networking.classes.wizard.aoepacket.MagicAoES2CPacket;
-import net.h8sh.playermod.networking.classes.wizard.manapacket.crystal.KillAllCrystalS2CPacket;
-import net.h8sh.playermod.networking.profession.ProfessionBasicC2SPacket;
-import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.AoEC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
-import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +26,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -45,7 +34,6 @@ public class ModEvents {
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
     public static class ForgeEvents {
-        private static final long EXECUTION_DELAY = 1000;
         public static BlockPos playerBlockPos;
 
         //TODO: on player death: kill every crystal + reset crystal data to 0
@@ -75,9 +63,6 @@ public class ModEvents {
                 }
                 if (!event.getObject().getCapability(RidingProvider.RIDING).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "riding"), new RidingProvider());
-                }
-                if (!event.getObject().getCapability(MetamorphoseProvider.METAMORPHOSE).isPresent()) {
-                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "metamorphose"), new MetamorphoseProvider());
                 }
                 if (!event.getObject().getCapability(QuestingProvider.QUESTING).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "questing"), new QuestingProvider());
@@ -127,11 +112,6 @@ public class ModEvents {
                         newStore.copyFrom(oldStore);
                     });
                 });
-                event.getOriginal().getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(oldStore -> {
-                    event.getEntity().getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(newStore -> {
-                        newStore.copyFrom(oldStore);
-                    });
-                });
                 event.getOriginal().getCapability(QuestingProvider.QUESTING).ifPresent(oldStore -> {
                     event.getEntity().getCapability(QuestingProvider.QUESTING).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
@@ -139,11 +119,6 @@ public class ModEvents {
                 });
 
                 event.getOriginal().invalidateCaps();
-
-                // Ability manager -------------------------------------------------------------------------------------
-
-                //Crystal reset if player die
-                ModMessages.sendToServer(new KillAllCrystalS2CPacket());
             }
         }
 
@@ -162,49 +137,18 @@ public class ModEvents {
                 return;
             }
 
-            //Gui ------------------------------------------------------------------------------------------------------
+            //Gui: -----------------------------------------------------------------------------------------------------
             if (Profession.getProfession() == Profession.Professions.BASIC) {
                 ClientEvents.setIsHotBar(true);
             }
 
-            //Skills ---------------------------------------------------------------------------------------------------
+            //Spells: --------------------------------------------------------------------------------------------------
+            Player player = Minecraft.getInstance().player;
+            if (player != null) {
 
-            //Wizard ---------------------------------------------------------------------------------------------------
+                //AoE: -------------------------------------------------------------------------------------------------
+                ModMessages.sendToServer(new AoEC2SPacket());
 
-            //Mana drain
-            ManaManager manaManager = ManaManager.get(event.level);
-            manaManager.tick(event.level);
-
-            //Crystal data set
-            CrystalManager crystalManager = CrystalManager.get(event.level);
-            crystalManager.tick(event.level);
-
-            //Magic AoE placement
-            long currentTime = System.currentTimeMillis();
-
-            if (KeyBinding.SECOND_SPELL_KEY.isDown() && Profession.getProfession() == Profession.Professions.WIZARD) {
-                MagicAoEManager.tick(event.level);
-            } else if (KeyBinding.SECOND_SPELL_KEY.consumeClick() && Profession.getProfession() == Profession.Professions.WIZARD) {
-                if (currentTime - lastExecutionTime >= EXECUTION_DELAY) {
-                    ModMessages.sendToServer(new MagicAoES2CPacket());
-                    lastExecutionTime = currentTime;
-                }
-            }
-
-            //--------------------------------------------------------------------------------------
-        }
-
-        @SubscribeEvent
-        public static void onPlayerLoggedIn(EntityJoinLevelEvent event) {
-            var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
-            if (event.getEntity() instanceof Player player) {
-                if(currentProfession == Profession.Professions.BASIC) {
-                    player.getCapability(ProfessionProvider.PROFESSION).ifPresent(Profession::resetProfession);
-                    player.getCapability(RidingProvider.RIDING).ifPresent(Riding::resetRiding);
-                    player.getCapability(MetamorphoseProvider.METAMORPHOSE).ifPresent(Metamorphose::resetMetamorphose);
-                } else {
-                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
-                }
             }
         }
 

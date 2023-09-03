@@ -18,7 +18,7 @@ public class SmogEffect extends MobEffect {
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         RandomSource randomsource = pLivingEntity.level().random;
         if (randomsource.nextFloat() < 0.11F) {
-            for (int i = 0; i < randomsource.nextInt(2) + 20; ++i) {
+            for (int i = 0; i < randomsource.nextInt(2) + 10; ++i) {
                 CampfireBlock.makeParticles(pLivingEntity.level(), pLivingEntity.blockPosition(), true, false);
             }
         }

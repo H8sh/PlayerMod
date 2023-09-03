@@ -1,5 +1,6 @@
 package net.h8sh.playermod.ability;
 
+import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
 import net.h8sh.playermod.effect.ModEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -40,7 +41,9 @@ public class SpellManager {
                 break;
 
             case "aoe":
-                //TODO
+
+                MagicAoECapability.setPrepareAoe(true);
+
                 break;
 
             case "freeze":
@@ -71,6 +74,18 @@ public class SpellManager {
 
             //FIREMETA: ------------------------------------------------------------------------------------------------
 
+            case "damage_spell":
+                //TODO
+                break;
+
+            case "fire_aura":
+                //TODO
+                break;
+
+            case "fire_scream":
+                //TODO
+                break;
+
             //AQUAMETA: ------------------------------------------------------------------------------------------------
 
             case "grab":
@@ -87,7 +102,31 @@ public class SpellManager {
 
             //WINDMETA: ------------------------------------------------------------------------------------------------
 
+            case "speed":
+                //TODO
+                break;
+
+            case "range":
+                //TODO
+                break;
+
+            case "dodge":
+                //TODO
+                break;
+
             //SPIRITUSMETA: --------------------------------------------------------------------------------------------
+
+            case "fire_boost":
+                //TODO
+                break;
+
+            case "aqua_boost":
+                //TODO
+                break;
+
+            case "wind_boost":
+                //TODO
+                break;
 
             //ROGUE: ---------------------------------------------------------------------------------------------------
 

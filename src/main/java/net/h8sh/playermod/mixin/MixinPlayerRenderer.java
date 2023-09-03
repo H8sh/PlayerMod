@@ -1,7 +1,7 @@
 package net.h8sh.playermod.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.h8sh.playermod.capability.ability.druid.metamorphose.Metamorphose;
+import net.h8sh.playermod.ability.druid.metamorphose.Metamorphose;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.event.ClientEvents;

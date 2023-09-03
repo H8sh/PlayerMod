@@ -8,6 +8,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,7 +31,13 @@ public class ModBlocks {
             ()-> new PaladinLectern(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
 
 
+    //TODO: change to custom block
+    public static final RegistryObject<Block> AOE_MARKER_BLOCK = BLOCKS.register("aoe_marker_block",
+            ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.AIR).sound(SoundType.AMETHYST).noOcclusion()));
 
+    //TODO: change to custom block
+    public static final RegistryObject<Block> AOE_BLOCK = BLOCKS.register("aoe_block",
+            ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.AIR).sound(SoundType.AMETHYST).noOcclusion()));
 
 
     public static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

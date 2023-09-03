@@ -18,5 +18,12 @@
     "sounds": [
       "playermod:living_lamppost_moving"
     ]
+  },
+
+  "rogue_laugh": {
+    "subtitle": "sounds.playermod.rogue_laugh",
+    "sounds": [
+      "playermod:rogue_laugh"
+    ]
   }
 }

@@ -2,7 +2,6 @@ package net.h8sh.playermod.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.ability.wizard.mana.ClientManaData;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +29,7 @@ public class ManaBarOverlay {
 
         RenderSystem.setShaderTexture(0, MANA_FILLED);
         for (int i = 0; i < 10; i++) {
-            if (ClientManaData.getPlayerMana() > 10 * i) {
+            if (35 > 10 * i) { //(ClientManaData.getPlayerMana() > 10 * i) {
                 guiGraphics.blit(MANA_FILLED, x - 100 + (i * 9), y - 54, 0, 0, 24, 13,
                         24, 13);
             } else {
