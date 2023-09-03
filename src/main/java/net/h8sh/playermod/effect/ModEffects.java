@@ -13,8 +13,8 @@ public class ModEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS =
             DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PlayerMod.MODID);
 
-    public static final RegistryObject<MobEffect> SMOG = MOB_EFFECTS.register("smog",
-            () -> new SmogEffect(MobEffectCategory.HARMFUL, 3124687));
+    public static final RegistryObject<MobEffect> SMOKE = MOB_EFFECTS.register("smog",
+            () -> new SmokeEffect(MobEffectCategory.HARMFUL, 3124687));
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

@@ -72,22 +72,18 @@ public class ClientEvents {
 
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getFirstSpell();
-                System.out.println(firstSpell);
                 SpellManager.activeSpell(firstSpell, minecraft);
             }
             if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
                 String secondSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getSecondSpell();
-                System.out.println(secondSpell);
                 SpellManager.activeSpell(secondSpell, minecraft);
             }
             if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
                 String thirdSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getThirdSpell();
-                System.out.println(thirdSpell);
                 SpellManager.activeSpell(thirdSpell, minecraft);
             }
             if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
                 String ultimateSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getUltimate();
-                System.out.println(ultimateSpell);
                 SpellManager.activeSpell(ultimateSpell, minecraft);
             }
 
@@ -126,6 +122,7 @@ public class ClientEvents {
             event.registerAboveAll("reputation_bar", ReputationOverlay.HUD_REPUTATION);
             event.registerAboveAll("spell_bar", SpellBarOverlay.HUD_SPELL_BAR);
             event.registerAboveAll("arrow_bar", ArrowOverlay.HUD_ARROW);
+            event.registerAboveAll("aoe_progress_bar", AoEBarOverlay.HUD_AOE_BAR_PROGRESS);
         }
 
     }

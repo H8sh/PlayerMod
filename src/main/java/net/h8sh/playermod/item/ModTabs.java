@@ -33,6 +33,13 @@ public class ModTabs {
                         pOutput.accept(ModItems.DRUID_BOOK.get());
                         pOutput.accept(ModItems.WIZARD_BOOK.get());
                         pOutput.accept(ModItems.BASIC_BOOK.get());
+                        pOutput.accept(ModItems.ROGUE_BOOK.get());
+                        pOutput.accept(ModItems.BERSERK_BOOK.get());
+                        pOutput.accept(ModItems.INVOCATOR_BOOK.get());
+                        pOutput.accept(ModItems.FIREMETA_BOOK.get());
+                        pOutput.accept(ModItems.AQUAMETA_BOOK.get());
+                        pOutput.accept(ModItems.WINDMETA_BOOK.get());
+                        pOutput.accept(ModItems.SPIRITUSMETA_BOOK.get());
                     })
                     .build());
 

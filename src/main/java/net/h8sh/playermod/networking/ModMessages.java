@@ -1,12 +1,11 @@
 package net.h8sh.playermod.networking;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.networking.classes.wizard.AoEC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
 import net.h8sh.playermod.networking.narrator.*;
-import net.h8sh.playermod.networking.profession.ProfessionBasicC2SPacket;
-import net.h8sh.playermod.networking.profession.ProfessionDruidC2SPacket;
-import net.h8sh.playermod.networking.profession.ProfessionPaladinC2SPacket;
-import net.h8sh.playermod.networking.profession.ProfessionWizardC2SPacket;
+import net.h8sh.playermod.networking.profession.*;
 import net.h8sh.playermod.networking.reputation.ReputationNormalC2SPacket;
 import net.h8sh.playermod.networking.reputation.SyncReputationToClientS2CPacket;
 import net.h8sh.playermod.networking.riding.RidingDruidC2SPacket;
@@ -66,6 +65,48 @@ public class ModMessages {
                 .decoder(ProfessionBasicC2SPacket::new)
                 .encoder(ProfessionBasicC2SPacket::toBytes)
                 .consumerMainThread(ProfessionBasicC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionRogueC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionRogueC2SPacket::new)
+                .encoder(ProfessionRogueC2SPacket::toBytes)
+                .consumerMainThread(ProfessionRogueC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionBerserkC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionBerserkC2SPacket::new)
+                .encoder(ProfessionBerserkC2SPacket::toBytes)
+                .consumerMainThread(ProfessionBerserkC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionInvocatorC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionInvocatorC2SPacket::new)
+                .encoder(ProfessionInvocatorC2SPacket::toBytes)
+                .consumerMainThread(ProfessionInvocatorC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionFireMetaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionFireMetaC2SPacket::new)
+                .encoder(ProfessionFireMetaC2SPacket::toBytes)
+                .consumerMainThread(ProfessionFireMetaC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionAquaMetaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionAquaMetaC2SPacket::new)
+                .encoder(ProfessionAquaMetaC2SPacket::toBytes)
+                .consumerMainThread(ProfessionAquaMetaC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionWindMetaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionWindMetaC2SPacket::new)
+                .encoder(ProfessionWindMetaC2SPacket::toBytes)
+                .consumerMainThread(ProfessionWindMetaC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ProfessionSpiritusMetaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ProfessionSpiritusMetaC2SPacket::new)
+                .encoder(ProfessionSpiritusMetaC2SPacket::toBytes)
+                .consumerMainThread(ProfessionSpiritusMetaC2SPacket::handle)
                 .add();
 
         //Travelling ---------------------------------------------------------------------------------------------------
@@ -184,15 +225,29 @@ public class ModMessages {
 
         // Wizard ------------------------------------------------------------------------------------------------------
 
-        net.messageBuilder(AoEC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(AoEC2SPacket::new)
-                .encoder(AoEC2SPacket::toBytes)
-                .consumerMainThread(AoEC2SPacket::handle)
+        net.messageBuilder(AoEMarkerC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AoEMarkerC2SPacket::new)
+                .encoder(AoEMarkerC2SPacket::toBytes)
+                .consumerMainThread(AoEMarkerC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(AoECastC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AoECastC2SPacket::new)
+                .encoder(AoECastC2SPacket::toBytes)
+                .consumerMainThread(AoECastC2SPacket::handle)
                 .add();
 
         // Druid -------------------------------------------------------------------------------------------------------
 
         //TODO
+
+        // Rogue -------------------------------------------------------------------------------------------------------
+
+        net.messageBuilder(SmokeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SmokeC2SPacket::new)
+                .encoder(SmokeC2SPacket::toBytes)
+                .consumerMainThread(SmokeC2SPacket::handle)
+                .add();
 
         // Mansion -----------------------------------------------------------------------------------------------------
         net.messageBuilder(OnChangedDimensionToMansionHuntedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)

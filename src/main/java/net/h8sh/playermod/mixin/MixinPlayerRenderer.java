@@ -1,11 +1,10 @@
 package net.h8sh.playermod.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.h8sh.playermod.ability.druid.metamorphose.Metamorphose;
+import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.event.ClientEvents;
-import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -81,9 +80,11 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
     private static String armToDraw(Profession.Professions currentProfession, boolean isLeftArm) {
         if (isLeftArm) {
-            return currentProfession.getName() + "_left_arm";
+            //return currentProfession.getName() + "_left_arm";
+            return "wizard_left_arm";
         } else {
-            return currentProfession.getName() + "_right_arm";
+            //return currentProfession.getName() + "_right_arm";
+            return "wizard_right_arm";
         }
     }
 
@@ -161,6 +162,104 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                     playermodel.body.getChild("wizard_left_leg").visible = false;
                     playermodel.head.getChild("wizard_hat").visible = false;
                 }
+                case ROGUE -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case BERSERK -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case INVOCATOR -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case FIREMETA -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case AQUAMETA -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case WIZARD -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
+                case SPIRITUSMETA -> {
+                    playermodel.body.getChild("paladin_right_leg").visible = false;
+                    playermodel.body.getChild("paladin_left_leg").visible = false;
+                    playermodel.body.getChild("druid_tail").visible = false;
+                    playermodel.body.getChild("druid_right_arm").visible = true;
+                    playermodel.body.getChild("druid_left_arm").visible = true;
+                    playermodel.body.getChild("druid_right_leg").visible = true;
+                    playermodel.body.getChild("druid_left_leg").visible = true;
+                    playermodel.body.getChild("wizard_right_arm").visible = false;
+                    playermodel.body.getChild("wizard_left_arm").visible = false;
+                    playermodel.body.getChild("wizard_right_leg").visible = false;
+                    playermodel.body.getChild("wizard_left_leg").visible = false;
+                    playermodel.head.getChild("wizard_hat").visible = false;
+                }
                 case PALADIN -> {
                     playermodel.body.getChild("paladin_right_leg").visible = true;
                     playermodel.body.getChild("paladin_left_leg").visible = true;
@@ -175,7 +274,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                     playermodel.body.getChild("wizard_left_leg").visible = false;
                     playermodel.head.getChild("wizard_hat").visible = false;
                 }
-                case WIZARD -> {
+                case WINDMETA -> {
                     playermodel.body.getChild("paladin_right_leg").visible = false;
                     playermodel.body.getChild("paladin_left_leg").visible = false;
                     playermodel.body.getChild("druid_tail").visible = false;
@@ -210,12 +309,6 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             //TODO
 
             var currentMount = Riding.getRiding();
-
-            // Druid metamorphoses ------------------------------------------------------------------------------------
-
-            //TODO
-
-            var currentMetamorphose = Metamorphose.getMetamorphose();
 
             // Rendering -----------------------------------------------------------------------------------------------
 
@@ -255,8 +348,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
-        if (KeyBinding.SKILL_SCREEN_KEY.isDown() && currentProfession == Profession.Professions.DRUID) {
-            cir.setReturnValue(Profession.getAbilityTexture("smog"));
+        if (SmokeCapability.getOnSmoke() && Profession.getProfession() == Profession.Professions.ROGUE) {
+            cir.setReturnValue(Profession.getAbilityTexture("smoke"));
         } else {
             cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
         }
@@ -274,15 +367,6 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         }*/
 
-    // Metamorphose ------------------------------------------------------------------------------------------------
-
-    //TODO: add textures to asset folder
-
-       /* var currentMetamorphose = Metamorphose.getMetamorphose();
-
-        cir.setReturnValue(Metamorphose.getMetamorphoseTexture(currentMetamorphose))
-
-        }*/
 
 }
 

@@ -109,7 +109,7 @@
         "name": "rogue",
         "skills": [
           {
-            "first_spell": "smog",
+            "first_spell": "smoke",
             "second_spell": "teleportation",
             "third_spell": "shot",
             "ultimate_spell": "double"

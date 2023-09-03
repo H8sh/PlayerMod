@@ -23,14 +23,14 @@ public class ManaBarOverlay {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, EMPTY_BAR);
         for (int i = 0; i < 10; i++) {
-            guiGraphics.blit(EMPTY_BAR, x - 100 + (i * 9), y - 54, 0, 0, 24, 13,
+            guiGraphics.blit(EMPTY_BAR, x - 100 + (i * 9), y - 56, 0, 0, 24, 13,
                     24, 13);
         }
 
         RenderSystem.setShaderTexture(0, MANA_FILLED);
         for (int i = 0; i < 10; i++) {
             if (35 > 10 * i) { //(ClientManaData.getPlayerMana() > 10 * i) {
-                guiGraphics.blit(MANA_FILLED, x - 100 + (i * 9), y - 54, 0, 0, 24, 13,
+                guiGraphics.blit(MANA_FILLED, x - 100 + (i * 9), y - 56, 0, 0, 24, 13,
                         24, 13);
             } else {
                 break;

@@ -1,9 +1,10 @@
 package net.h8sh.playermod.ability;
 
+import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
-import net.h8sh.playermod.effect.ModEffects;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
 public class SpellManager {
@@ -37,7 +38,7 @@ public class SpellManager {
             //WIZARD: --------------------------------------------------------------------------------------------------
 
             case "mana_drain":
-                //TODO
+                MagicAoECapability.setOnCD(false);
                 break;
 
             case "aoe":
@@ -130,12 +131,12 @@ public class SpellManager {
 
             //ROGUE: ---------------------------------------------------------------------------------------------------
 
-            case "smog":
-                player.addEffect(new MobEffectInstance(ModEffects.SMOG.get(), 20, 0, false, true, false));
+            case "smoke":
+                ModMessages.sendToServer(new SmokeC2SPacket());
                 break;
 
             case "teleportation":
-                //TODO
+                SmokeCapability.setOnSmoke(false);
                 break;
 
             case "shot":

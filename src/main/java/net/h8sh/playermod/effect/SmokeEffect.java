@@ -8,9 +8,9 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.CampfireBlock;
 
-public class SmogEffect extends MobEffect {
+public class SmokeEffect extends MobEffect {
 
-    public SmogEffect(MobEffectCategory mobEffectCategory, int color) {
+    public SmokeEffect(MobEffectCategory mobEffectCategory, int color) {
         super(mobEffectCategory, color);
     }
 

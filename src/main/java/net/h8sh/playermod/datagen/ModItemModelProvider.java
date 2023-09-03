@@ -21,6 +21,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.WIZARD_BOOK);
         simpleItem(ModItems.DRUID_BOOK);
         simpleItem(ModItems.BASIC_BOOK);
+        simpleItem(ModItems.BERSERK_BOOK);
+        simpleItem(ModItems.INVOCATOR_BOOK);
+        simpleItem(ModItems.FIREMETA_BOOK);
+        simpleItem(ModItems.AQUAMETA_BOOK);
+        simpleItem(ModItems.WINDMETA_BOOK);
+        simpleItem(ModItems.SPIRITUSMETA_BOOK);
+        simpleItem(ModItems.ROGUE_BOOK);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

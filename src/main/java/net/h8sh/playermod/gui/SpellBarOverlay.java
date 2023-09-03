@@ -32,6 +32,34 @@ public class SpellBarOverlay {
             itemStack = new ItemStack(ModItems.WIZARD_BOOK.get());
             WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/wizard.png");
         }
+        if (currentProfession == Profession.Professions.ROGUE) {
+            itemStack = new ItemStack(ModItems.ROGUE_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/rogue.png");
+        }
+        if (currentProfession == Profession.Professions.BERSERK) {
+            itemStack = new ItemStack(ModItems.BERSERK_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/berserk.png");
+        }
+        if (currentProfession == Profession.Professions.INVOCATOR) {
+            itemStack = new ItemStack(ModItems.INVOCATOR_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/invocator.png");
+        }
+        if (currentProfession == Profession.Professions.FIREMETA) {
+            itemStack = new ItemStack(ModItems.FIREMETA_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/firemeta.png");
+        }
+        if (currentProfession == Profession.Professions.AQUAMETA) {
+            itemStack = new ItemStack(ModItems.AQUAMETA_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/aquameta.png");
+        }
+        if (currentProfession == Profession.Professions.WINDMETA) {
+            itemStack = new ItemStack(ModItems.WINDMETA_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/windmeta.png");
+        }
+        if (currentProfession == Profession.Professions.SPIRITUSMETA) {
+            itemStack = new ItemStack(ModItems.SPIRITUSMETA_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/spiritusmeta.png");
+        }
 
 
         int l = 1;

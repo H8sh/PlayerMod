@@ -29,7 +29,7 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.CRYSTAL, 0x555555, 0xFFAA00,
                     new Item.Properties()));
 
-    //Metamorphoses ------------------------------------------------------------------------------------------------------
+    //Professions ------------------------------------------------------------------------------------------------------
     public static final RegistryObject<Item> PALADIN_LECTERN_ITEM = ITEMS.register("paladin_lectern",
             () -> new PaladinLecternItem(ModBlocks.PALADIN_LECTERN.get(), new Item.Properties()));
 
@@ -37,15 +37,34 @@ public class ModItems {
     public static final RegistryObject<Item> PALADIN_BOOK = ITEMS.register("paladin_book",
             () -> new BookItem(new Item.Properties()));
 
-    //TODO: replace item book by custom item book
     public static final RegistryObject<Item> WIZARD_BOOK = ITEMS.register("wizard_book",
             () -> new BookItem(new Item.Properties()));
 
-    //TODO: replace item book by custom item book
     public static final RegistryObject<Item> DRUID_BOOK = ITEMS.register("druid_book",
             () -> new BookItem(new Item.Properties()));
 
     public static final RegistryObject<Item> BASIC_BOOK = ITEMS.register("basic_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> ROGUE_BOOK = ITEMS.register("rogue_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> BERSERK_BOOK = ITEMS.register("berserk_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> INVOCATOR_BOOK = ITEMS.register("invocator_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> FIREMETA_BOOK = ITEMS.register("firemeta_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> AQUAMETA_BOOK = ITEMS.register("aquameta_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> WINDMETA_BOOK = ITEMS.register("windmeta_book",
+            () -> new BookItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> SPIRITUSMETA_BOOK = ITEMS.register("spiritusmeta_book",
             () -> new BookItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

@@ -16,7 +16,7 @@ public class ModPotions {
 
     // Reputation Upgrade Skill ----------------------------------------------------------------------------------------
     public static final RegistryObject<Potion> REPUTATION_POTION = POTIONS.register("reputation_potion",
-            () -> new Potion(new MobEffectInstance(ModEffects.SMOG.get(), 200, 0)));
+            () -> new Potion(new MobEffectInstance(ModEffects.SMOKE.get(), 200, 0)));
 
     public static void register(IEventBus eventBus) {
         POTIONS.register(eventBus);
