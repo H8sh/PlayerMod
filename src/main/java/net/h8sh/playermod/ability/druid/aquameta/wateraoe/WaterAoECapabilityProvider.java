@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.aquameta.wateraoe;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class WaterAoECapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_WATERAOE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<WaterAoECapability> PLAYER_WATERAOE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerWaterAoE = null;
+    private WaterAoECapability playerWaterAoE = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerWaterAoE);
+    private final LazyOptional<WaterAoECapability> optional = LazyOptional.of(this::createPlayerWaterAoE);
 
     @NonNull
-    private SmokeCapability createPlayerWaterAoE() {
+    private WaterAoECapability createPlayerWaterAoE() {
         if (this.playerWaterAoE == null) {
-            this.playerWaterAoE = new SmokeCapability();
+            this.playerWaterAoE = new WaterAoECapability();
         }
         return this.playerWaterAoE;
     }

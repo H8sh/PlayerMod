@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.rogue.doublee;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class DoubleCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_DOUBLE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<DoubleCapability> PLAYER_DOUBLE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerDouble = null;
+    private DoubleCapability playerDouble = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerDouble);
+    private final LazyOptional<DoubleCapability> optional = LazyOptional.of(this::createPlayerDouble);
 
     @NonNull
-    private SmokeCapability createPlayerDouble() {
+    private DoubleCapability createPlayerDouble() {
         if (this.playerDouble == null) {
-            this.playerDouble = new SmokeCapability();
+            this.playerDouble = new DoubleCapability();
         }
         return this.playerDouble;
     }

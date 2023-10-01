@@ -1,11 +1,11 @@
 package net.h8sh.playermod.entity.custom;
 
-import net.h8sh.playermod.block.entity.PaladinLecternEntity;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.event.ModEvents;
-import net.h8sh.playermod.event.ScreenEvent;
 import net.h8sh.playermod.sound.ModSounds;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EndCrystalRenderer;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
+import net.minecraft.client.renderer.entity.GuardianRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -17,38 +17,23 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.example.entity.CoolKidEntity;
-import software.bernie.example.item.JackInTheBoxItem;
-import software.bernie.example.item.PistolItem;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.ClientUtils;
 
 import java.awt.geom.Point2D;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class LivingLamppost extends Animal implements GeoEntity {
-    private final RawAnimation SLEEP = RawAnimation.begin().then("sleep", Animation.LoopType.PLAY_ONCE);
-    private final RawAnimation WAKE_UP = RawAnimation.begin().then("wake_up", Animation.LoopType.PLAY_ONCE);
-    private final RawAnimation LAMP_SWITCH = RawAnimation.begin().then("lamp_switch", Animation.LoopType.PLAY_ONCE);
-
-
-    private boolean isLampOn = false;
-
-    private boolean isAwake = false;
-
     public static double distance;
-
+    private boolean isLampOn = false;
+    private boolean isAwake = false;
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public LivingLamppost(EntityType<? extends Animal> pEntityType, Level pLevel) {
@@ -71,33 +56,33 @@ public class LivingLamppost extends Animal implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "controller", 1, this::predicate));
     }
 
     @Override
     public void tick() {
 
-            BlockPos playerPos = null;
-            if (playerPos != null) {
-                BlockPos livingLamppostPos = this.blockPosition();
+        BlockPos playerPos = ModEvents.ForgeEvents.getPlayerBlockPos();
+        if (playerPos != null) {
+            BlockPos livingLamppostPos = this.blockPosition();
 
-                distance = Point2D.distance(playerPos.getX(), playerPos.getZ(), livingLamppostPos.getX(), livingLamppostPos.getZ());
+            distance = Point2D.distance(playerPos.getX(), playerPos.getZ(), livingLamppostPos.getX(), livingLamppostPos.getZ());
 
-                if (distance > 6) {
-                    setLampOff();
-                } else if (distance <= 6 && distance > 3) {
-                    if (!isLampOn) {
-                        setLampOn();
-                    }
-                    if (isAwake) {
-                        setSleeping();
-                    }
-                } else if (distance <= 3) {
-                    if (!isAwake) {
-                        setAwake();
-                    }
+            if (distance > 6) {
+                setLampOff();
+            } else if (distance <= 6 && distance > 3) {
+                if (!isLampOn) {
+                    setLampOn();
+                }
+                if (isAwake) {
+                    setSleeping();
+                }
+            } else if (distance <= 3) {
+                if (!isAwake) {
+                    setAwake();
                 }
             }
+        }
     }
 
     private void setAwake() {
@@ -117,33 +102,43 @@ public class LivingLamppost extends Animal implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-        if (distance > 6) {
+        /*if (distance > 6) {
 
-            tAnimationState.getController().setAnimation(LAMP_SWITCH.then("idle", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("lamp_switch", Animation.LoopType.PLAY_ONCE).then("idle", Animation.LoopType.LOOP));
             this.playSound(SoundEvents.LANTERN_PLACE);
             return PlayState.CONTINUE;
         } else if (distance <= 6 && distance > 3) {
             if (!isLampOn) {
 
-                tAnimationState.getController().setAnimation(LAMP_SWITCH.then("idle", Animation.LoopType.LOOP));
+                tAnimationState.getController().setAnimation(RawAnimation.begin().then("lamp_switch", Animation.LoopType.PLAY_ONCE).then("idle", Animation.LoopType.LOOP));
                 this.playSound(SoundEvents.LANTERN_PLACE);
                 return PlayState.CONTINUE;
             }
             if (isAwake) {
 
-                tAnimationState.getController().setAnimation(SLEEP.then("idle", Animation.LoopType.LOOP));
+                tAnimationState.getController().setAnimation(RawAnimation.begin().then("sleep", Animation.LoopType.PLAY_ONCE).then("idle", Animation.LoopType.LOOP));
                 this.playSound(ModSounds.LIVING_LAMPPOST_MOVING.get());
                 return PlayState.CONTINUE;
             }
         } else if (distance <= 3) {
             if (!isAwake) {
 
-                tAnimationState.getController().setAnimation(WAKE_UP.then("awake", Animation.LoopType.LOOP));
+                tAnimationState.getController().setAnimation(RawAnimation.begin().then("wake_up", Animation.LoopType.PLAY_ONCE).then("awake", Animation.LoopType.LOOP));
                 this.playSound(ModSounds.LIVING_LAMPPOST_MOVING.get());
                 return PlayState.CONTINUE;
             }
         }
-        return PlayState.CONTINUE;
+        return PlayState.CONTINUE;*/
+
+        if (distance > 6) {
+
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("lamp_switch", Animation.LoopType.PLAY_ONCE).then("idle", Animation.LoopType.LOOP));
+            this.playSound(SoundEvents.LANTERN_PLACE);
+            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
     }
 
     @Override

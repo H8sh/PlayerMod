@@ -7,23 +7,38 @@ import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.riding.Riding;
 import net.h8sh.playermod.capability.riding.RidingProvider;
-import net.h8sh.playermod.gui.*;
+import net.h8sh.playermod.gui.profession.ArrowOverlay;
+import net.h8sh.playermod.gui.profession.ReputationOverlay;
+import net.h8sh.playermod.gui.profession.SpellBarOverlay;
+import net.h8sh.playermod.gui.wizard.CrystalOverlay;
+import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
+import net.h8sh.playermod.gui.wizard.ManaOverlay;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.berserk.SyncRageBarProgressS2CPacket;
 import net.h8sh.playermod.networking.profession.*;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class ProfessionEvent {
+
+    @SubscribeEvent
+    public static void onPlayerTackingDamages(LivingHurtEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer && Profession.getProfession() == Profession.Professions.BERSERK) {
+            ModMessages.sendToPlayer(new SyncRageBarProgressS2CPacket(0.8F), serverPlayer);
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(EntityJoinLevelEvent event) {

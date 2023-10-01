@@ -8,6 +8,7 @@ import com.mojang.logging.LogUtils;
 import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.block.entity.ModBlockEntities;
 import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
+import net.h8sh.playermod.block.entity.client.PnjBlockRenderer;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.h8sh.playermod.config.WonderlandsModCommonConfigs;
@@ -16,7 +17,10 @@ import net.h8sh.playermod.effect.ModEffects;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.client.CrystalRenderer;
 import net.h8sh.playermod.entity.client.LivingLamppostRenderer;
+import net.h8sh.playermod.entity.client.PnjEntityRenderer;
 import net.h8sh.playermod.entity.client.SwouiffiRenderer;
+import net.h8sh.playermod.fluid.ModFluidTypes;
+import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
@@ -25,6 +29,8 @@ import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
@@ -70,6 +76,9 @@ public class PlayerMod {
 
         ModPotions.register(modEventBus);
 
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
+
         ModEffects.register(modEventBus);
 
         ModBlocks.register(modEventBus);
@@ -100,7 +109,6 @@ public class PlayerMod {
     private void commonSetup(final FMLCommonSetupEvent event) {
 
         event.enqueueWork(() -> {
-
         });
         ModMessages.register();
     }
@@ -161,12 +169,18 @@ public class PlayerMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SOAP_WATER.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOAP_WATER.get(), RenderType.translucent());
+
             EntityRenderers.register(ModEntities.SWOUIFFI.get(), SwouiffiRenderer::new);
             EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);
             EntityRenderers.register(ModEntities.CRYSTAL.get(), CrystalRenderer::new);
+            EntityRenderers.register(ModEntities.CUSTOM_PNJ.get(), PnjEntityRenderer::new);
 
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.PNJ_BLOCK_ENTITY.get(), PnjBlockRenderer::new);
         }
     }
 }

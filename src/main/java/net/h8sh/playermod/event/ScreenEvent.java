@@ -1,12 +1,15 @@
 package net.h8sh.playermod.event;
 
+import net.h8sh.playermod.screen.pnj.PnjBlockScreen;
 import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
 import net.h8sh.playermod.screen.profession.PaladinBookScreen;
 import net.h8sh.playermod.sound.ModMusics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WinScreen;
+import net.minecraft.client.particle.LavaParticle;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.LavaFluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,13 +25,22 @@ public class ScreenEvent {
     private static final List<ResourceLocation> images = createResourceLocations();
     private static boolean isEndPortalCinematicScreenOpen = false;
     private static boolean shouldOpenEndPortalCinematicScreen = true;
-
     private static boolean shouldOpenPaladinBookScreen = false;
+    private static boolean shouldOpenPnjBlockScreen = false;
 
-    public static void openPaladinBookScreen(){
+    public static boolean openPnjBlockScreen() {
+        return shouldOpenPnjBlockScreen = true;
+    }
+
+    public static void closePnjBlockScreen() {
+        shouldOpenPnjBlockScreen = false;
+    }
+
+    public static void openPaladinBookScreen() {
         shouldOpenPaladinBookScreen = true;
     }
-    public static void closePaladinBookScreen(){
+
+    public static void closePaladinBookScreen() {
         shouldOpenPaladinBookScreen = false;
     }
 
@@ -50,10 +62,13 @@ public class ScreenEvent {
                 closePaladinBookScreen();
             }
 
+            if (shouldOpenPnjBlockScreen) {
+                Minecraft.getInstance().setScreen(new PnjBlockScreen());
+                closePnjBlockScreen();
+            }
+
         }
     }
-
-
 
 
 }

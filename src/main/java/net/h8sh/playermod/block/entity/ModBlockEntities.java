@@ -17,6 +17,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(PaladinLecternEntity::new,
                             ModBlocks.PALADIN_LECTERN.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<PnjBlockEntity>> PNJ_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("pnj_block_entity", ()->
+                    BlockEntityType.Builder.of(PnjBlockEntity::new,
+                            ModBlocks.PNJ_BLOCK_ENTITY.get()).build(null));
+
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);
     }

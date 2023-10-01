@@ -1,4 +1,4 @@
-package net.h8sh.playermod.gui;
+package net.h8sh.playermod.gui.profession;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.h8sh.playermod.PlayerMod;

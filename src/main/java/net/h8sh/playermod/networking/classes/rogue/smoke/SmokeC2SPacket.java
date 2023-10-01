@@ -7,6 +7,7 @@ import net.h8sh.playermod.sound.ModSounds;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -36,6 +37,9 @@ public class SmokeC2SPacket {
                 player.getCapability(SmokeCapabilityProvider.PLAYER_SMOKE).ifPresent(smokeCapability -> {
                     SmokeCapability.setOnSmoke(true);
                     player.addEffect(new MobEffectInstance(ModEffects.SMOKE.get(), 20, 0, false, true, false));
+
+                /*    player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 6, 20, false, true, false));*/
+
                     player.playSound(ModSounds.ROGUE_LAUGH.get(), 1, 1);
                 });
             }

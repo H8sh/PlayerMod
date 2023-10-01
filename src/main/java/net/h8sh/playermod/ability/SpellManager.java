@@ -1,9 +1,21 @@
 package net.h8sh.playermod.ability;
 
+import net.h8sh.playermod.ability.berserk.charge.ChargeCapability;
+import net.h8sh.playermod.ability.berserk.rage.RageCapability;
+import net.h8sh.playermod.ability.druid.firemeta.damage_spell.DamageSpellCapability;
+import net.h8sh.playermod.ability.druid.firemeta.fire_aura.FireAuraCapability;
 import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
+import net.h8sh.playermod.ability.rogue.teleportation.TeleportationCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
+import net.h8sh.playermod.ability.wizard.laser.LaserCapability;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.berserk.charge.ChargeC2SPacket;
+import net.h8sh.playermod.networking.classes.berserk.rage.RageC2SPacket;
+import net.h8sh.playermod.networking.classes.berserk.slam.SlamC2SPacket;
+import net.h8sh.playermod.networking.classes.druid.firemeta.damagespell.DamageSpellC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.teleportation.TeleportationC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.laser.LaserC2SPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
@@ -48,11 +60,11 @@ public class SpellManager {
                 break;
 
             case "freeze":
-                //TODO
                 break;
 
             case "laser":
-                //TODO
+                LaserCapability.setOnLaserActivated(false);
+                ModMessages.sendToServer(new LaserC2SPacket());
                 break;
 
             //DRUID: ---------------------------------------------------------------------------------------------------
@@ -76,15 +88,15 @@ public class SpellManager {
             //FIREMETA: ------------------------------------------------------------------------------------------------
 
             case "damage_spell":
-                //TODO
+                ModMessages.sendToServer(new DamageSpellC2SPacket());
                 break;
 
             case "fire_aura":
-                //TODO
+                FireAuraCapability.setOnFireAura(false);
                 break;
 
             case "fire_scream":
-                //TODO
+                DamageSpellCapability.setOnDamageSpell(false);
                 break;
 
             //AQUAMETA: ------------------------------------------------------------------------------------------------
@@ -136,11 +148,11 @@ public class SpellManager {
                 break;
 
             case "teleportation":
-                SmokeCapability.setOnSmoke(false);
+                ModMessages.sendToServer(new TeleportationC2SPacket());
                 break;
 
             case "shot":
-                //TODO
+                SmokeCapability.setOnSmoke(false);
                 break;
 
             case "double":
@@ -150,19 +162,23 @@ public class SpellManager {
             //BERSERK: -------------------------------------------------------------------------------------------------
 
             case "healthSacrifice":
-                //TODO
                 break;
 
             case "charge":
-                //TODO
-                break;
+                ModMessages.sendToServer(new ChargeC2SPacket());
+                break; 
 
             case "slam":
-                //TODO
+                ModMessages.sendToServer(new SlamC2SPacket());
                 break;
 
             case "rage":
-                //TODO
+                if (!RageCapability.getOnRage()) {
+                    ModMessages.sendToServer(new RageC2SPacket());
+                } else {
+                    RageCapability.resetRage();
+                }
+
                 break;
 
             //INVOCATOR: -----------------------------------------------------------------------------------------------

@@ -1,9 +1,7 @@
 package net.h8sh.playermod.networking.reputation;
 
-import net.h8sh.playermod.ability.wizard.mana.ClientManaData;
 import net.h8sh.playermod.capability.reputation.ClientReputationData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;

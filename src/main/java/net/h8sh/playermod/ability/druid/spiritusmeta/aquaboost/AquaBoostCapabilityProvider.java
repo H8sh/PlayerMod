@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.spiritusmeta.aquaboost;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class AquaBoostCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_AQUABOOST = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<AquaBoostCapability> PLAYER_AQUABOOST = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerAquaBoost = null;
+    private AquaBoostCapability playerAquaBoost = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerAquaBoost);
+    private final LazyOptional<AquaBoostCapability> optional = LazyOptional.of(this::createPlayerAquaBoost);
 
     @NonNull
-    private SmokeCapability createPlayerAquaBoost() {
+    private AquaBoostCapability createPlayerAquaBoost() {
         if (this.playerAquaBoost == null) {
-            this.playerAquaBoost = new SmokeCapability();
+            this.playerAquaBoost = new AquaBoostCapability();
         }
         return this.playerAquaBoost;
     }

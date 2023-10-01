@@ -5,7 +5,16 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.SpellManager;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
-import net.h8sh.playermod.gui.*;
+import net.h8sh.playermod.gui.berserk.ChargeBarOverlay;
+import net.h8sh.playermod.gui.berserk.RageBarOverlay;
+import net.h8sh.playermod.gui.profession.ArrowOverlay;
+import net.h8sh.playermod.gui.profession.NarratorOverlay;
+import net.h8sh.playermod.gui.profession.ReputationOverlay;
+import net.h8sh.playermod.gui.profession.SpellBarOverlay;
+import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
+import net.h8sh.playermod.gui.wizard.CrystalOverlay;
+import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
+import net.h8sh.playermod.gui.wizard.ManaOverlay;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -123,6 +132,8 @@ public class ClientEvents {
             event.registerAboveAll("spell_bar", SpellBarOverlay.HUD_SPELL_BAR);
             event.registerAboveAll("arrow_bar", ArrowOverlay.HUD_ARROW);
             event.registerAboveAll("aoe_progress_bar", AoEBarOverlay.HUD_AOE_BAR_PROGRESS);
+            event.registerAboveAll("charge_progress_bar", ChargeBarOverlay.HUD_CHARGE_BAR_PROGRESS);
+            event.registerAboveAll("rage_progress_bar", RageBarOverlay.HUD_RAGE_BAR_PROGRESS);
         }
 
     }

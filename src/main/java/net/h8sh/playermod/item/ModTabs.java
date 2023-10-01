@@ -27,6 +27,7 @@ public class ModTabs {
 
                         pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
 
+                        pOutput.accept(ModItems.PNJ_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
 
                         pOutput.accept(ModItems.PALADIN_BOOK.get());
@@ -40,6 +41,7 @@ public class ModTabs {
                         pOutput.accept(ModItems.AQUAMETA_BOOK.get());
                         pOutput.accept(ModItems.WINDMETA_BOOK.get());
                         pOutput.accept(ModItems.SPIRITUSMETA_BOOK.get());
+                        pOutput.accept(ModItems.SOAP_WATER_BUCKET.get());
                     })
                     .build());
 

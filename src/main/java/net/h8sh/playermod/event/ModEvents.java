@@ -44,11 +44,14 @@ import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
+import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
 import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -58,11 +61,14 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 
 public class ModEvents {
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
     public static class ForgeEvents {
+
+        public static BlockPos PLAYER_BLOCK_POS;
 
         @SubscribeEvent
         public static void onAttachedCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -456,6 +462,14 @@ public class ModEvents {
             }
         }
 
+        public static void setPlayerBlockPos(BlockPos blockPos) {
+            PLAYER_BLOCK_POS = blockPos;
+        }
+
+        public static BlockPos getPlayerBlockPos() {
+            return PLAYER_BLOCK_POS;
+        }
+
         @SubscribeEvent
         public static void onWorldTick(TickEvent.LevelTickEvent event) {
             if (event.level.isClientSide()) {
@@ -463,21 +477,6 @@ public class ModEvents {
             }
             if (event.phase == TickEvent.Phase.START) {
                 return;
-            }
-
-            //Gui: -----------------------------------------------------------------------------------------------------
-            if (Profession.getProfession() == Profession.Professions.BASIC) {
-                ClientEvents.setIsHotBar(true);
-            }
-
-
-            //Spells: --------------------------------------------------------------------------------------------------
-            Player player = Minecraft.getInstance().player;
-            if (player != null) {
-
-                //AoE: -------------------------------------------------------------------------------------------------
-                ModMessages.sendToServer(new AoEMarkerC2SPacket());
-                ModMessages.sendToServer(new AoECastC2SPacket());
             }
         }
 
@@ -491,6 +490,7 @@ public class ModEvents {
             event.put(ModEntities.SWOUIFFI.get(), SwouiffiEntity.setAttributes());
             event.put(ModEntities.LIVING_LAMPPOST.get(), LivingLamppost.setAttributes());
             event.put(ModEntities.CRYSTAL.get(), CrystalEntity.setAttributes());
+            event.put(ModEntities.CUSTOM_PNJ.get(), PnjEntity.setAttributes());
         }
 
     }

@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.invocator.invocation;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class InvocationCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_INVOCATION = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<InvocationCapability> PLAYER_INVOCATION = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerInvocation = null;
+    private InvocationCapability playerInvocation = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerInvocation);
+    private final LazyOptional<InvocationCapability> optional = LazyOptional.of(this::createPlayerInvocation);
 
     @NonNull
-    private SmokeCapability createPlayerInvocation() {
+    private InvocationCapability createPlayerInvocation() {
         if (this.playerInvocation == null) {
-            this.playerInvocation = new SmokeCapability();
+            this.playerInvocation = new InvocationCapability();
         }
         return this.playerInvocation;
     }

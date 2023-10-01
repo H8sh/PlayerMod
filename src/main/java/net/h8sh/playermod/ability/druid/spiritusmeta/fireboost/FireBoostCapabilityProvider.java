@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.spiritusmeta.fireboost;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class FireBoostCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_FIREBOOST = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<FireBoostCapability> PLAYER_FIREBOOST = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerFireBoost = null;
+    private FireBoostCapability playerFireBoost = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerFireBoost);
+    private final LazyOptional<FireBoostCapability> optional = LazyOptional.of(this::createPlayerFireBoost);
 
     @NonNull
-    private SmokeCapability createPlayerFireBoost() {
+    private FireBoostCapability createPlayerFireBoost() {
         if (this.playerFireBoost == null) {
-            this.playerFireBoost = new SmokeCapability();
+            this.playerFireBoost = new FireBoostCapability();
         }
         return this.playerFireBoost;
     }

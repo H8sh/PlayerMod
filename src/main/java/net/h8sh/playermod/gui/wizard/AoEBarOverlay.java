@@ -1,18 +1,11 @@
-package net.h8sh.playermod.gui;
+package net.h8sh.playermod.gui.wizard;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.h8sh.playermod.event.ClientEvents;
-import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Overlay;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import org.lwjgl.glfw.GLFW;
 
 public class AoEBarOverlay  {
     private static final boolean fadeIn = true;

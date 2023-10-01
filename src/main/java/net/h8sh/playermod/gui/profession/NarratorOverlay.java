@@ -1,4 +1,4 @@
-package net.h8sh.playermod.gui;
+package net.h8sh.playermod.gui.profession;
 
 import net.h8sh.playermod.capability.narrator.ClientNarratorData;
 import net.minecraft.client.gui.GuiGraphics;

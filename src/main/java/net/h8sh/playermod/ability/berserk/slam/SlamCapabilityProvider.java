@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.berserk.slam;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class SlamCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_SLAM = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<SlamCapability> PLAYER_SLAM = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerSlam = null;
+    private SlamCapability playerSlam = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerSlam);
+    private final LazyOptional<SlamCapability> optional = LazyOptional.of(this::createPlayerSlam);
 
     @NonNull
-    private SmokeCapability createPlayerSlam() {
+    private SlamCapability createPlayerSlam() {
         if (this.playerSlam == null) {
-            this.playerSlam = new SmokeCapability();
+            this.playerSlam = new SlamCapability();
         }
         return this.playerSlam;
     }

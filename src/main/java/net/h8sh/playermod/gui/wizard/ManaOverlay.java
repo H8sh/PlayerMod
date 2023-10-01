@@ -1,4 +1,4 @@
-package net.h8sh.playermod.gui;
+package net.h8sh.playermod.gui.wizard;
 
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.minecraft.client.gui.GuiGraphics;

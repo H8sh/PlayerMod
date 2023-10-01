@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.paladin.damageboost;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class DamageBoostCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_DAMAGEBOOST = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<DamageBoostCapability> PLAYER_DAMAGEBOOST = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerDamageBoost = null;
+    private DamageBoostCapability playerDamageBoost = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerDamageBoost);
+    private final LazyOptional<DamageBoostCapability> optional = LazyOptional.of(this::createPlayerDamageBoost);
 
     @NonNull
-    private SmokeCapability createPlayerDamageBoost() {
+    private DamageBoostCapability createPlayerDamageBoost() {
         if (this.playerDamageBoost == null) {
-            this.playerDamageBoost = new SmokeCapability();
+            this.playerDamageBoost = new DamageBoostCapability();
         }
         return this.playerDamageBoost;
     }

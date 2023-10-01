@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.windmeta.range;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class RangeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_RANGE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<RangeCapability> PLAYER_RANGE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerRange = null;
+    private RangeCapability playerRange = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerRange);
+    private final LazyOptional<RangeCapability> optional = LazyOptional.of(this::createPlayerRange);
 
     @NonNull
-    private SmokeCapability createPlayerRange() {
+    private RangeCapability createPlayerRange() {
         if (this.playerRange == null) {
-            this.playerRange = new SmokeCapability();
+            this.playerRange = new RangeCapability();
         }
         return this.playerRange;
     }

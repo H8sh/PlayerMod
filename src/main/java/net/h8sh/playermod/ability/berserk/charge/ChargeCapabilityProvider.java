@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.berserk.charge;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ChargeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_CHARGE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<ChargeCapability> PLAYER_CHARGE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerCharge = null;
+    private ChargeCapability playerCharge = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerCharge);
+    private final LazyOptional<ChargeCapability> optional = LazyOptional.of(this::createPlayerCharge);
 
     @NonNull
-    private SmokeCapability createPlayerCharge() {
+    private ChargeCapability createPlayerCharge() {
         if (this.playerCharge == null) {
-            this.playerCharge = new SmokeCapability();
+            this.playerCharge = new ChargeCapability();
         }
         return this.playerCharge;
     }

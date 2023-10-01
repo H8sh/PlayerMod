@@ -1,9 +1,18 @@
 package net.h8sh.playermod.networking;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.networking.classes.berserk.charge.ChargeC2SPacket;
+import net.h8sh.playermod.networking.classes.berserk.SyncRageBarProgressS2CPacket;
+import net.h8sh.playermod.networking.classes.berserk.healthsacrifice.HealthSacrificeC2SPacket;
+import net.h8sh.playermod.networking.classes.berserk.rage.RageC2SPacket;
+import net.h8sh.playermod.networking.classes.berserk.slam.SlamC2SPacket;
+import net.h8sh.playermod.networking.classes.druid.firemeta.damagespell.DamageSpellC2SPacket;
+import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.teleportation.TeleportationC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.laser.LaserC2SPacket;
 import net.h8sh.playermod.networking.narrator.*;
 import net.h8sh.playermod.networking.profession.*;
 import net.h8sh.playermod.networking.reputation.ReputationNormalC2SPacket;
@@ -237,9 +246,43 @@ public class ModMessages {
                 .consumerMainThread(AoECastC2SPacket::handle)
                 .add();
 
-        // Druid -------------------------------------------------------------------------------------------------------
+        net.messageBuilder(LaserC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(LaserC2SPacket::new)
+                .encoder(LaserC2SPacket::toBytes)
+                .consumerMainThread(LaserC2SPacket::handle)
+                .add();
 
-        //TODO
+        // Berserk -----------------------------------------------------------------------------------------------------
+
+        net.messageBuilder(SyncRageBarProgressS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncRageBarProgressS2CPacket::new)
+                .encoder(SyncRageBarProgressS2CPacket::toBytes)
+                .consumerMainThread(SyncRageBarProgressS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(HealthSacrificeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(HealthSacrificeC2SPacket::new)
+                .encoder(HealthSacrificeC2SPacket::toBytes)
+                .consumerMainThread(HealthSacrificeC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(SlamC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SlamC2SPacket::new)
+                .encoder(SlamC2SPacket::toBytes)
+                .consumerMainThread(SlamC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ChargeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ChargeC2SPacket::new)
+                .encoder(ChargeC2SPacket::toBytes)
+                .consumerMainThread(ChargeC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(RageC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RageC2SPacket::new)
+                .encoder(RageC2SPacket::toBytes)
+                .consumerMainThread(RageC2SPacket::handle)
+                .add();
 
         // Rogue -------------------------------------------------------------------------------------------------------
 
@@ -247,6 +290,26 @@ public class ModMessages {
                 .decoder(SmokeC2SPacket::new)
                 .encoder(SmokeC2SPacket::toBytes)
                 .consumerMainThread(SmokeC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(TeleportationC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(TeleportationC2SPacket::new)
+                .encoder(TeleportationC2SPacket::toBytes)
+                .consumerMainThread(TeleportationC2SPacket::handle)
+                .add();
+
+        // FIREMETA ----------------------------------------------------------------------------------------------------
+
+        net.messageBuilder(DamageSpellC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(DamageSpellC2SPacket::new)
+                .encoder(DamageSpellC2SPacket::toBytes)
+                .consumerMainThread(DamageSpellC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(FireAuraC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(FireAuraC2SPacket::new)
+                .encoder(FireAuraC2SPacket::toBytes)
+                .consumerMainThread(FireAuraC2SPacket::handle)
                 .add();
 
         // Mansion -----------------------------------------------------------------------------------------------------

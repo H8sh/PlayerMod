@@ -2,7 +2,7 @@ package net.h8sh.playermod.networking.classes.wizard.aoe;
 
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapabilityProvider;
-import net.h8sh.playermod.gui.AoEBarOverlay;
+import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;

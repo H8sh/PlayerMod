@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.aquameta.grab;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class GrabCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_GRAB = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<GrabCapability> PLAYER_GRAB = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerGrab = null;
+    private GrabCapability playerGrab = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerGrab);
+    private final LazyOptional<GrabCapability> optional = LazyOptional.of(this::createPlayerGrab);
 
     @NonNull
-    private SmokeCapability createPlayerGrab() {
+    private GrabCapability createPlayerGrab() {
         if (this.playerGrab == null) {
-            this.playerGrab = new SmokeCapability();
+            this.playerGrab = new GrabCapability();
         }
         return this.playerGrab;
     }

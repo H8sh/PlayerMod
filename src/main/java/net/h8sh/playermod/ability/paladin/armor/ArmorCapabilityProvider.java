@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.paladin.armor;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ArmorCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_ARMORBUFF = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<ArmorCapability> PLAYER_ARMORBUFF = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerArmorBuff = null;
+    private ArmorCapability playerArmorBuff = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerArmorBuff);
+    private final LazyOptional<ArmorCapability> optional = LazyOptional.of(this::createPlayerArmorBuff);
 
     @NonNull
-    private SmokeCapability createPlayerArmorBuff() {
+    private ArmorCapability createPlayerArmorBuff() {
         if (this.playerArmorBuff == null) {
-            this.playerArmorBuff = new SmokeCapability();
+            this.playerArmorBuff = new ArmorCapability();
         }
         return this.playerArmorBuff;
     }

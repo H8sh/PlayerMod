@@ -3,9 +3,13 @@ package net.h8sh.playermod.item;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.entity.ModEntities;
+import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.custom.PaladinLecternItem;
+import net.h8sh.playermod.item.custom.PnjBlockItem;
 import net.minecraft.world.item.BookItem;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,6 +19,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PlayerMod.MODID);
+
+    public static final RegistryObject<Item> SOAP_WATER_BUCKET = ITEMS.register("soap_water_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_SOAP_WATER,
+                    new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     //Entities ---------------------------------------------------------------------------------------------------------
     public static final RegistryObject<Item> SWOUIFFI_SPAWN_EGG = ITEMS.register("swouiffi_spawn_egg",
@@ -32,6 +40,9 @@ public class ModItems {
     //Professions ------------------------------------------------------------------------------------------------------
     public static final RegistryObject<Item> PALADIN_LECTERN_ITEM = ITEMS.register("paladin_lectern",
             () -> new PaladinLecternItem(ModBlocks.PALADIN_LECTERN.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PNJ_BLOCK_ITEM = ITEMS.register("pnj_block",
+            () -> new PnjBlockItem(ModBlocks.PNJ_BLOCK_ENTITY.get(), new Item.Properties()));
 
     //TODO: replace item book by custom item book
     public static final RegistryObject<Item> PALADIN_BOOK = ITEMS.register("paladin_book",

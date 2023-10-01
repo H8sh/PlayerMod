@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.paladin.lightningstrike;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class LightningStrikeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_LIGHTNINGSTRIKE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<LightningStrikeCapability> PLAYER_LIGHTNINGSTRIKE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerLightningStrike = null;
+    private LightningStrikeCapability playerLightningStrike = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerLightningStrike);
+    private final LazyOptional<LightningStrikeCapability> optional = LazyOptional.of(this::createPlayerLightningStrike);
 
     @NonNull
-    private SmokeCapability createPlayerLightningStrike() {
+    private LightningStrikeCapability createPlayerLightningStrike() {
         if (this.playerLightningStrike == null) {
-            this.playerLightningStrike = new SmokeCapability();
+            this.playerLightningStrike = new LightningStrikeCapability();
         }
         return this.playerLightningStrike;
     }

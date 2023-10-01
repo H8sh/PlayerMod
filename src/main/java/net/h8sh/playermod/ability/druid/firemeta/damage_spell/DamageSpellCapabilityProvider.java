@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.firemeta.damage_spell;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class DamageSpellCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_DAMAGESPELL = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<DamageSpellCapability> PLAYER_DAMAGESPELL = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerDamageSpell = null;
+    private DamageSpellCapability playerDamageSpell = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerDamageSpell);
+    private final LazyOptional<DamageSpellCapability> optional = LazyOptional.of(this::createPlayerDamageSpell);
 
     @NonNull
-    private SmokeCapability createPlayerDamageSpell() {
+    private DamageSpellCapability createPlayerDamageSpell() {
         if (this.playerDamageSpell == null) {
-            this.playerDamageSpell = new SmokeCapability();
+            this.playerDamageSpell = new DamageSpellCapability();
         }
         return this.playerDamageSpell;
     }

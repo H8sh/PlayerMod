@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.windmeta.dodge;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class DodgeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_DODGE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<DodgeCapability> PLAYER_DODGE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerDodge = null;
+    private DodgeCapability playerDodge = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerDodge);
+    private final LazyOptional<DodgeCapability> optional = LazyOptional.of(this::createPlayerDodge);
 
     @NonNull
-    private SmokeCapability createPlayerDodge() {
+    private DodgeCapability createPlayerDodge() {
         if (this.playerDodge == null) {
-            this.playerDodge = new SmokeCapability();
+            this.playerDodge = new DodgeCapability();
         }
         return this.playerDodge;
     }

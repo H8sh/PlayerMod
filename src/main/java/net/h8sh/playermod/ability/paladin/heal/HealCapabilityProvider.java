@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.paladin.heal;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class HealCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_HEAL = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<HealCapability> PLAYER_HEAL = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerHeal = null;
+    private HealCapability playerHeal = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerHeal);
+    private final LazyOptional<HealCapability> optional = LazyOptional.of(this::createPlayerHeal);
 
     @NonNull
-    private SmokeCapability createPlayerHeal() {
+    private HealCapability createPlayerHeal() {
         if (this.playerHeal == null) {
-            this.playerHeal = new SmokeCapability();
+            this.playerHeal = new HealCapability();
         }
         return this.playerHeal;
     }

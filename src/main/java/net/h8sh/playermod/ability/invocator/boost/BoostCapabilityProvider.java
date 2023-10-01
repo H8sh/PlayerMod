@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.invocator.boost;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class BoostCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_BOOST = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<BoostCapability> PLAYER_BOOST = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerBoost = null;
+    private BoostCapability playerBoost = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerBoost);
+    private final LazyOptional<BoostCapability> optional = LazyOptional.of(this::createPlayerBoost);
 
     @NonNull
-    private SmokeCapability createPlayerBoost() {
+    private BoostCapability createPlayerBoost() {
         if (this.playerBoost == null) {
-            this.playerBoost = new SmokeCapability();
+            this.playerBoost = new BoostCapability();
         }
         return this.playerBoost;
     }

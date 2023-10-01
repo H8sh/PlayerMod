@@ -337,27 +337,27 @@ public class MagicAoECapability {
         this.Y20 = pos20.getY();
         this.Z20 = pos20.getZ();
 
-        aoe.add(new Pair<>(pos0,""));
-        aoe.add(new Pair<>(pos1,""));
-        aoe.add(new Pair<>(pos2,""));
-        aoe.add(new Pair<>(pos3,""));
-        aoe.add(new Pair<>(pos4,""));
-        aoe.add(new Pair<>(pos5,""));
-        aoe.add(new Pair<>(pos6,""));
-        aoe.add(new Pair<>(pos7,""));
-        aoe.add(new Pair<>(pos8,""));
-        aoe.add(new Pair<>(pos9,""));
-        aoe.add(new Pair<>(pos10,""));
-        aoe.add(new Pair<>(pos11,""));
-        aoe.add(new Pair<>(pos12,""));
-        aoe.add(new Pair<>(pos13,""));
-        aoe.add(new Pair<>(pos14,""));
-        aoe.add(new Pair<>(pos15,""));
-        aoe.add(new Pair<>(pos16,""));
-        aoe.add(new Pair<>(pos17,""));
-        aoe.add(new Pair<>(pos18,""));
-        aoe.add(new Pair<>(pos19,""));
-        aoe.add(new Pair<>(pos20,""));
+        aoe.add(new Pair<>(pos0, ""));
+        aoe.add(new Pair<>(pos1, ""));
+        aoe.add(new Pair<>(pos2, ""));
+        aoe.add(new Pair<>(pos3, ""));
+        aoe.add(new Pair<>(pos4, ""));
+        aoe.add(new Pair<>(pos5, ""));
+        aoe.add(new Pair<>(pos6, ""));
+        aoe.add(new Pair<>(pos7, ""));
+        aoe.add(new Pair<>(pos8, ""));
+        aoe.add(new Pair<>(pos9, ""));
+        aoe.add(new Pair<>(pos10, ""));
+        aoe.add(new Pair<>(pos11, ""));
+        aoe.add(new Pair<>(pos12, ""));
+        aoe.add(new Pair<>(pos13, ""));
+        aoe.add(new Pair<>(pos14, ""));
+        aoe.add(new Pair<>(pos15, ""));
+        aoe.add(new Pair<>(pos16, ""));
+        aoe.add(new Pair<>(pos17, ""));
+        aoe.add(new Pair<>(pos18, ""));
+        aoe.add(new Pair<>(pos19, ""));
+        aoe.add(new Pair<>(pos20, ""));
 
         return aoe;
     }

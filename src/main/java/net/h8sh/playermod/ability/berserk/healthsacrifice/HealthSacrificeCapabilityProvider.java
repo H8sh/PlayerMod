@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.berserk.healthsacrifice;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class HealthSacrificeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_HEALTHSACRIFICE = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<HealthSacrificeCapability> PLAYER_HEALTHSACRIFICE = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerHealthSacrifice = null;
+    private HealthSacrificeCapability playerHealthSacrifice = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerHealthSacrifice);
+    private final LazyOptional<HealthSacrificeCapability> optional = LazyOptional.of(this::createPlayerHealthSacrifice);
 
     @NonNull
-    private SmokeCapability createPlayerHealthSacrifice() {
+    private HealthSacrificeCapability createPlayerHealthSacrifice() {
         if (this.playerHealthSacrifice == null) {
-            this.playerHealthSacrifice = new SmokeCapability();
+            this.playerHealthSacrifice = new HealthSacrificeCapability();
         }
         return this.playerHealthSacrifice;
     }

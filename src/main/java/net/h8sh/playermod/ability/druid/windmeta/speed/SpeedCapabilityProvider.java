@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.windmeta.speed;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class SpeedCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_SPEED = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<SpeedCapability> PLAYER_SPEED = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerSpeed = null;
+    private SpeedCapability playerSpeed = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerSpeed);
+    private final LazyOptional<SpeedCapability> optional = LazyOptional.of(this::createPlayerSpeed);
 
     @NonNull
-    private SmokeCapability createPlayerSpeed() {
+    private SpeedCapability createPlayerSpeed() {
         if (this.playerSpeed == null) {
-            this.playerSpeed = new SmokeCapability();
+            this.playerSpeed = new SpeedCapability();
         }
         return this.playerSpeed;
     }

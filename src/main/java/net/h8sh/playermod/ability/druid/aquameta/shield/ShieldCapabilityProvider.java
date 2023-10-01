@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.aquameta.shield;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ShieldCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_SHIELD = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<ShieldCapability> PLAYER_SHIELD = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerShield = null;
+    private ShieldCapability playerShield = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerShield);
+    private final LazyOptional<ShieldCapability> optional = LazyOptional.of(this::createPlayerShield);
 
     @NonNull
-    private SmokeCapability createPlayerShield() {
+    private ShieldCapability createPlayerShield() {
         if (this.playerShield == null) {
-            this.playerShield = new SmokeCapability();
+            this.playerShield = new ShieldCapability();
         }
         return this.playerShield;
     }

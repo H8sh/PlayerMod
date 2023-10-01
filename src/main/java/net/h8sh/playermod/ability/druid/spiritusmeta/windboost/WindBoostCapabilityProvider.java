@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.spiritusmeta.windboost;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class WindBoostCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_WINDBOOST = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<WindBoostCapability> PLAYER_WINDBOOST = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerWindBoost = null;
+    private WindBoostCapability playerWindBoost = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerWindBoost);
+    private final LazyOptional<WindBoostCapability> optional = LazyOptional.of(this::createPlayerWindBoost);
 
     @NonNull
-    private SmokeCapability createPlayerWindBoost() {
+    private WindBoostCapability createPlayerWindBoost() {
         if (this.playerWindBoost == null) {
-            this.playerWindBoost = new SmokeCapability();
+            this.playerWindBoost = new WindBoostCapability();
         }
         return this.playerWindBoost;
     }

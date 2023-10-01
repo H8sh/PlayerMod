@@ -1,7 +1,6 @@
 package net.h8sh.playermod.ability.druid.firemeta.fire_aura;
 
 
-import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,17 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class FireAuraCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<SmokeCapability> PLAYER_FIREAURA = CapabilityManager.get(new CapabilityToken<>() {
+    public static Capability<FireAuraCapability> PLAYER_FIREAURA = CapabilityManager.get(new CapabilityToken<>() {
     });
 
-    private SmokeCapability playerFireAura = null;
+    private FireAuraCapability playerFireAura = null;
 
-    private final LazyOptional<SmokeCapability> optional = LazyOptional.of(this::createPlayerFireAura);
+    private final LazyOptional<FireAuraCapability> optional = LazyOptional.of(this::createPlayerFireAura);
 
     @NonNull
-    private SmokeCapability createPlayerFireAura() {
+    private FireAuraCapability createPlayerFireAura() {
         if (this.playerFireAura == null) {
-            this.playerFireAura = new SmokeCapability();
+            this.playerFireAura = new FireAuraCapability();
         }
         return this.playerFireAura;
     }
