@@ -1,6 +1,8 @@
 package net.h8sh.playermod.mixin;
 
 import net.h8sh.playermod.animation.CustomPlayerAnimation;
+import net.h8sh.playermod.util.KeyBinding;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -33,11 +35,6 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
     public MixinPlayerModel(ModelPart root) {
         super(root);
-    }
-
-    @Inject(at = @At("TAIL"), method = "<init>")
-    private void PlayerModel(ModelPart pRoot, boolean pSlim, CallbackInfo info) {
-        this.root = pRoot;
     }
 
     private static Optional<ModelPart> getAnyDescendantWithName(String pName) {
@@ -153,6 +150,11 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         return partdefinition.addOrReplaceChild(name, CubeListBuilder.create().texOffs(0, 0).addBox(0, 0, 0, 0, 0, 0, CubeDeformation.NONE), PartPose.ZERO);
     }
 
+    @Inject(at = @At("TAIL"), method = "<init>")
+    private void PlayerModel(ModelPart pRoot, boolean pSlim, CallbackInfo info) {
+        this.root = pRoot;
+    }
+
     protected void animateWalk(AnimationDefinition pAnimationDefinition, float pLimbSwing, float pLimbSwingAmount, float pMaxAnimationSpeed, float pAnimationScaleFactor) {
         long i = (long) (pLimbSwing * 50.0F * pMaxAnimationSpeed);
         float f = Math.min(pLimbSwingAmount * pAnimationScaleFactor, 1.0F);
@@ -176,9 +178,31 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         if (entity.isAlive()) {
             animateWalk(CustomPlayerAnimation.WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
+        if (Minecraft.getInstance().options.keyJump.isDown()) {
+            //animate(CustomPlayerAnimation.JUMP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (Minecraft.getInstance().options.keyShift.isDown()) {
+            //animate(CustomPlayerAnimation.SHIFT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (Minecraft.getInstance().options.keyAttack.isDown()) {
+            //animate(CustomPlayerAnimation.ATTACK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown()) {
+            //animate(CustomPlayerAnimation.DASH_LEFT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown()) {
+            //animate(CustomPlayerAnimation.DASH_RIGHT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown()) {
+            //animate(CustomPlayerAnimation.DASH_UP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown()) {
+            //animate(CustomPlayerAnimation.DASH_DOWN, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+
+        //HEAD ROTATION: -----------------------------------------------------------------------------------------------
 
         var head = this.body.getChild("steve_head");
-
         boolean flag = entity.getFallFlyingTicks() > 4;
         boolean flag1 = entity.isVisuallySwimming();
         head.yRot = netHeadYaw * ((float) Math.PI / 180F);

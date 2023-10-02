@@ -23,6 +23,7 @@ import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingWizardC2SPacket;
 import net.h8sh.playermod.networking.travelling.OnChangedDimensionToMansionHuntedC2SPacket;
 import net.h8sh.playermod.networking.travelling.OnChangedDimensionToWonderlandsHomeC2SPacket;
+import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -49,6 +50,15 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+
+        //Utils --------------------------------------------------------------------------------------------------------
+
+        net.messageBuilder(DashC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(DashC2SPacket::new)
+                .encoder(DashC2SPacket::toBytes)
+                .consumerMainThread(DashC2SPacket::handle)
+                .add();
+
 
         //Profession ---------------------------------------------------------------------------------------------------
 

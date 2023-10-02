@@ -15,6 +15,8 @@ import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
 import net.h8sh.playermod.gui.wizard.CrystalOverlay;
 import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
 import net.h8sh.playermod.gui.wizard.ManaOverlay;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,6 +49,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             Minecraft minecraft = Minecraft.getInstance();
+
             boolean shouldRenderHotBar = ClientEvents.getHotBar();
             var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
 
@@ -103,6 +106,10 @@ public class ClientEvents {
                 //TODO
             }
 
+            if (KeyBinding.DASH_KEY.isDown() && (Minecraft.getInstance().options.keyRight.isDown() || Minecraft.getInstance().options.keyLeft.isDown() || Minecraft.getInstance().options.keyUp.isDown() || Minecraft.getInstance().options.keyDown.isDown())) {
+                ModMessages.sendToServer(new DashC2SPacket());
+            }
+
         }
 
     }
@@ -120,6 +127,7 @@ public class ClientEvents {
             event.register(KeyBinding.INVENTORY_SWITCH_KEY);
             event.register(KeyBinding.SKILL_SCREEN_KEY);
             event.register(KeyBinding.SHOW_KEYS_KEY);
+            event.register(KeyBinding.DASH_KEY);
         }
 
         @SubscribeEvent

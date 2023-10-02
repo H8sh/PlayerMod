@@ -136,7 +136,13 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         ci.cancel();
 
         PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
-        var body =  playermodel.body.getChild("chest");
+
+        var body = playermodel.body.getChild("chest");
+        var rightArm = body.getChild("steve_right_arm_full");
+        var leftArm = body.getChild("steve_left_arm_full");
+        var rightLeg = body.getChild("steve_right_leg_full");
+        var leftLeg = body.getChild("steve_left_leg_full");
+
         if (p_117819_.isSpectator()) {
             playermodel.setAllVisible(false);
             playermodel.body.getChild("steve_head").visible = true;
@@ -150,114 +156,114 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             switch (currentProfession) {
 
                 case BASIC -> {
-                    body.getChild("steve_right_arm_full").getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm_full").getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_arm_full").getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm_full").getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_full").getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg_full").getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_leg_full").getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg_full").getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case ROGUE -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case BERSERK -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case INVOCATOR -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case FIREMETA -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case AQUAMETA -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case WIZARD -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case SPIRITUSMETA -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case PALADIN -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case WINDMETA -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
                 case DRUID -> {
-                    body.getChild("steve_right_forearm").visible = true;
-                    body.getChild("steve_right_arm").visible = true;
-                    body.getChild("steve_left_forearm").visible = true;
-                    body.getChild("steve_left_arm").visible = true;
-                    body.getChild("steve_right_leg_bottom").visible = true;
-                    body.getChild("steve_right_leg").visible = true;
-                    body.getChild("steve_left_bottom").visible = true;
-                    body.getChild("steve_left_leg").visible = true;
+                    rightArm.getChild("steve_right_forearm").visible = true;
+                    rightArm.getChild("steve_right_arm").visible = true;
+                    leftArm.getChild("steve_left_forearm").visible = true;
+                    leftArm.getChild("steve_left_arm").visible = true;
+                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
+                    rightLeg.getChild("steve_right_leg").visible = true;
+                    leftLeg.getChild("steve_left_bottom").visible = true;
+                    leftLeg.getChild("steve_left_leg").visible = true;
                 }
             }
 
