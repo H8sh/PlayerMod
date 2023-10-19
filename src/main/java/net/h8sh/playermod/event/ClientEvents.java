@@ -3,6 +3,7 @@ package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.SpellManager;
+import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
 import net.h8sh.playermod.gui.berserk.ChargeBarOverlay;
@@ -100,7 +101,7 @@ public class ClientEvents {
             }
 
             if (KeyBinding.INTERACTION_KEY.consumeClick()) {
-                //TODO
+                AnimationHandler.setSteveBackDash(false);
             }
             if (KeyBinding.RIDING_KEY.consumeClick()) {
                 //TODO

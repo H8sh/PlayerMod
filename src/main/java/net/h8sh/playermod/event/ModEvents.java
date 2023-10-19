@@ -35,8 +35,9 @@ import net.h8sh.playermod.ability.wizard.freeze.FreezeCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.laser.LaserCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.ManaCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
+import net.h8sh.playermod.animation.handler.AnimationHandler;
+import net.h8sh.playermod.animation.handler.AnimationProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
-import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.questing.QuestingProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
@@ -46,11 +47,6 @@ import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
-import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
-import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
-import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -61,7 +57,6 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 
 public class ModEvents {
 
@@ -74,6 +69,9 @@ public class ModEvents {
         public static void onAttachedCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
             if (event.getObject() instanceof Player) {
 
+                if (!event.getObject().getCapability(AnimationProvider.ANIMATION_HANDLER).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "animation"), new AnimationProvider());
+                }
                 if (!event.getObject().getCapability(ProfessionProvider.PROFESSION).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "profession"), new ProfessionProvider());
                 }
@@ -232,6 +230,11 @@ public class ModEvents {
                 // Capability saver ------------------------------------------------------------------------------------
                 event.getOriginal().reviveCaps();
 
+                event.getOriginal().getCapability(AnimationProvider.ANIMATION_HANDLER).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(AnimationProvider.ANIMATION_HANDLER).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
                 event.getOriginal().getCapability(NarratorProvider.NARRATOR).ifPresent(oldStore -> {
                     event.getEntity().getCapability(NarratorProvider.NARRATOR).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
@@ -462,22 +465,22 @@ public class ModEvents {
             }
         }
 
-        public static void setPlayerBlockPos(BlockPos blockPos) {
-            PLAYER_BLOCK_POS = blockPos;
-        }
-
         public static BlockPos getPlayerBlockPos() {
             return PLAYER_BLOCK_POS;
+        }
+
+        public static void setPlayerBlockPos(BlockPos blockPos) {
+            PLAYER_BLOCK_POS = blockPos;
         }
 
         @SubscribeEvent
         public static void onWorldTick(TickEvent.LevelTickEvent event) {
             if (event.level.isClientSide()) {
-                return;
             }
             if (event.phase == TickEvent.Phase.START) {
                 return;
             }
+            AnimationHandler.countTickAnimation();
         }
 
     }

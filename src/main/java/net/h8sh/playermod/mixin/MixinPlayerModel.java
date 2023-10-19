@@ -1,6 +1,8 @@
 package net.h8sh.playermod.mixin;
 
-import net.h8sh.playermod.animation.CustomPlayerAnimation;
+import net.h8sh.playermod.animation.animations.CustomPlayerAnimation;
+import net.h8sh.playermod.animation.ModAnimationStates;
+import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.animation.AnimationChannel;
@@ -32,6 +34,9 @@ import java.util.Optional;
 public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidModel<T> {
     private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
     private static ModelPart root;
+    private static int age = 0;
+    private static int ageEnd = 0;
+    private static boolean flag = true;
 
     public MixinPlayerModel(ModelPart root) {
         super(root);
@@ -114,33 +119,35 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 6.0F, 0.0F));
 
-        PartDefinition steve_head = body.addOrReplaceChild("steve_head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, 0.0F));
+        PartDefinition steve_body = body.addOrReplaceChild("steve_body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition chest = body.addOrReplaceChild("chest", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -6.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition chest = steve_body.addOrReplaceChild("chest", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -6.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition steve_right_leg_full = chest.addOrReplaceChild("steve_right_leg_full", CubeListBuilder.create(), PartPose.offset(-2.0F, 6.0F, 0.0F));
+        PartDefinition steve_right_leg_full = steve_body.addOrReplaceChild("steve_right_leg_full", CubeListBuilder.create(), PartPose.offset(-2.0F, 6.0F, 0.0F));
 
         PartDefinition steve_right_leg_bottom = steve_right_leg_full.addOrReplaceChild("steve_right_leg_bottom", CubeListBuilder.create().texOffs(32, 0).addBox(-2.0F, 0.0F, -1.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -1.0F));
 
         PartDefinition steve_right_leg = steve_right_leg_full.addOrReplaceChild("steve_right_leg", CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition steve_left_leg_full = chest.addOrReplaceChild("steve_left_leg_full", CubeListBuilder.create(), PartPose.offset(2.0F, 6.0F, 0.0F));
+        PartDefinition steve_left_leg_full = steve_body.addOrReplaceChild("steve_left_leg_full", CubeListBuilder.create(), PartPose.offset(2.0F, 6.0F, 0.0F));
 
         PartDefinition steve_left_bottom = steve_left_leg_full.addOrReplaceChild("steve_left_bottom", CubeListBuilder.create().texOffs(24, 26).addBox(-2.0F, 0.0F, -1.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -1.0F));
 
         PartDefinition steve_left_leg = steve_left_leg_full.addOrReplaceChild("steve_left_leg", CubeListBuilder.create().texOffs(24, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition steve_right_arm_full = chest.addOrReplaceChild("steve_right_arm_full", CubeListBuilder.create(), PartPose.offset(-4.0F, -4.0F, 0.0F));
+        PartDefinition steve_right_arm_full = steve_body.addOrReplaceChild("steve_right_arm_full", CubeListBuilder.create(), PartPose.offset(-4.0F, -4.0F, 0.0F));
 
         PartDefinition steve_right_arm = steve_right_arm_full.addOrReplaceChild("steve_right_arm", CubeListBuilder.create().texOffs(32, 36).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition steve_right_forearm = steve_right_arm_full.addOrReplaceChild("steve_right_forearm", CubeListBuilder.create().texOffs(40, 20).addBox(-2.0F, 1.0F, -3.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 3.0F, 1.0F));
 
-        PartDefinition steve_left_arm_full = chest.addOrReplaceChild("steve_left_arm_full", CubeListBuilder.create(), PartPose.offset(4.0F, -4.0F, 0.0F));
+        PartDefinition steve_left_arm_full = steve_body.addOrReplaceChild("steve_left_arm_full", CubeListBuilder.create(), PartPose.offset(4.0F, -4.0F, 0.0F));
 
         PartDefinition steve_left_forearm = steve_left_arm_full.addOrReplaceChild("steve_left_forearm", CubeListBuilder.create().texOffs(16, 36).addBox(-2.0F, 0.0F, -3.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 4.0F, 1.0F));
 
         PartDefinition steve_left_arm = steve_left_arm_full.addOrReplaceChild("steve_left_arm", CubeListBuilder.create().texOffs(36, 10).addBox(0.0F, -3.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
+
+        PartDefinition steve_head = steve_body.addOrReplaceChild("steve_head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, 0.0F));
 
 
         return meshDefinition;
@@ -175,8 +182,11 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         ci.cancel();
 
         root().getAllParts().forEach(ModelPart::resetPose);
-        if (entity.isAlive()) {
-            animateWalk(CustomPlayerAnimation.WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+
+        animate(ModAnimationStates.IDLE, CustomPlayerAnimation.DASH_BACK, AnimationHandler.getCountTickAnimation(), 0.3F);
+
+        if (entity.isDeadOrDying()) {
+            //animate(CustomPlayerAnimation.DEAD, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
         if (Minecraft.getInstance().options.keyJump.isDown()) {
             //animate(CustomPlayerAnimation.JUMP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
@@ -197,12 +207,18 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
             //animate(CustomPlayerAnimation.DASH_UP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
         if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown()) {
-            //animate(CustomPlayerAnimation.DASH_DOWN, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+            //animate(null,CustomPlayerAnimation.DASH_BACK, ageInTicks, 1.0F);
+        }
+        if (entity.fallDistance != 0) {
+            //animate(CustomPlayerAnimation.FALL, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveBackDash()) {
+            animateWalk(CustomPlayerAnimation.WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
 
         //HEAD ROTATION: -----------------------------------------------------------------------------------------------
 
-        var head = this.body.getChild("steve_head");
+        var head = this.body.getChild("steve_body").getChild("steve_head");
         boolean flag = entity.getFallFlyingTicks() > 4;
         boolean flag1 = entity.isVisuallySwimming();
         head.yRot = netHeadYaw * ((float) Math.PI / 180F);

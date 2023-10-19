@@ -137,7 +137,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
 
-        var body = playermodel.body.getChild("chest");
+        var body = playermodel.body.getChild("steve_body");
+        var chest = body.getChild("chest");
         var rightArm = body.getChild("steve_right_arm_full");
         var leftArm = body.getChild("steve_left_arm_full");
         var rightLeg = body.getChild("steve_right_leg_full");
@@ -145,7 +146,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         if (p_117819_.isSpectator()) {
             playermodel.setAllVisible(false);
-            playermodel.body.getChild("steve_head").visible = true;
+            body.getChild("steve_head").visible = true;
             playermodel.hat.visible = true;
         } else {
 
@@ -156,6 +157,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             switch (currentProfession) {
 
                 case BASIC -> {
+                    chest.visible = true;
                     rightArm.getChild("steve_right_forearm").visible = true;
                     rightArm.getChild("steve_right_arm").visible = true;
                     leftArm.getChild("steve_left_forearm").visible = true;
