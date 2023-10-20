@@ -6,6 +6,7 @@ import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.narrator.*;
 import net.h8sh.playermod.sound.ModSounds;
+import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -206,7 +207,7 @@ public class NarratorEvents {
 
     @SubscribeEvent
     public static void onPlayerSpawningForFirstTime(TickEvent.PlayerTickEvent event) {
-        if (event.side == LogicalSide.SERVER && event.player != null) {
+        if (event.side == LogicalSide.CLIENT && event.player != null && Minecraft.getInstance().player != null) {
             event.player.getCapability(NarratorProvider.NARRATOR).ifPresent(narrator -> {
                 if (event.player.level().dimension() == Level.OVERWORLD) {
                     if (!narrator.asAlreadySpawn() && shouldCheckForSpawn()) {

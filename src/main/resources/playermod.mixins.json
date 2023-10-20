@@ -9,7 +9,12 @@
     "MixinFoodData",
     "MixinPlayer",
     "MixinItem",
-    "MixinBlock"
+    "MixinBlock",
+    "MixinLivingEntityRenderer",
+    "MixinMinecraft",
+    "MixinClientPacketListener",
+    "MixinLocalPlayer",
+    "MixinLivingEntity"
   ],
   "injectors": {
     "defaultRequire": 1

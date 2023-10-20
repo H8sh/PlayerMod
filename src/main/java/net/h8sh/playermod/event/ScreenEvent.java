@@ -5,6 +5,7 @@ import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
 import net.h8sh.playermod.screen.profession.PaladinBookScreen;
 import net.h8sh.playermod.sound.ModMusics;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.client.particle.LavaParticle;
@@ -56,7 +57,6 @@ public class ScreenEvent {
                 isEndPortalCinematicScreenOpen = false;
                 shouldOpenEndPortalCinematicScreen = false;
             }
-
             if (shouldOpenPaladinBookScreen) {
                 Minecraft.getInstance().setScreen(new PaladinBookScreen());
                 closePaladinBookScreen();

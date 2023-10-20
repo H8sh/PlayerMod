@@ -1,7 +1,8 @@
 package net.h8sh.playermod.mixin;
 
-import net.h8sh.playermod.animation.animations.CustomPlayerAnimation;
 import net.h8sh.playermod.animation.ModAnimationStates;
+import net.h8sh.playermod.animation.animations.AnimationManager;
+import net.h8sh.playermod.animation.animations.CustomPlayerAnimation;
 import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -175,7 +176,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         });
     }
 
-    @Inject(method = "Lnet/minecraft/client/model/PlayerModel;setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
+    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
             at = @At("HEAD"), cancellable = true)
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 
@@ -183,7 +184,18 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         root().getAllParts().forEach(ModelPart::resetPose);
 
-        animate(ModAnimationStates.IDLE, CustomPlayerAnimation.DASH_BACK, AnimationHandler.getCountTickAnimation(), 0.3F);
+        animate(ModAnimationStates.STEVE_DEATH, CustomPlayerAnimation.STEVE_DEATH, ageInTicks, AnimationManager.STEVE_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.STEVE_IDLE_ANIMATION_SPEED);
+    /*    animate(ModAnimationStates.STEVE_JUMP, CustomPlayerAnimation.JUMP, ageInTicks, AnimationManager.STEVE_JUMP_ANIMATION_SPEED);
+        animate(ModAnimationStates.STEVE_FRONT_DASH, CustomPlayerAnimation.FRONT_DASH, ageInTicks, AnimationManager.STEVE_FRONT_DASH_ANIMATION_SPEED);
+        animate(ModAnimationStates.STEVE_LEFT_DASH, CustomPlayerAnimation.LEFT_DASH, ageInTicks, AnimationManager.STEVE_LEFT_DASH_ANIMATION_SPEED);
+        animate(ModAnimationStates.STEVE_RIGHT_DASH, CustomPlayerAnimation.RIGHT_DASH, ageInTicks, AnimationManager.STEVE_RIGHT_DASH_SPEED);
+
+        animate(ModAnimationStates.STEVE_ATTACK, CustomPlayerAnimation.ATTACK, ageInTicks, AnimationManager.STEVE_ATTACK_ANIMATION_SPEED);
+        animate(ModAnimationStates.STEVE_SHIFT_DOWN, CustomPlayerAnimation.SHIFT_DOWN, ageInTicks, AnimationManager.STEVE_SHIFT_DOWN_ANIMATION_SPEED);
+        animate(ModAnimationStates.STEVE_FALL, CustomPlayerAnimation.FALL, ageInTicks, AnimationManager.STEVE_FALL_ANIMATION_SPEED);*/
+        animate(ModAnimationStates.STEVE_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_BACK_DASH_ANIMATION_SPEED);
 
         if (entity.isDeadOrDying()) {
             //animate(CustomPlayerAnimation.DEAD, limbSwing, limbSwingAmount, 1.5F, 2.5F);
@@ -212,27 +224,29 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         if (entity.fallDistance != 0) {
             //animate(CustomPlayerAnimation.FALL, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
-        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveBackDash()) {
-            animateWalk(CustomPlayerAnimation.WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        if (entity.isAlive() && entity.walkAnimation.isMoving()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
 
         //HEAD ROTATION: -----------------------------------------------------------------------------------------------
 
-        var head = this.body.getChild("steve_body").getChild("steve_head");
-        boolean flag = entity.getFallFlyingTicks() > 4;
-        boolean flag1 = entity.isVisuallySwimming();
-        head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-        if (flag) {
-            head.xRot = (-(float) Math.PI / 4F);
-        } else if (this.swimAmount > 0.0F) {
-            if (flag1) {
-                head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, (-(float) Math.PI / 4F));
-            } else {
-                head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, headPitch * ((float) Math.PI / 180F));
-            }
-        } else {
-            head.xRot = headPitch * ((float) Math.PI / 180F);
-        }
+       if (entity.isAlive()) {
+           var head = this.body.getChild("steve_body").getChild("steve_head");
+           boolean flag = entity.getFallFlyingTicks() > 4;
+           boolean flag1 = entity.isVisuallySwimming();
+           head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+           if (flag) {
+               head.xRot = (-(float) Math.PI / 4F);
+           } else if (this.swimAmount > 0.0F) {
+               if (flag1) {
+                   head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, (-(float) Math.PI / 4F));
+               } else {
+                   head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, headPitch * ((float) Math.PI / 180F));
+               }
+           } else {
+               head.xRot = headPitch * ((float) Math.PI / 180F);
+           }
+       }
 
     }
 

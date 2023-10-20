@@ -101,7 +101,7 @@ public class ClientEvents {
             }
 
             if (KeyBinding.INTERACTION_KEY.consumeClick()) {
-                AnimationHandler.setSteveBackDash(false);
+                minecraft.player.respawn();
             }
             if (KeyBinding.RIDING_KEY.consumeClick()) {
                 //TODO

@@ -126,6 +126,16 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     @Shadow
     protected abstract void renderHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm, ModelPart pRendererArmwear);
 
+    @Inject(
+            method = {"setupRotations(Lnet/minecraft/client/player/AbstractClientPlayer;Lcom/mojang/blaze3d/vertex/PoseStack;FFF)V"},
+            at = {@At("HEAD")},
+            cancellable = true
+    )
+    protected void setupRotations(AbstractClientPlayer pEntityLiving, PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks, CallbackInfo ci) {
+        if (pEntityLiving.isDeadOrDying()) {
+            ci.cancel();
+        }
+    }
 
     @Inject(
             method = {"setModelProperties"},
@@ -321,16 +331,6 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
 
     }
-
-    // Riding ------------------------------------------------------------------------------------------------------
-
-    //TODO: add textures to asset folder
-
-        /*var currentMount = Riding.getRiding();
-
-        cir.setReturnValue(Riding.getRidingTexture(currentMount))
-
-        }*/
 
 
 }

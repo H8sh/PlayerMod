@@ -60,6 +60,10 @@ public class SpellBarOverlay {
             itemStack = new ItemStack(ModItems.SPIRITUSMETA_BOOK.get());
             WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/spiritusmeta.png");
         }
+        if (currentProfession == Profession.Professions.BASIC) {
+            itemStack = new ItemStack(ModItems.BASIC_BOOK.get());
+            WIDGETS_LOCATION = new ResourceLocation(PlayerMod.MODID, "textures/gui/spell_bar/basic.png");
+        }
 
 
         int l = 1;
