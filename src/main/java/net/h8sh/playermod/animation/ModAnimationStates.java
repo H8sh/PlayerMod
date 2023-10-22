@@ -13,4 +13,5 @@ public class ModAnimationStates {
     public static final AnimationState STEVE_SHIFT_DOWN = new AnimationState();
     public static final AnimationState STEVE_ATTACK = new AnimationState();
     public static final AnimationState STEVE_FALL = new AnimationState();
+    public static final AnimationState STEVE_IDLE_SHIFT_DOWN = new AnimationState();
 }

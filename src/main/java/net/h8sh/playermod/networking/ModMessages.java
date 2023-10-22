@@ -1,6 +1,9 @@
 package net.h8sh.playermod.networking;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.networking.animation.SteveAttackC2SPacket;
+import net.h8sh.playermod.networking.animation.SteveShiftDownC2SPacket;
+import net.h8sh.playermod.networking.animation.SyncDeltaMovementProgressS2CPacket;
 import net.h8sh.playermod.networking.classes.berserk.charge.ChargeC2SPacket;
 import net.h8sh.playermod.networking.classes.berserk.SyncRageBarProgressS2CPacket;
 import net.h8sh.playermod.networking.classes.berserk.healthsacrifice.HealthSacrificeC2SPacket;
@@ -50,6 +53,25 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+
+        //Animations ---------------------------------------------------------------------------------------------------
+        net.messageBuilder(SteveAttackC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SteveAttackC2SPacket::new)
+                .encoder(SteveAttackC2SPacket::toBytes)
+                .consumerMainThread(SteveAttackC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(SteveShiftDownC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SteveShiftDownC2SPacket::new)
+                .encoder(SteveShiftDownC2SPacket::toBytes)
+                .consumerMainThread(SteveShiftDownC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(SyncDeltaMovementProgressS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncDeltaMovementProgressS2CPacket::new)
+                .encoder(SyncDeltaMovementProgressS2CPacket::toBytes)
+                .consumerMainThread(SyncDeltaMovementProgressS2CPacket::handle)
+                .add();
 
         //Utils --------------------------------------------------------------------------------------------------------
 

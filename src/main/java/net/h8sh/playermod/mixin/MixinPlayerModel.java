@@ -4,22 +4,24 @@ import net.h8sh.playermod.animation.ModAnimationStates;
 import net.h8sh.playermod.animation.animations.AnimationManager;
 import net.h8sh.playermod.animation.animations.CustomPlayerAnimation;
 import net.h8sh.playermod.animation.handler.AnimationHandler;
-import net.h8sh.playermod.util.KeyBinding;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.RavagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.RavagerRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.behavior.RamTarget;
+import net.minecraft.world.entity.monster.Ravager;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,11 +35,10 @@ import java.util.Optional;
 
 @Mixin(PlayerModel.class)
 public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidModel<T> {
+
     private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
     private static ModelPart root;
-    private static int age = 0;
-    private static int ageEnd = 0;
-    private static boolean flag = true;
+    int deathTick = 0;
 
     public MixinPlayerModel(ModelPart root) {
         super(root);
@@ -182,71 +183,59 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         ci.cancel();
 
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
         root().getAllParts().forEach(ModelPart::resetPose);
 
-        animate(ModAnimationStates.STEVE_DEATH, CustomPlayerAnimation.STEVE_DEATH, ageInTicks, AnimationManager.STEVE_DEATH_ANIMATION_SPEED);
-
         animate(ModAnimationStates.STEVE_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.STEVE_IDLE_ANIMATION_SPEED);
-    /*    animate(ModAnimationStates.STEVE_JUMP, CustomPlayerAnimation.JUMP, ageInTicks, AnimationManager.STEVE_JUMP_ANIMATION_SPEED);
-        animate(ModAnimationStates.STEVE_FRONT_DASH, CustomPlayerAnimation.FRONT_DASH, ageInTicks, AnimationManager.STEVE_FRONT_DASH_ANIMATION_SPEED);
-        animate(ModAnimationStates.STEVE_LEFT_DASH, CustomPlayerAnimation.LEFT_DASH, ageInTicks, AnimationManager.STEVE_LEFT_DASH_ANIMATION_SPEED);
-        animate(ModAnimationStates.STEVE_RIGHT_DASH, CustomPlayerAnimation.RIGHT_DASH, ageInTicks, AnimationManager.STEVE_RIGHT_DASH_SPEED);
 
-        animate(ModAnimationStates.STEVE_ATTACK, CustomPlayerAnimation.ATTACK, ageInTicks, AnimationManager.STEVE_ATTACK_ANIMATION_SPEED);
-        animate(ModAnimationStates.STEVE_SHIFT_DOWN, CustomPlayerAnimation.SHIFT_DOWN, ageInTicks, AnimationManager.STEVE_SHIFT_DOWN_ANIMATION_SPEED);
-        animate(ModAnimationStates.STEVE_FALL, CustomPlayerAnimation.FALL, ageInTicks, AnimationManager.STEVE_FALL_ANIMATION_SPEED);*/
+        animate(ModAnimationStates.STEVE_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.STEVE_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_JUMP_ANIMATION_SPEED);
+
         animate(ModAnimationStates.STEVE_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_BACK_DASH_ANIMATION_SPEED);
 
-        if (entity.isDeadOrDying()) {
-            //animate(CustomPlayerAnimation.DEAD, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        animate(ModAnimationStates.STEVE_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.STEVE_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveAttack() && AnimationHandler.getSteveShiftDown() && !AnimationHandler.getSteveBackDash() && !AnimationHandler.getSteveRightDash() && !AnimationHandler.getSteveFrontDash() && !AnimationHandler.getSteveLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
         }
-        if (Minecraft.getInstance().options.keyJump.isDown()) {
-            //animate(CustomPlayerAnimation.JUMP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (Minecraft.getInstance().options.keyShift.isDown()) {
-            //animate(CustomPlayerAnimation.SHIFT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (Minecraft.getInstance().options.keyAttack.isDown()) {
-            //animate(CustomPlayerAnimation.ATTACK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown()) {
-            //animate(CustomPlayerAnimation.DASH_LEFT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown()) {
-            //animate(CustomPlayerAnimation.DASH_RIGHT, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown()) {
-            //animate(CustomPlayerAnimation.DASH_UP, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown()) {
-            //animate(null,CustomPlayerAnimation.DASH_BACK, ageInTicks, 1.0F);
-        }
-        if (entity.fallDistance != 0) {
-            //animate(CustomPlayerAnimation.FALL, limbSwing, limbSwingAmount, 1.5F, 2.5F);
-        }
-        if (entity.isAlive() && entity.walkAnimation.isMoving()) {
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveAttack() && !AnimationHandler.getSteveShiftDown() && !AnimationHandler.getSteveIdleShiftDown() && !AnimationHandler.getSteveJump() && !AnimationHandler.getSteveBackDash() && !AnimationHandler.getSteveRightDash() && !AnimationHandler.getSteveFrontDash() && !AnimationHandler.getSteveLeftDash()) {
             animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
 
+
         //HEAD ROTATION: -----------------------------------------------------------------------------------------------
 
-       if (entity.isAlive()) {
-           var head = this.body.getChild("steve_body").getChild("steve_head");
-           boolean flag = entity.getFallFlyingTicks() > 4;
-           boolean flag1 = entity.isVisuallySwimming();
-           head.yRot = netHeadYaw * ((float) Math.PI / 180F);
-           if (flag) {
-               head.xRot = (-(float) Math.PI / 4F);
-           } else if (this.swimAmount > 0.0F) {
-               if (flag1) {
-                   head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, (-(float) Math.PI / 4F));
-               } else {
-                   head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, headPitch * ((float) Math.PI / 180F));
-               }
-           } else {
-               head.xRot = headPitch * ((float) Math.PI / 180F);
-           }
-       }
+        if (entity.isAlive() && !AnimationHandler.getSteveFrontDash()) {
+            var head = this.body.getChild("steve_body").getChild("steve_head");
+            boolean flag = entity.getFallFlyingTicks() > 4;
+            boolean flag1 = entity.isVisuallySwimming();
+            head.yRot = netHeadYaw * ((float) Math.PI / 180F);
+            if (flag) {
+                head.xRot = (-(float) Math.PI / 4F);
+            } else if (this.swimAmount > 0.0F) {
+                if (flag1) {
+                    head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, (-(float) Math.PI / 4F));
+                } else {
+                    head.xRot = this.rotlerpRad(this.swimAmount, head.xRot, headPitch * ((float) Math.PI / 180F));
+                }
+            } else {
+                head.xRot = headPitch * ((float) Math.PI / 180F);
+            }
+        }
 
     }
 

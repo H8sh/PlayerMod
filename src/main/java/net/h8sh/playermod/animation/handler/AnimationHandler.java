@@ -12,10 +12,9 @@ public class AnimationHandler {
     public static boolean STEVE_FRONT_DASH = false;
     public static boolean STEVE_LEFT_DASH = false;
     public static boolean STEVE_RIGHT_DASH = false;
-    public static boolean STEVE_DEATH = false;
     public static boolean STEVE_JUMP = false;
-    public static boolean STEVE_FALL = false;
     public static boolean STEVE_SHIFT_DOWN = false;
+    public static boolean STEVE_IDLE_SHIFT_DOWN = false;
     public static boolean STEVE_ATTACK = false;
 
     public static void setAnimationLongInTick(int animationLongInTick) {
@@ -34,11 +33,8 @@ public class AnimationHandler {
             setSteveFrontDash(false);
             setSteveLeftDash(false);
             setSteveRightDash(false);
-            setSteveDeath(false);
             setSteveJump(false);
-            setSteveFall(false);
             setSteveAttack(false);
-            setSteveShiftDown(false);
         }
     }
 
@@ -74,14 +70,6 @@ public class AnimationHandler {
         STEVE_LEFT_DASH = b;
     }
 
-    public static boolean getSteveDeath() {
-        return STEVE_DEATH;
-    }
-
-    public static void setSteveDeath(boolean b) {
-        STEVE_DEATH = b;
-    }
-
     public static boolean getSteveJump() {
         return STEVE_JUMP;
     }
@@ -106,12 +94,12 @@ public class AnimationHandler {
         STEVE_ATTACK = b;
     }
 
-    public static boolean getSteveFall() {
-        return STEVE_FALL;
+    public static boolean getSteveIdleShiftDown() {
+        return STEVE_IDLE_SHIFT_DOWN;
     }
 
-    public static void setSteveFall(boolean b) {
-        STEVE_FALL = b;
+    public static void setSteveIdleShiftDown(boolean b) {
+        STEVE_IDLE_SHIFT_DOWN = b;
     }
 
     public void copyFrom(AnimationHandler source) {
@@ -120,10 +108,9 @@ public class AnimationHandler {
         STEVE_RIGHT_DASH = source.STEVE_RIGHT_DASH;
         STEVE_LEFT_DASH = source.STEVE_LEFT_DASH;
         STEVE_JUMP = source.STEVE_JUMP;
-        STEVE_DEATH = source.STEVE_DEATH;
         STEVE_SHIFT_DOWN = source.STEVE_SHIFT_DOWN;
         STEVE_ATTACK = source.STEVE_ATTACK;
-        STEVE_FALL = source.STEVE_FALL;
+        STEVE_IDLE_SHIFT_DOWN = source.STEVE_IDLE_SHIFT_DOWN;
     }
 
     public void savedNBTData(CompoundTag compoundTag) {
@@ -131,11 +118,10 @@ public class AnimationHandler {
         compoundTag.putBoolean("steve_front_dash", STEVE_FRONT_DASH);
         compoundTag.putBoolean("steve_left_dash", STEVE_LEFT_DASH);
         compoundTag.putBoolean("steve_right_dash", STEVE_RIGHT_DASH);
-        compoundTag.putBoolean("steve_fall", STEVE_FALL);
-        compoundTag.putBoolean("steve_death", STEVE_DEATH);
         compoundTag.putBoolean("steve_jump", STEVE_JUMP);
         compoundTag.putBoolean("steve_attack", STEVE_ATTACK);
         compoundTag.putBoolean("steve_shift_down", STEVE_SHIFT_DOWN);
+        compoundTag.putBoolean("steve_idle_shift_down", STEVE_IDLE_SHIFT_DOWN);
     }
 
     public void loadNBTData(CompoundTag compoundTag) {
@@ -143,11 +129,10 @@ public class AnimationHandler {
         STEVE_FRONT_DASH = compoundTag.getBoolean("steve_front_dash");
         STEVE_LEFT_DASH = compoundTag.getBoolean("steve_left_dash");
         STEVE_RIGHT_DASH = compoundTag.getBoolean("steve_right_dash");
-        STEVE_FALL = compoundTag.getBoolean("steve_fall");
-        STEVE_DEATH = compoundTag.getBoolean("steve_death");
         STEVE_JUMP = compoundTag.getBoolean("steve_jump");
         STEVE_ATTACK = compoundTag.getBoolean("steve_attack");
         STEVE_SHIFT_DOWN = compoundTag.getBoolean("steve_shift_down");
+        STEVE_IDLE_SHIFT_DOWN = compoundTag.getBoolean("steve_idle_shift_down");
     }
 
 }

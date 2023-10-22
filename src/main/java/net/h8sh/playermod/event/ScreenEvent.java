@@ -1,16 +1,13 @@
 package net.h8sh.playermod.event;
 
-import net.h8sh.playermod.screen.pnj.PnjBlockScreen;
 import net.h8sh.playermod.screen.cinematic.EndPortalCinematic;
+import net.h8sh.playermod.screen.pnj.PnjBlockScreen;
 import net.h8sh.playermod.screen.profession.PaladinBookScreen;
 import net.h8sh.playermod.sound.ModMusics;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WinScreen;
-import net.minecraft.client.particle.LavaParticle;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.LavaFluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

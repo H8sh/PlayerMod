@@ -3,6 +3,7 @@ package net.h8sh.playermod.event;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.SpellManager;
+import net.h8sh.playermod.animation.animations.AnimationManager;
 import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
@@ -20,6 +21,7 @@ import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -64,7 +66,7 @@ public class ClientEvents {
             }
             if (!shouldRenderHotBar && minecraft.options.keyInventory.consumeClick()) {
                 /*
-                 * We don't want to display the name of items and blocks if in spell bar, but this must be seen if inventory is open
+                 * We don't want to display the name of items and blocks if in spell bar mode, but this must be seen if inventory is open
                  */
                 minecraft.options.keyInventory.setDown(false);
             }
@@ -107,10 +109,19 @@ public class ClientEvents {
                 //TODO
             }
 
-            if (KeyBinding.DASH_KEY.isDown() && (Minecraft.getInstance().options.keyRight.isDown() || Minecraft.getInstance().options.keyLeft.isDown() || Minecraft.getInstance().options.keyUp.isDown() || Minecraft.getInstance().options.keyDown.isDown())) {
+            if (KeyBinding.DASH_KEY.isDown() && (Minecraft.getInstance().options.keyRight.isDown() || Minecraft.getInstance().options.keyLeft.isDown() || Minecraft.getInstance().options.keyUp.isDown() || Minecraft.getInstance().options.keyDown.isDown()) && minecraft.player != null && !minecraft.player.isDeadOrDying()) {
                 ModMessages.sendToServer(new DashC2SPacket());
             }
 
+            if (Minecraft.getInstance().options.keyShift.isDown() || Minecraft.getInstance().options.keyDown.consumeClick()) {
+                AnimationManager.STEVE_SHIFT_DOWN_FLAG = 0;
+            }
+            if (!(Minecraft.getInstance().options.keyShift.isDown() || Minecraft.getInstance().options.keyDown.consumeClick())) {
+                AnimationManager.STEVE_SHIFT_DOWN_FLAG = 1;
+            }
+            if (Minecraft.getInstance().options.keyJump.consumeClick() && minecraft.player != null && !minecraft.player.isDeadOrDying()) {
+                AnimationHandler.setSteveJump(true);
+            }
         }
 
     }

@@ -205,7 +205,7 @@ public class NarratorEvents {
         sendEmptyMessage = false;
     }
 
-    @SubscribeEvent
+  /*  @SubscribeEvent
     public static void onPlayerSpawningForFirstTime(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.CLIENT && event.player != null && Minecraft.getInstance().player != null) {
             event.player.getCapability(NarratorProvider.NARRATOR).ifPresent(narrator -> {
@@ -229,6 +229,6 @@ public class NarratorEvents {
                 }
             });
         }
-    }
+    }*/
 
 }

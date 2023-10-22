@@ -14,7 +14,12 @@
     "MixinMinecraft",
     "MixinClientPacketListener",
     "MixinLocalPlayer",
-    "MixinLivingEntity"
+    "MixinLivingEntity",
+    "MixinAbstractClientPlayer",
+    "MixinInventoryMenu",
+    "MixinInventoryScreen",
+    "MixinRecipeBookComponent",
+    "MixinRecipeBookPage"
   ],
   "injectors": {
     "defaultRequire": 1

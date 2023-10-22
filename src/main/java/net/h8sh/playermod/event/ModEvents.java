@@ -47,6 +47,7 @@ import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
+import net.minecraft.client.telemetry.TelemetryProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -63,8 +64,6 @@ public class ModEvents {
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
     public static class ForgeEvents {
-
-        public static BlockPos PLAYER_BLOCK_POS;
 
         @SubscribeEvent
         public static void onAttachedCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -463,31 +462,6 @@ public class ModEvents {
                 });
 
                 event.getOriginal().invalidateCaps();
-            }
-        }
-
-        public static BlockPos getPlayerBlockPos() {
-            return PLAYER_BLOCK_POS;
-        }
-
-        public static void setPlayerBlockPos(BlockPos blockPos) {
-            PLAYER_BLOCK_POS = blockPos;
-        }
-
-        @SubscribeEvent
-        public static void onWorldTick(TickEvent.LevelTickEvent event) {
-            if (event.level.isClientSide()) {
-            }
-            if (event.phase == TickEvent.Phase.START) {
-                return;
-            }
-            AnimationHandler.countTickAnimation();
-        }
-
-        @SubscribeEvent
-        public static void onPlayerDeath(LivingDeathEvent event) {
-            if (event.getEntity() instanceof Player) {
-                AnimationHandler.setSteveDeath(true);
             }
         }
 

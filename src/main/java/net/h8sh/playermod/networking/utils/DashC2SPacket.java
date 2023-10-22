@@ -1,5 +1,8 @@
 package net.h8sh.playermod.networking.utils;
 
+import net.h8sh.playermod.animation.handler.AnimationHandler;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.animation.SyncDeltaMovementProgressS2CPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
@@ -19,75 +22,6 @@ public class DashC2SPacket {
 
     }
 
-    public static void teleport(Player player, Direction motionDirection, String direction) {
-        int toBeTeleported = 2;
-
-        if (direction == "left") {
-            switch (motionDirection) {
-                case WEST:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case EAST:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case NORTH:
-                    player.teleportTo(player.getX(), player.getY(), player.getZ() - toBeTeleported);
-                    break;
-                case SOUTH:
-                    player.teleportTo(player.getX(), player.getY(), player.getZ() + toBeTeleported);
-                    break;
-            }
-        }
-        if (direction == "right") {
-            switch (motionDirection) {
-                case WEST:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case EAST:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case NORTH:
-                    player.teleportTo(player.getX(), player.getY(), player.getZ() + toBeTeleported);
-                    break;
-                case SOUTH:
-                    player.teleportTo(player.getX(), player.getY(), player.getZ() - toBeTeleported);
-                    break;
-            }
-        }
-        if (direction == "up") {
-            switch (motionDirection) {
-                case WEST:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ() - toBeTeleported);
-                    break;
-                case EAST:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ() + toBeTeleported);
-                    break;
-                case NORTH:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case SOUTH:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ());
-                    break;
-            }
-        }
-        if (direction == "down") {
-            switch (motionDirection) {
-                case WEST:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ() - toBeTeleported);
-                    break;
-                case EAST:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ() + toBeTeleported);
-                    break;
-                case NORTH:
-                    player.teleportTo(player.getX() - toBeTeleported, player.getY(), player.getZ());
-                    break;
-                case SOUTH:
-                    player.teleportTo(player.getX() + toBeTeleported, player.getY(), player.getZ());
-                    break;
-            }
-        }
-    }
-
     public void toBytes(FriendlyByteBuf byteBuf) {
 
     }
@@ -99,18 +33,22 @@ public class DashC2SPacket {
 
             ServerPlayer player = context.getSender();
 
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown()) {
-                teleport(player, player.getMotionDirection(), "right");
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown() && !AnimationHandler.getSteveRightDash()) {
+                ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(0), player);
+                AnimationHandler.setSteveRightDash(true);
 
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown()) {
-                teleport(player, player.getMotionDirection(), "left");
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown() && !AnimationHandler.getSteveLeftDash()) {
+                ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(1), player);
+                AnimationHandler.setSteveLeftDash(true);
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown()) {
-                teleport(player, player.getMotionDirection(), "up");
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown() && !AnimationHandler.getSteveFrontDash()) {
+                ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(2), player);
+                AnimationHandler.setSteveFrontDash(true);
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown()) {
-                teleport(player, player.getMotionDirection(), "down");
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown() && !AnimationHandler.getSteveBackDash()) {
+                ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(3), player);
+                AnimationHandler.setSteveBackDash(true);
             }
         });
 
