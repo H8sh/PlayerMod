@@ -13,6 +13,7 @@ import net.h8sh.playermod.gui.profession.ArrowOverlay;
 import net.h8sh.playermod.gui.profession.NarratorOverlay;
 import net.h8sh.playermod.gui.profession.ReputationOverlay;
 import net.h8sh.playermod.gui.profession.SpellBarOverlay;
+import net.h8sh.playermod.gui.rogue.DoubleBarOverlay;
 import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
 import net.h8sh.playermod.gui.wizard.CrystalOverlay;
 import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
@@ -26,6 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -48,7 +50,7 @@ public class ClientEvents {
 
     @Mod.EventBusSubscriber(modid = PlayerMod.MODID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
-
+        
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             Minecraft minecraft = Minecraft.getInstance();
@@ -113,6 +115,10 @@ public class ClientEvents {
                 ModMessages.sendToServer(new DashC2SPacket());
             }
 
+            if (minecraft.player.isDeadOrDying() && minecraft.options.keyShift.consumeClick()) {
+                minecraft.options.keyShift.setDown(false);
+            }
+
             if (Minecraft.getInstance().options.keyShift.isDown() || Minecraft.getInstance().options.keyDown.consumeClick()) {
                 AnimationManager.STEVE_SHIFT_DOWN_FLAG = 0;
             }
@@ -154,6 +160,7 @@ public class ClientEvents {
             event.registerAboveAll("aoe_progress_bar", AoEBarOverlay.HUD_AOE_BAR_PROGRESS);
             event.registerAboveAll("charge_progress_bar", ChargeBarOverlay.HUD_CHARGE_BAR_PROGRESS);
             event.registerAboveAll("rage_progress_bar", RageBarOverlay.HUD_RAGE_BAR_PROGRESS);
+            event.registerAboveAll("double_progress_bar", DoubleBarOverlay.HUD_DOUBLE_BAR_PROGRESS);
         }
 
     }

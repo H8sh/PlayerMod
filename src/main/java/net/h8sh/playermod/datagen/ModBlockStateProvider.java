@@ -17,6 +17,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
 
         blockWithItem(ModBlocks.AOE_MARKER_BLOCK);
+        blockWithItem(ModBlocks.TARGET_MARK_BLOCK);
         blockWithItem(ModBlocks.AOE_BLOCK);
         blockWithItem(ModBlocks.DAMAGE_SPELL_BLOCK);
     }

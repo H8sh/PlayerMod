@@ -11,6 +11,9 @@ import net.h8sh.playermod.networking.classes.berserk.rage.RageC2SPacket;
 import net.h8sh.playermod.networking.classes.berserk.slam.SlamC2SPacket;
 import net.h8sh.playermod.networking.classes.druid.firemeta.damagespell.DamageSpellC2SPacket;
 import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.FrizzC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkCastC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkMarkerC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.teleportation.TeleportationC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
@@ -328,6 +331,24 @@ public class ModMessages {
                 .decoder(TeleportationC2SPacket::new)
                 .encoder(TeleportationC2SPacket::toBytes)
                 .consumerMainThread(TeleportationC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(TargetMarkMarkerC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(TargetMarkMarkerC2SPacket::new)
+                .encoder(TargetMarkMarkerC2SPacket::toBytes)
+                .consumerMainThread(TargetMarkMarkerC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(TargetMarkCastC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(TargetMarkCastC2SPacket::new)
+                .encoder(TargetMarkCastC2SPacket::toBytes)
+                .consumerMainThread(TargetMarkCastC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(FrizzC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(FrizzC2SPacket::new)
+                .encoder(FrizzC2SPacket::toBytes)
+                .consumerMainThread(FrizzC2SPacket::handle)
                 .add();
 
         // FIREMETA ----------------------------------------------------------------------------------------------------

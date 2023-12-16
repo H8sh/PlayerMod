@@ -25,9 +25,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(ModBlocks.PALADIN_LECTERN.get());
         this.dropSelf(ModBlocks.AOE_MARKER_BLOCK.get());
+        this.dropSelf(ModBlocks.TARGET_MARK_BLOCK.get());
         this.dropSelf(ModBlocks.AOE_BLOCK.get());
         this.dropSelf(ModBlocks.DAMAGE_SPELL_BLOCK.get());
         this.dropSelf(ModBlocks.PNJ_BLOCK_ENTITY.get());
+        this.dropSelf(ModBlocks.SOAP_WATER_BLOCK.get());
    /*     this.dropSelf(ModBlocks.SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.RAW_SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.SOUND_BLOCK.get());

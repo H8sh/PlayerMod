@@ -3,14 +3,19 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.berserk.charge.ChargeCapability;
 import net.h8sh.playermod.ability.berserk.rage.RageCapability;
+import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.gui.berserk.RageBarOverlay;
+import net.h8sh.playermod.gui.rogue.DoubleBarOverlay;
 import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
 import net.h8sh.playermod.gui.berserk.ChargeBarOverlay;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.classes.berserk.rage.RageC2SPacket;
 import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.FrizzC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkCastC2SPacket;
+import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkMarkerC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
@@ -52,6 +57,16 @@ public class SpellEvent {
             //AoE: -------------------------------------------------------------------------------------------------
             ModMessages.sendToServer(new AoEMarkerC2SPacket());
             ModMessages.sendToServer(new AoECastC2SPacket());
+
+            //Rogue Ultimate: --------------------------------------------------------------------------------------
+            ModMessages.sendToServer(new TargetMarkMarkerC2SPacket());
+            ModMessages.sendToServer(new TargetMarkCastC2SPacket());
+            if (DoubleCapability.isTargetMarkerOn()) {
+                DoubleCapability.spawnTargetMarkMarker(player);
+            }
+            if (DoubleCapability.isEntityFrizz()) {
+                ModMessages.sendToServer(new FrizzC2SPacket());
+            }
         }
     }
 
@@ -66,6 +81,17 @@ public class SpellEvent {
             }
             if (!KeyBinding.SECOND_SPELL_KEY.isDown()) {
                 AoEBarOverlay.setCurrentProgress(0.0F);
+            }
+        }
+        if (event.getOverlay().overlay() == DoubleBarOverlay.HUD_DOUBLE_BAR_PROGRESS) {
+            event.setCanceled(true);
+            if (KeyBinding.ULTIMATE_SPELL_KEY.isDown() && Profession.getProfession() == Profession.Professions.ROGUE && DoubleBarOverlay.getCurrentProgress() != DoubleBarOverlay.getCurrentProgressD() && !DoubleCapability.isOnCD()) {
+                event.getOverlay().overlay().render(
+                        new ForgeGui(Minecraft.getInstance()), event.getGuiGraphics(), event.getPartialTick(),
+                        event.getGuiGraphics().guiWidth(), event.getGuiGraphics().guiHeight());
+            }
+            if (!KeyBinding.ULTIMATE_SPELL_KEY.isDown()) {
+                DoubleBarOverlay.setCurrentProgress(0.0F);
             }
         }
         if (event.getOverlay().overlay() == ChargeBarOverlay.HUD_CHARGE_BAR_PROGRESS) {

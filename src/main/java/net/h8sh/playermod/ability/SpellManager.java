@@ -4,6 +4,7 @@ import net.h8sh.playermod.ability.berserk.charge.ChargeCapability;
 import net.h8sh.playermod.ability.berserk.rage.RageCapability;
 import net.h8sh.playermod.ability.druid.firemeta.damage_spell.DamageSpellCapability;
 import net.h8sh.playermod.ability.druid.firemeta.fire_aura.FireAuraCapability;
+import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.h8sh.playermod.ability.rogue.teleportation.TeleportationCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
@@ -144,6 +145,7 @@ public class SpellManager {
             //ROGUE: ---------------------------------------------------------------------------------------------------
 
             case "smoke":
+                DoubleCapability.setOnCD(false);
                 ModMessages.sendToServer(new SmokeC2SPacket());
                 break;
 
@@ -156,7 +158,8 @@ public class SpellManager {
                 break;
 
             case "double":
-                //TODO
+
+                DoubleCapability.setPrepareTargetMark(true);
                 break;
 
             //BERSERK: -------------------------------------------------------------------------------------------------

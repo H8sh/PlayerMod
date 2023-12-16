@@ -10,20 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FoodData.class)
 public class MixinFoodData {
-
-    /**
-     * Disable food consumption
-     *
-     * @param pPlayer
-     * @param ci
-     */
     @Inject(
             method = {"tick"},
             at = {@At("HEAD")},
             cancellable = true
     )
     private void tick(Player pPlayer, CallbackInfo ci) {
-        if (Profession.getProfession() != Profession.Professions.BASIC) {
+        if (Profession.getProfession() != Profession.Professions.BASIC && Profession.getProfession() != null) {
             ci.cancel();
         }
     }

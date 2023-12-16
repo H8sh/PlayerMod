@@ -35,9 +35,12 @@ public class ModBlocks {
             () -> new PnjBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
 
 
-
     //TODO: change to custom block
     public static final RegistryObject<Block> AOE_MARKER_BLOCK = BLOCKS.register("aoe_marker_block",
+            () -> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.AIR).sound(SoundType.AMETHYST).noOcclusion()));
+
+    //TODO: change to custom block
+    public static final RegistryObject<Block> TARGET_MARK_BLOCK = BLOCKS.register("target_mark_marker_block",
             () -> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.AIR).sound(SoundType.AMETHYST).noOcclusion()));
 
     //TODO: change to custom block

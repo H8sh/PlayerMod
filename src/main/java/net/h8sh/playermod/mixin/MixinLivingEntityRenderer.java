@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +21,9 @@ public class MixinLivingEntityRenderer {
 
     @Inject(method = "getOverlayCoords", at = @At("HEAD"), cancellable = true)
     private static void getOverlayCoords(LivingEntity pLivingEntity, float pU, CallbackInfoReturnable<Integer> cir) {
-        cir.cancel();
-        cir.setReturnValue(OverlayTexture.pack(OverlayTexture.u(pU), OverlayTexture.v(false)));
+        if (pLivingEntity instanceof Player) {
+            cir.cancel();
+            cir.setReturnValue(OverlayTexture.pack(OverlayTexture.u(pU), OverlayTexture.v(false)));
+        }
     }
 }
