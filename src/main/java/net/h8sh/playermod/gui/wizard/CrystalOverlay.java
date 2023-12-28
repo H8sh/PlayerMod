@@ -2,6 +2,7 @@ package net.h8sh.playermod.gui.wizard;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.ability.wizard.mana.crystal.ClientCrystalData;
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
@@ -14,7 +15,7 @@ public class CrystalOverlay {
     private final static ResourceLocation CRYSTAL = new ResourceLocation(PlayerMod.MODID, "textures/gui/crystal/crystal.png");
 
     public static final IGuiOverlay HUD_CRYSTAL = (ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) -> {
-        String toDisplay = "" + 0; //ClientCrystalData.getPlayerCrystal();
+        String toDisplay = "" + ClientCrystalData.getCrystal();
         int x = screenWidth - WonderlandsModClientConfigs.CRYSTAL_HUD_X.get() - 50;
         int y = WonderlandsModClientConfigs.CRYSTAL_HUD_Y.get();
         if (x >= 0 && y >= 0) {

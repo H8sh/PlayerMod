@@ -3,8 +3,10 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.berserk.charge.ChargeCapability;
 import net.h8sh.playermod.ability.berserk.rage.RageCapability;
+import net.h8sh.playermod.ability.paladin.PaladinPassive;
 import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
+import net.h8sh.playermod.ability.wizard.mana.ManaCapability;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.gui.berserk.RageBarOverlay;
 import net.h8sh.playermod.gui.rogue.DoubleBarOverlay;
@@ -39,6 +41,15 @@ public class SpellEvent {
         }
         if (event.phase == TickEvent.Phase.START) {
             return;
+        }
+
+        ManaCapability.tick(event.level);
+
+        if (Minecraft.getInstance().level != null) {
+            int inGameSolarTime = (int) Minecraft.getInstance().level.getDayTime();
+            int trueSolarTime = PaladinPassive.setCorrectTime(inGameSolarTime);
+            PaladinPassive.setPaladinParameters(trueSolarTime);
+            // time get from 0 to 24 000 so day from 0 to 12 000 and night from 12 000 to 24 000 modulo
         }
 
         //Gui: -----------------------------------------------------------------------------------------------------

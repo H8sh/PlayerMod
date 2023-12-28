@@ -17,6 +17,7 @@ import net.h8sh.playermod.networking.classes.druid.firemeta.damagespell.DamageSp
 import net.h8sh.playermod.networking.classes.rogue.smoke.SmokeC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.teleportation.TeleportationC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.laser.LaserC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.mana.ManaExtractionC2SPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
@@ -52,6 +53,7 @@ public class SpellManager {
 
             case "mana_drain":
                 MagicAoECapability.setOnCD(false);
+                ModMessages.sendToServer(new ManaExtractionC2SPacket());
                 break;
 
             case "aoe":

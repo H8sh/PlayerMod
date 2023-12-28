@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": {"models": "playermod:block/pnj_block"}
+  }
+}

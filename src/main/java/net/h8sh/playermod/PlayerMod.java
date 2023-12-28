@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.block.entity.ModBlockEntities;
+import net.h8sh.playermod.block.entity.client.AdamBlockRenderer;
 import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
 import net.h8sh.playermod.block.entity.client.PnjBlockRenderer;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
@@ -181,6 +182,7 @@ public class PlayerMod {
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.PNJ_BLOCK_ENTITY.get(), PnjBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.ADAM_BLOCK_ENTITY.get(), AdamBlockRenderer::new);
         }
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.client.animation.KeyframeAnimations;
 
 public final class CustomPlayerAnimation {
 
+
     public static final AnimationDefinition STEVE_WALK = AnimationDefinition.Builder.withLength(1f).looping()
             .addAnimation("chest",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
@@ -335,11 +336,11 @@ public final class CustomPlayerAnimation {
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
@@ -733,7 +734,7 @@ public final class CustomPlayerAnimation {
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(0.875f, KeyframeAnimations.posVec(0f, -0.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.5f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -954,13 +955,13 @@ public final class CustomPlayerAnimation {
                             new Keyframe(0.875f, KeyframeAnimations.posVec(0f, -1.5f, -1.75f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_SHIFT_DOWN = AnimationDefinition.Builder.withLength(1.125f).looping()
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -2.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(1.125f, KeyframeAnimations.posVec(0f, -2.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -2.5f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1117,13 +1118,13 @@ public final class CustomPlayerAnimation {
                             new Keyframe(1.125f, KeyframeAnimations.degreeVec(5f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_IDLE_SHIFT_DOWN = AnimationDefinition.Builder.withLength(0.25f).looping()
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -2.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(0.25f, KeyframeAnimations.posVec(0f, -2.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -2.5f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1214,7 +1215,7 @@ public final class CustomPlayerAnimation {
                             new Keyframe(0.25f, KeyframeAnimations.degreeVec(5f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_JUMP = AnimationDefinition.Builder.withLength(0.6766666f)
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1224,7 +1225,7 @@ public final class CustomPlayerAnimation {
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(0.5416766f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1570,7 +1571,7 @@ public final class CustomPlayerAnimation {
                             new Keyframe(0.25f, KeyframeAnimations.posVec(0f, -0.5f, -2.25f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_DASH_FRONT = AnimationDefinition.Builder.withLength(1f).looping()
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -1.25f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1586,7 +1587,7 @@ public final class CustomPlayerAnimation {
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(1f, KeyframeAnimations.posVec(0f, -11.05f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -1815,7 +1816,7 @@ public final class CustomPlayerAnimation {
                             new Keyframe(1f, KeyframeAnimations.degreeVec(140f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_DASH_LEFT = AnimationDefinition.Builder.withLength(0.625f)
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.5f, 0f),
                                     AnimationChannel.Interpolations.LINEAR),
@@ -1964,7 +1965,7 @@ public final class CustomPlayerAnimation {
                             new Keyframe(0.5416766f, KeyframeAnimations.posVec(0f, -0.75f, -0.5f),
                                     AnimationChannel.Interpolations.CATMULLROM))).build();
     public static final AnimationDefinition STEVE_DASH_RIGHT = AnimationDefinition.Builder.withLength(0.625f)
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -0.5f, 0f),
                                     AnimationChannel.Interpolations.LINEAR),
@@ -2357,7 +2358,7 @@ public final class CustomPlayerAnimation {
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(1.3433333f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.POSITION,
                             new Keyframe(0f, KeyframeAnimations.posVec(0f, -2f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),
@@ -2379,7 +2380,7 @@ public final class CustomPlayerAnimation {
                                     AnimationChannel.Interpolations.CATMULLROM),
                             new Keyframe(1.3433333f, KeyframeAnimations.posVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM)))
-            .addAnimation("steve_body",
+            .addAnimation("main_body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.CATMULLROM),

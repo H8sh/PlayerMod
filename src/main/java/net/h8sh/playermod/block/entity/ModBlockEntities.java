@@ -22,6 +22,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(PnjBlockEntity::new,
                             ModBlocks.PNJ_BLOCK_ENTITY.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<AdamBlockEntity>> ADAM_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("adam_block_entity", ()->
+                    BlockEntityType.Builder.of(AdamBlockEntity::new,
+                            ModBlocks.ADAM_BLOCK_ENTITY.get()).build(null));
+
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);
     }

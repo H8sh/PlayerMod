@@ -59,7 +59,7 @@ public class Profession {
     }
 
     public enum Professions {
-        BASIC(0, "basic"),
+        BASIC(0, "steve"),
         PALADIN(1, "paladin"),
         WIZARD(2, "wizard"),
         DRUID(3, "druid"),

@@ -115,7 +115,7 @@ public class ClientEvents {
                 ModMessages.sendToServer(new DashC2SPacket());
             }
 
-            if (minecraft.player.isDeadOrDying() && minecraft.options.keyShift.consumeClick()) {
+            if (minecraft.player != null && minecraft.player.isDeadOrDying() && minecraft.options.keyShift.consumeClick()) {
                 minecraft.options.keyShift.setDown(false);
             }
 

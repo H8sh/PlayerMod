@@ -19,6 +19,9 @@ import net.h8sh.playermod.networking.classes.rogue.teleportation.TeleportationC2
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.laser.LaserC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.mana.ManaExtractionC2SPacket;
+import net.h8sh.playermod.networking.classes.wizard.mana.PacketSyncCrystalToClient;
+import net.h8sh.playermod.networking.classes.wizard.mana.PacketSyncManaToClient;
 import net.h8sh.playermod.networking.narrator.*;
 import net.h8sh.playermod.networking.profession.*;
 import net.h8sh.playermod.networking.reputation.ReputationNormalC2SPacket;
@@ -285,6 +288,24 @@ public class ModMessages {
                 .decoder(LaserC2SPacket::new)
                 .encoder(LaserC2SPacket::toBytes)
                 .consumerMainThread(LaserC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ManaExtractionC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ManaExtractionC2SPacket::new)
+                .encoder(ManaExtractionC2SPacket::toBytes)
+                .consumerMainThread(ManaExtractionC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(PacketSyncManaToClient.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(PacketSyncManaToClient::new)
+                .encoder(PacketSyncManaToClient::toBytes)
+                .consumerMainThread(PacketSyncManaToClient::handle)
+                .add();
+
+        net.messageBuilder(PacketSyncCrystalToClient.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(PacketSyncCrystalToClient::new)
+                .encoder(PacketSyncCrystalToClient::toBytes)
+                .consumerMainThread(PacketSyncCrystalToClient::handle)
                 .add();
 
         // Berserk -----------------------------------------------------------------------------------------------------

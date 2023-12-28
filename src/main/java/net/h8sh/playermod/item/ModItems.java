@@ -44,6 +44,9 @@ public class ModItems {
     public static final RegistryObject<Item> PNJ_BLOCK_ITEM = ITEMS.register("pnj_block",
             () -> new PnjBlockItem(ModBlocks.PNJ_BLOCK_ENTITY.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> ADAM_BLOCK_ITEM = ITEMS.register("adam_block",
+            () -> new PnjBlockItem(ModBlocks.ADAM_BLOCK_ENTITY.get(), new Item.Properties()));
+
     //TODO: replace item book by custom item book
     public static final RegistryObject<Item> PALADIN_BOOK = ITEMS.register("paladin_book",
             () -> new BookItem(new Item.Properties()));

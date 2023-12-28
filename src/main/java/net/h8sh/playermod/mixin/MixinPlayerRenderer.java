@@ -78,14 +78,65 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         }
     }
 
-    private static String armToDraw(Profession.Professions currentProfession, boolean isLeftArm) {
-        if (isLeftArm) {
-            //return currentProfession.getName() + "_left_arm";
-            return "wizard_left_arm";
-        } else {
-            //return currentProfession.getName() + "_right_arm";
-            return "wizard_right_arm";
-        }
+    private static void isModelVisible(PlayerModel<AbstractClientPlayer> playermodel, String professionName, boolean flag) {
+        var body = playermodel.body.getChild(professionName + "_body");
+        var head = body.getChild(professionName + "_head");
+        var chest = body.getChild(professionName + "_chest");
+        var right_arm_full = body.getChild(professionName + "_right_arm_full");
+        var left_arm_full = body.getChild(professionName + "_left_arm_full");
+        var right_leg_full = body.getChild(professionName + "_right_leg_full");
+        var left_leg_full = body.getChild(professionName + "_left_leg_full");
+        chest.visible = flag;
+        head.visible = flag;
+        left_arm_full.visible = flag;
+        right_leg_full.visible = flag;
+        left_leg_full.visible = flag;
+        right_arm_full.visible = flag;
+
+    }
+
+    private static void removeCustomHands(PlayerModel<AbstractClientPlayer> playermodel) {
+        var wizard_body = playermodel.body.getChild("wizard_body");
+        wizard_body.getChild("wizard_right_arm_full").visible = false;
+        wizard_body.getChild("wizard_left_arm_full").visible = false;
+
+       /* var paladin_body = playermodel.body.getChild("paladin_body");
+        paladin_body.getChild("paladin_right_arm_full").visible = false;
+        paladin_body.getChild("paladin_left_arm_full").visible = false;
+
+        var berserk_body = playermodel.body.getChild("berserk_body");
+        berserk_body.getChild("berserk_right_arm_full").visible = false;
+        berserk_body.getChild("berserk_left_arm_full").visible = false;
+
+        var rogue_body = playermodel.body.getChild("rogue_body");
+        rogue_body.getChild("rogue_right_arm_full").visible = false;
+        rogue_body.getChild("rogue_left_arm_full").visible = false;
+
+        var invocator_body = playermodel.body.getChild("invocator_body");
+        invocator_body.getChild("invocator_right_arm_full").visible = false;
+        invocator_body.getChild("invocator_left_arm_full").visible = false;
+
+        var druid_body = playermodel.body.getChild("druid_body");
+        druid_body.getChild("druid_right_arm_full").visible = false;
+        druid_body.getChild("druid_left_arm_full").visible = false;
+
+        var fire_body = playermodel.body.getChild("fire_body");
+        fire_body.getChild("fire_right_arm_full").visible = false;
+        fire_body.getChild("fire_left_arm_full").visible = false;
+
+        var aqua_body = playermodel.body.getChild("aqua_body");
+        aqua_body.getChild("aqua_right_arm_full").visible = false;
+        aqua_body.getChild("aqua_left_arm_full").visible = false;
+
+        var wind_body = playermodel.body.getChild("wind_body");
+        wind_body.getChild("wind_right_arm_full").visible = false;
+        wind_body.getChild("wind_left_arm_full").visible = false;
+
+        var spiritus_body = playermodel.body.getChild("spiritus_body");
+        spiritus_body.getChild("spiritus_right_arm_full").visible = false;
+        spiritus_body.getChild("spiritus_left_arm_full").visible = false;*/
+
+
     }
 
     @Inject(
@@ -94,14 +145,14 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             cancellable = true
     )
     private void renderRightHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, CallbackInfo ci) {
+
         var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
         if (currentProfession != Profession.Professions.BASIC) {
             ci.cancel();
-
             boolean shouldRenderHotBar = ClientEvents.getHotBar();
             PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
             if (!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.RIGHT) && shouldRenderHotBar)
-                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, false)), playermodel.body.getChild(armToDraw(currentProfession, false)));
+                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(Profession.getProfessionName() + "_body").getChild(Profession.getProfessionName() + "_right_arm_full").getChild(Profession.getProfessionName() + "_right_forearm"), playermodel.body.getChild(Profession.getProfessionName() + "_body").getChild(Profession.getProfessionName() + "_right_arm_full").getChild(Profession.getProfessionName() + "_right_forearm"));
         }
     }
 
@@ -111,14 +162,14 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             cancellable = true
     )
     private void renderLeftHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, CallbackInfo ci) {
+
         var currentProfession = Profession.getProfession() == null ? Profession.Professions.BASIC : Profession.getProfession();
         if (currentProfession != Profession.Professions.BASIC) {
             ci.cancel();
-
             boolean shouldRenderHotBar = ClientEvents.getHotBar();
             PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
             if (!net.minecraftforge.client.ForgeHooksClient.renderSpecificFirstPersonArm(pMatrixStack, pBuffer, pCombinedLight, pPlayer, HumanoidArm.LEFT) && shouldRenderHotBar)
-                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(armToDraw(currentProfession, true)), playermodel.body.getChild(armToDraw(currentProfession, true)));
+                this.renderHand(pMatrixStack, pBuffer, pCombinedLight, pPlayer, playermodel.body.getChild(Profession.getProfessionName() + "_body").getChild(Profession.getProfessionName() + "_left_arm_full").getChild(Profession.getProfessionName() + "_left_forearm"), playermodel.body.getChild(Profession.getProfessionName() + "_body").getChild(Profession.getProfessionName() + "_left_arm_full").getChild(Profession.getProfessionName() + "_left_forearm"));
         }
 
     }
@@ -147,16 +198,9 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
 
-        var body = playermodel.body.getChild("steve_body");
-        var chest = body.getChild("chest");
-        var rightArm = body.getChild("steve_right_arm_full");
-        var leftArm = body.getChild("steve_left_arm_full");
-        var rightLeg = body.getChild("steve_right_leg_full");
-        var leftLeg = body.getChild("steve_left_leg_full");
-
         if (p_117819_.isSpectator()) {
             playermodel.setAllVisible(false);
-            body.getChild("steve_head").visible = true;
+            playermodel.body.getChild("steve_body").getChild("steve_head").visible = true;
             playermodel.hat.visible = true;
         } else {
 
@@ -167,115 +211,148 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             switch (currentProfession) {
 
                 case BASIC -> {
-                    chest.visible = true;
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
-                }
-                case ROGUE -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
-                }
-                case BERSERK -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
-                }
-                case INVOCATOR -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
-                }
-                case FIREMETA -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
-                }
-                case AQUAMETA -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    removeCustomHands(playermodel);
+                    isModelVisible(playermodel, "steve", true);
+                    isModelVisible(playermodel, "wizard", false);
+                    /*isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
                 case WIZARD -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", true);
+  /*                  isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
+                }
+                case ROGUE -> {
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+              /*      isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", true);*/
+                }
+                case BERSERK -> {
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+          /*          isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", true);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
+                }
+                case INVOCATOR -> {
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+               /*     isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", true);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
+                }
+                case FIREMETA -> {
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+              /*      isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", true);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
+                }
+                case AQUAMETA -> {
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+     /*               isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", true);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
                 case SPIRITUSMETA -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+               /*     isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", true);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
                 case PALADIN -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+               /*     isModelVisible(playermodel, "paladin", true);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
                 case WINDMETA -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+                /*    isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", false);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", true);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
                 case DRUID -> {
-                    rightArm.getChild("steve_right_forearm").visible = true;
-                    rightArm.getChild("steve_right_arm").visible = true;
-                    leftArm.getChild("steve_left_forearm").visible = true;
-                    leftArm.getChild("steve_left_arm").visible = true;
-                    rightLeg.getChild("steve_right_leg_bottom").visible = true;
-                    rightLeg.getChild("steve_right_leg").visible = true;
-                    leftLeg.getChild("steve_left_bottom").visible = true;
-                    leftLeg.getChild("steve_left_leg").visible = true;
+                    isModelVisible(playermodel, "steve", false);
+                    isModelVisible(playermodel, "wizard", false);
+             /*       isModelVisible(playermodel, "paladin", false);
+                    isModelVisible(playermodel, "berserk", false);
+                    isModelVisible(playermodel, "druid", true);
+                    isModelVisible(playermodel, "invocator", false);
+                    isModelVisible(playermodel, "fire", false);
+                    isModelVisible(playermodel, "aqua", false);
+                    isModelVisible(playermodel, "wind", false);
+                    isModelVisible(playermodel, "spiritus", false);
+                    isModelVisible(playermodel, "rogue", false);*/
                 }
             }
 

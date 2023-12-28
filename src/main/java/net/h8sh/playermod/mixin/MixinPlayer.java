@@ -6,6 +6,7 @@ import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.event.ClientEvents;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvent;

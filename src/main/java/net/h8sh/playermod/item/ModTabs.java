@@ -28,6 +28,8 @@ public class ModTabs {
                         pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
 
                         pOutput.accept(ModItems.PNJ_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.ADAM_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.ADAM_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
 
                         pOutput.accept(ModItems.PALADIN_BOOK.get());

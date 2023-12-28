@@ -1,6 +1,7 @@
 package net.h8sh.playermod.block;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.block.custom.AdamBlock;
 import net.h8sh.playermod.block.custom.PaladinLectern;
 import net.h8sh.playermod.block.custom.PnjBlock;
 import net.h8sh.playermod.block.custom.PortalBlock;
@@ -33,6 +34,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> PNJ_BLOCK_ENTITY = BLOCKS.register("pnj_block",
             () -> new PnjBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
+
+    public static final RegistryObject<Block> ADAM_BLOCK_ENTITY = BLOCKS.register("adam_block",
+            () -> new AdamBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
 
 
     //TODO: change to custom block
