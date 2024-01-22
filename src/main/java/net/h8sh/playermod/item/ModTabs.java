@@ -2,13 +2,10 @@ package net.h8sh.playermod.item;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.block.ModBlocks;
-import net.h8sh.playermod.potion.ModPotions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -26,10 +23,23 @@ public class ModTabs {
                         pOutput.accept(ModItems.CRYSTAL_SPAWN_EGG.get());
 
                         pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEATH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_NORTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_SOUTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_WEST_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_EAST_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_MINE_NORTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_MINE_SOUTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_MINE_WEST_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_MINE_EAST_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_FIELDS_NORTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_FIELDS_SOUTH_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_FIELDS_WEST_BLOCK.get());
+                        pOutput.accept(ModBlocks.LINK_ZONE_FIELDS_EAST_BLOCK.get());
 
                         pOutput.accept(ModItems.PNJ_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.ADAM_BLOCK_ITEM.get());
-                        pOutput.accept(ModItems.ADAM_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.PLINTH_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
 
                         pOutput.accept(ModItems.PALADIN_BOOK.get());

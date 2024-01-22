@@ -1,10 +1,19 @@
 package net.h8sh.playermod.block;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.block.custom.AdamBlock;
-import net.h8sh.playermod.block.custom.PaladinLectern;
-import net.h8sh.playermod.block.custom.PnjBlock;
-import net.h8sh.playermod.block.custom.PortalBlock;
+import net.h8sh.playermod.block.custom.*;
+import net.h8sh.playermod.block.custom.linkzone.citadel.LinkZoneCitadelEastBlock;
+import net.h8sh.playermod.block.custom.linkzone.citadel.LinkZoneCitadelNorthBlock;
+import net.h8sh.playermod.block.custom.linkzone.citadel.LinkZoneCitadelSouthBlock;
+import net.h8sh.playermod.block.custom.linkzone.citadel.LinkZoneCitadelWestBlock;
+import net.h8sh.playermod.block.custom.linkzone.fields.LinkZoneFieldsEastBlock;
+import net.h8sh.playermod.block.custom.linkzone.fields.LinkZoneFieldsNorthBlock;
+import net.h8sh.playermod.block.custom.linkzone.fields.LinkZoneFieldsSouthBlock;
+import net.h8sh.playermod.block.custom.linkzone.fields.LinkZoneFieldsWestBlock;
+import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineEastBlock;
+import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineNorthBlock;
+import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineSouthBlock;
+import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineWestBlock;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -29,6 +38,45 @@ public class ModBlocks {
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal",
             () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
 
+    public static final RegistryObject<Block> DEATH_BLOCK = registerBlock("death_block",
+            () -> new DeathBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_CITADEL_NORTH_BLOCK = registerBlock("link_zone_citadel_north",
+            () -> new LinkZoneCitadelNorthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_CITADEL_SOUTH_BLOCK = registerBlock("link_zone_citadel_south",
+            () -> new LinkZoneCitadelSouthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_CITADEL_WEST_BLOCK = registerBlock("link_zone_citadel_west",
+            () -> new LinkZoneCitadelWestBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_CITADEL_EAST_BLOCK = registerBlock("link_zone_citadel_east",
+            () -> new LinkZoneCitadelEastBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_MINE_NORTH_BLOCK = registerBlock("link_zone_mine_north",
+            () -> new LinkZoneMineNorthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_MINE_SOUTH_BLOCK = registerBlock("link_zone_mine_south",
+            () -> new LinkZoneMineSouthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_MINE_WEST_BLOCK = registerBlock("link_zone_mine_west",
+            () -> new LinkZoneMineWestBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_MINE_EAST_BLOCK = registerBlock("link_zone_mine_east",
+            () -> new LinkZoneMineEastBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_FIELDS_NORTH_BLOCK = registerBlock("link_zone_fields_north",
+            () -> new LinkZoneFieldsNorthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_FIELDS_SOUTH_BLOCK = registerBlock("link_zone_fields_south",
+            () -> new LinkZoneFieldsSouthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_FIELDS_WEST_BLOCK = registerBlock("link_zone_fields_west",
+            () -> new LinkZoneFieldsWestBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
+    public static final RegistryObject<Block> LINK_ZONE_FIELDS_EAST_BLOCK = registerBlock("link_zone_fields_east",
+            () -> new LinkZoneFieldsEastBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
+
     public static final RegistryObject<Block> PALADIN_LECTERN = BLOCKS.register("paladin_lectern",
             () -> new PaladinLectern(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
 
@@ -37,6 +85,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ADAM_BLOCK_ENTITY = BLOCKS.register("adam_block",
             () -> new AdamBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
+
+    public static final RegistryObject<Block> PLINTH_BLOCK = registerBlock("plinth",
+            () -> new PlinthBLock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion()));
 
 
     //TODO: change to custom block

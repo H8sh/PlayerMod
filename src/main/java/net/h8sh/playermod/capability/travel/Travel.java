@@ -1,10 +1,12 @@
-package net.h8sh.playermod.world.portal;
+package net.h8sh.playermod.capability.travel;
 
 import net.h8sh.playermod.PlayerMod;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -14,40 +16,43 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.ITeleporter;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class TravelManager extends SavedData {
-
+@AutoRegisterCapability
+public class Travel {
     private final Map<String, BlockPos> travelMap = new HashMap<>();
 
+    public static void teleportToDimension(String dimension, ServerPlayer player, ServerLevel newWorld) {
+        player.getCapability(TravelProvider.PLAYER_TRAVEL).ifPresent(travel -> {
+            Travel.teleport(player, newWorld, new BlockPos(0, 50, 0), true);
 
-    public TravelManager() {
-    }
+            if (!travel.asAlreadyTravel(dimension)) {
 
-    public TravelManager(CompoundTag tag) {
-        ListTag list = tag.getList("travel", Tag.TAG_COMPOUND);
-        for (Tag t : list) {
-            CompoundTag travelTag = (CompoundTag) t;
-            String travel = travelTag.getString("travel");
-            BlockPos pos = new BlockPos(travelTag.getInt("x"), travelTag.getInt("y"), travelTag.getInt("z"));
-            travelMap.put(travel, pos);
-        }
-    }
+                Travel.createPortal(newWorld,
+                        new BlockPos(player.blockPosition().getX() - 2,
+                                player.blockPosition().getY() - 1,
+                                player.blockPosition().getZ() - 2));
 
-    @Nonnull
-    public static TravelManager get(Level level) {
-        if (level.isClientSide) {
-            throw new RuntimeException("Don't access this client-side!");
-        }
-        DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
-        return storage.computeIfAbsent(TravelManager::new, TravelManager::new, "travel_manager");
+                player.teleportTo(player.position().x + 0.5, player.position().y, player.position().z + 0.5);
+
+                player.sendSystemMessage(Component.literal("Here for the first time").withStyle(ChatFormatting.AQUA));
+
+                travel.usedToTravel(dimension, player.blockPosition());
+
+            } else {
+
+                BlockPos pos = travel.getPos(dimension);
+
+                player.teleportTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5); //BlockPos cast player coords to integers so we have to add 0.5 again for centering the player
+
+                player.sendSystemMessage(Component.literal("Already been there").withStyle(ChatFormatting.RED));
+            }
+        });
     }
 
     public static void teleport(ServerPlayer entity, ServerLevel destination, BlockPos pos, boolean findTop) {
@@ -79,6 +84,10 @@ public class TravelManager extends SavedData {
         teleport(player, world, new BlockPos(pos.getX(), pos.getY(), pos.getZ()), true);
     }
 
+    public void copyFrom(Travel source) {
+
+    }
+
     public boolean asAlreadyTravel(String name) {
         return travelMap.containsKey(name);
     }
@@ -91,8 +100,7 @@ public class TravelManager extends SavedData {
         return travelMap.get(name);
     }
 
-    @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void savedNBTData(CompoundTag compound) {
         ListTag list = new ListTag();
         travelMap.forEach((travel, pos) -> {
             CompoundTag travelTag = new CompoundTag();
@@ -102,9 +110,18 @@ public class TravelManager extends SavedData {
             travelTag.putInt("z", pos.getZ());
             list.add(travelTag);
         });
-        tag.put("travel", list);
-        return tag;
+        compound.put("travel", list);
+
     }
 
+    public void loadNBTData(CompoundTag compoundTag) {
+        ListTag list = compoundTag.getList("travel", Tag.TAG_COMPOUND);
+        for (Tag t : list) {
+            CompoundTag travelTag = (CompoundTag) t;
+            String travel = travelTag.getString("travel");
+            BlockPos pos = new BlockPos(travelTag.getInt("x"), travelTag.getInt("y"), travelTag.getInt("z"));
+            travelMap.put(travel, pos);
+        }
+    }
 
 }

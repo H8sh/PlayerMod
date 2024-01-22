@@ -30,6 +30,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.PNJ_BLOCK_ENTITY.get());
         this.dropSelf(ModBlocks.ADAM_BLOCK_ENTITY.get());
         this.dropSelf(ModBlocks.SOAP_WATER_BLOCK.get());
+        this.dropSelf(ModBlocks.PLINTH_BLOCK.get());
    /*     this.dropSelf(ModBlocks.SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.RAW_SAPPHIRE_BLOCK.get());
         this.dropSelf(ModBlocks.SOUND_BLOCK.get());

@@ -2,16 +2,9 @@ package net.h8sh.playermod.world.dimension.mansion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mojang.datafixers.util.Pair;
-import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MansionManager {
-    public static final String INPUT_DIRECTORY = "src/main/resources/data/playermod/library";
     private static final Pair<Integer, Integer> RIGHT = new Pair<>(0, 1);
     private static final Pair<Integer, Integer> LEFT = new Pair<>(0, -1);
     private static final Pair<Integer, Integer> UP = new Pair<>(-1, 0);
@@ -53,7 +45,7 @@ public class MansionManager {
 
     public static void createMansionInWorld(ServerLevel world, ServerPlayer player) {
 
-       //TODO
+        //TODO
 
     }
 

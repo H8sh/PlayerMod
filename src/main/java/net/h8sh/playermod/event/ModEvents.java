@@ -35,27 +35,25 @@ import net.h8sh.playermod.ability.wizard.freeze.FreezeCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.laser.LaserCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.ManaCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
-import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.animation.handler.AnimationProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.questing.QuestingProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
 import net.h8sh.playermod.capability.riding.RidingProvider;
+import net.h8sh.playermod.capability.travel.TravelProvider;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
-import net.minecraft.client.telemetry.TelemetryProperty;
-import net.minecraft.core.BlockPos;
+import net.h8sh.playermod.world.dimension.DimensionManager;
+import net.h8sh.playermod.world.dimension.DimensionProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -86,6 +84,12 @@ public class ModEvents {
                 }
                 if (!event.getObject().getCapability(QuestingProvider.QUESTING).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "questing"), new QuestingProvider());
+                }
+                if (!event.getObject().getCapability(TravelProvider.PLAYER_TRAVEL).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "travel"), new TravelProvider());
+                }
+                if (!event.getObject().getCapability(DimensionProvider.PLAYER_DIMENSION).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "dimension"), new DimensionProvider());
                 }
 
                 //WIZARD -----------------------------------------------------------------------------------------------
@@ -260,6 +264,16 @@ public class ModEvents {
                         newStore.copyFrom(oldStore);
                     });
                 });
+                event.getOriginal().getCapability(TravelProvider.PLAYER_TRAVEL).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(TravelProvider.PLAYER_TRAVEL).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+                event.getOriginal().getCapability(DimensionProvider.PLAYER_DIMENSION).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(DimensionProvider.PLAYER_DIMENSION).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
 
                 //WIZARD -----------------------------------------------------------------------------------------------
 
@@ -288,6 +302,7 @@ public class ModEvents {
                         newStore.copyFrom(oldStore);
                     });
                 });
+
 
                 //ROGUE ------------------------------------------------------------------------------------------------
 

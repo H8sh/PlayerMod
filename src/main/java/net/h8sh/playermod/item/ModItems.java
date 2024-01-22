@@ -5,6 +5,7 @@ import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.custom.PaladinLecternItem;
+import net.h8sh.playermod.item.custom.PlinthBlockItem;
 import net.h8sh.playermod.item.custom.PnjBlockItem;
 import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.BucketItem;
@@ -46,6 +47,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> ADAM_BLOCK_ITEM = ITEMS.register("adam_block",
             () -> new PnjBlockItem(ModBlocks.ADAM_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PLINTH_BLOCK_ITEM = ITEMS.register("plinth_block",
+            () -> new PlinthBlockItem(ModBlocks.PLINTH_BLOCK.get(), new Item.Properties()));
 
     //TODO: replace item book by custom item book
     public static final RegistryObject<Item> PALADIN_BOOK = ITEMS.register("paladin_book",

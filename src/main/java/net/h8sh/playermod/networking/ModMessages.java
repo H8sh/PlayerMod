@@ -30,8 +30,7 @@ import net.h8sh.playermod.networking.riding.RidingDruidC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingPaladinC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingWizardC2SPacket;
-import net.h8sh.playermod.networking.travelling.OnChangedDimensionToMansionHuntedC2SPacket;
-import net.h8sh.playermod.networking.travelling.OnChangedDimensionToWonderlandsHomeC2SPacket;
+import net.h8sh.playermod.networking.travelling.*;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -163,6 +162,24 @@ public class ModMessages {
                 .encoder(OnChangedDimensionToWonderlandsHomeC2SPacket::toBytes)
                 .consumerMainThread(OnChangedDimensionToWonderlandsHomeC2SPacket::handle)
                 .add();
+        net.messageBuilder(OnChangedDimensionToCitadelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(OnChangedDimensionToCitadelC2SPacket::new)
+                .encoder(OnChangedDimensionToCitadelC2SPacket::toBytes)
+                .consumerMainThread(OnChangedDimensionToCitadelC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(OnChangedDimensionToFieldsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(OnChangedDimensionToFieldsC2SPacket::new)
+                .encoder(OnChangedDimensionToFieldsC2SPacket::toBytes)
+                .consumerMainThread(OnChangedDimensionToFieldsC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(OnChangedDimensionToMineC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(OnChangedDimensionToMineC2SPacket::new)
+                .encoder(OnChangedDimensionToMineC2SPacket::toBytes)
+                .consumerMainThread(OnChangedDimensionToMineC2SPacket::handle)
+                .add();
+
 
         //Narrator -----------------------------------------------------------------------------------------------------
 
@@ -244,7 +261,7 @@ public class ModMessages {
                 .consumerMainThread(NarratorDataSyncS2CPacket::handle)
                 .add();
 
-        // Riding ------------------------------------------------------------------------------------------------------
+        // Travel ------------------------------------------------------------------------------------------------------
 
         net.messageBuilder(RidingDruidC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RidingDruidC2SPacket::new)

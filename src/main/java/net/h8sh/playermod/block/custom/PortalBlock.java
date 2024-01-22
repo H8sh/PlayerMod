@@ -1,8 +1,8 @@
 package net.h8sh.playermod.block.custom;
 
+import net.h8sh.playermod.capability.travel.Travel;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.travelling.OnChangedDimensionToWonderlandsHomeC2SPacket;
-import net.h8sh.playermod.world.portal.TravelManager;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,7 +39,7 @@ public class PortalBlock extends Block {
                 ModMessages.sendToServer(new OnChangedDimensionToWonderlandsHomeC2SPacket());
             }
             if (!level.dimension().equals(Level.OVERWORLD)) {
-                TravelManager.teleportTo(player, pos.north(), Level.OVERWORLD);
+                Travel.teleportTo(player, pos.north(), Level.OVERWORLD);
             }
         }
     }

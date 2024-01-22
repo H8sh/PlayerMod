@@ -20,6 +20,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.TARGET_MARK_BLOCK);
         blockWithItem(ModBlocks.AOE_BLOCK);
         blockWithItem(ModBlocks.DAMAGE_SPELL_BLOCK);
+        blockWithItem(ModBlocks.DEATH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_CITADEL_NORTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_CITADEL_SOUTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_CITADEL_WEST_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_CITADEL_EAST_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_FIELDS_NORTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_FIELDS_SOUTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_FIELDS_WEST_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_FIELDS_EAST_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_MINE_NORTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_MINE_SOUTH_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_MINE_WEST_BLOCK);
+        blockWithItem(ModBlocks.LINK_ZONE_MINE_EAST_BLOCK);
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

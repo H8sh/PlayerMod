@@ -17,6 +17,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(PaladinLecternEntity::new,
                             ModBlocks.PALADIN_LECTERN.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<PlinthBlockEntity>> PLINTH_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("plinth_block_entity", ()->
+                    BlockEntityType.Builder.of(PlinthBlockEntity::new,
+                            ModBlocks.PLINTH_BLOCK.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<PnjBlockEntity>> PNJ_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("pnj_block_entity", ()->
                     BlockEntityType.Builder.of(PnjBlockEntity::new,

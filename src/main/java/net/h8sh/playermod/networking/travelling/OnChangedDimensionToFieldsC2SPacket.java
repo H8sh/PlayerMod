@@ -1,7 +1,8 @@
 package net.h8sh.playermod.networking.travelling;
 
 import net.h8sh.playermod.capability.travel.Travel;
-import net.h8sh.playermod.world.dimension.ModDimensions;
+import net.h8sh.playermod.world.dimension.DimensionManager;
+import net.h8sh.playermod.world.dimension.DimensionMaps;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -11,12 +12,12 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class OnChangedDimensionToWonderlandsHomeC2SPacket {
+public class OnChangedDimensionToFieldsC2SPacket {
 
-    public OnChangedDimensionToWonderlandsHomeC2SPacket() {
+    public OnChangedDimensionToFieldsC2SPacket() {
     }
 
-    public OnChangedDimensionToWonderlandsHomeC2SPacket(FriendlyByteBuf byteBuf) {
+    public OnChangedDimensionToFieldsC2SPacket(FriendlyByteBuf byteBuf) {
 
     }
 
@@ -31,12 +32,11 @@ public class OnChangedDimensionToWonderlandsHomeC2SPacket {
 
             ServerPlayer player = context.getSender();
 
-            ResourceKey<Level> destination = player.level().dimension() == ModDimensions.WONDERLANDS_LEVEL_KEY ?
-                    Level.OVERWORLD : ModDimensions.WONDERLANDS_LEVEL_KEY;
+            ResourceKey<Level> destination = DimensionManager.getResourceKey(DimensionManager.getToNextZone(DimensionMaps.FIELDS.getMap()));
 
             ServerLevel newWorld = player.getServer().getLevel(destination);
 
-            Travel.teleportToDimension("wonderlands_home", player, newWorld);
+            Travel.teleportToDimension(DimensionManager.getToNextZone(DimensionMaps.FIELDS.getMap()), player, newWorld);
         });
 
         return true;
