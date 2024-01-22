@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
+import net.h8sh.playermod.event.AnimationEvent;
 import net.h8sh.playermod.event.ClientEvents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
@@ -20,6 +21,8 @@ import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -134,8 +137,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
         var spiritus_body = playermodel.body.getChild("spiritus_body");
         spiritus_body.getChild("spiritus_right_arm_full").visible = false;
-        spiritus_body.getChild("spiritus_left_arm_full").visible = false;*/
-
+        spiritus_body.getChild("spiritus_left_arm_full").visible = false;
+*/
 
     }
 
@@ -197,6 +200,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         ci.cancel();
 
         PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
+        AnimationEvent.setPlayermodel(playermodel);
 
         if (p_117819_.isSpectator()) {
             playermodel.setAllVisible(false);
@@ -405,8 +409,6 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         } else {
             cir.setReturnValue(Profession.getProfessionTexture(currentProfession.getId()));
         }
-
-
     }
 
 

@@ -1,8 +1,7 @@
-package net.h8sh.playermod.networking.travelling;
+package net.h8sh.playermod.world.portal;
 
 import net.h8sh.playermod.PlayerMod;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -13,8 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -59,11 +56,11 @@ public class TravelManager extends SavedData {
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity = repositionEntity.apply(false);
                 int y = pos.getY();
-                if (findTop) {
+                /*if (findTop) {
                     y = destination.getChunk(SectionPos.blockToSectionCoord(pos.getX()),
                             SectionPos.blockToSectionCoord(pos.getZ())).getHeight(Heightmap.Types.WORLD_SURFACE_WG,
                             pos.getX() & 15, pos.getZ() & 15) + 1;
-                }
+                }*/
                 entity.teleportTo(pos.getX(), y, pos.getZ());
                 return entity;
             }

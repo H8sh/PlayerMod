@@ -22,12 +22,10 @@ import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

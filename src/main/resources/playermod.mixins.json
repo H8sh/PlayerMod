@@ -20,7 +20,8 @@
     "MixinInventoryScreen",
     "MixinRecipeBookComponent",
     "MixinRecipeBookPage",
-    "MixinLayerDefinitions"
+    "MixinLayerDefinitions",
+    "MixinRenderType"
   ],
   "injectors": {
     "defaultRequire": 1

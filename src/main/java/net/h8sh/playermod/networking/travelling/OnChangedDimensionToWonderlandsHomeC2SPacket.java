@@ -1,6 +1,7 @@
 package net.h8sh.playermod.networking.travelling;
 
 import net.h8sh.playermod.world.dimension.ModDimensions;
+import net.h8sh.playermod.world.portal.TravelManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,10 +34,13 @@ public class OnChangedDimensionToWonderlandsHomeC2SPacket {
 
             ServerPlayer player = context.getSender();
 
-            ResourceKey<Level> destination = ModDimensions.WONDERLANDS_KEY;
+            //ResourceKey<Level> destination = ModDimensions.WONDERLANDS_LEVEL_KEY;
+
+            ResourceKey<Level> destination = player.level().dimension() == ModDimensions.WONDERLANDS_LEVEL_KEY ?
+                    Level.OVERWORLD : ModDimensions.WONDERLANDS_LEVEL_KEY;
 
             ServerLevel newWorld = player.getServer().getLevel(destination);
-            TravelManager.teleport(player, newWorld, new BlockPos(0, 0, 0), true);
+            TravelManager.teleport(player, newWorld, new BlockPos(0, 50, 0), true);
 
             if (!TravelManager.get(player.serverLevel()).asAlreadyTravel("wonderlands_home")) {
 

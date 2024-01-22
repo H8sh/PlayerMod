@@ -27,7 +27,7 @@ public class ModBlocks {
 
 
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal",
-            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL)));
+            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
 
     public static final RegistryObject<Block> PALADIN_LECTERN = BLOCKS.register("paladin_lectern",
             () -> new PaladinLectern(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));

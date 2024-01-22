@@ -7,6 +7,8 @@ import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.animation.SteveAttackC2SPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
@@ -16,12 +18,20 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class AnimationEvent {
 
+    static PlayerModel<AbstractClientPlayer> playermodel;
+
+    public static void setPlayermodel(PlayerModel<AbstractClientPlayer> playermodel) {
+        AnimationEvent.playermodel = playermodel;
+    }
+
+
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             return;
         }
         if (Minecraft.getInstance().player != null) {
+
             Player player = Minecraft.getInstance().player;
 
             AnimationHandler.countTickAnimation();
@@ -45,6 +55,7 @@ public class AnimationEvent {
                 AnimationHandler.setSteveShiftDown(false);
                 AnimationHandler.setSteveIdleShiftDown(false);
             }
+
         }
     }
 

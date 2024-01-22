@@ -31,8 +31,6 @@ public class BaseFluidType extends FluidType {
         this.fogColor = fogColor;
     }
 
-
-
     @Override
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
         consumer.accept(new IClientFluidTypeExtensions() {

@@ -26,12 +26,12 @@ import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.potion.ModPotions;
+import net.h8sh.playermod.shader.ModRenderTypes;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
@@ -59,6 +59,7 @@ import java.util.Map;
 
 @Mod(PlayerMod.MODID)
 public class PlayerMod {
+
     public static final String MODID = "playermod";
 
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -90,8 +91,6 @@ public class PlayerMod {
 
         ModTabs.register(modEventBus);
 
-        ModDimensions.register();
-
         ModSounds.register(modEventBus);
 
         ModEntities.register(modEventBus);
@@ -112,6 +111,7 @@ public class PlayerMod {
         event.enqueueWork(() -> {
         });
         ModMessages.register();
+
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -171,8 +171,11 @@ public class PlayerMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
-            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SOAP_WATER.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOAP_WATER.get(), RenderType.translucent());
+           /* ItemBlockRenderTypes.setRenderLayer(Fluids.WATER.getSource(), ModRenderTypes.brightSolid());
+            ItemBlockRenderTypes.setRenderLayer(Fluids.WATER.getFlowing(), ModRenderTypes.brightSolid());*/
+
+           /* ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SOAP_WATER.get(), ModRenderTypes.brightSolid());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SOAP_WATER.get(), ModRenderTypes.brightSolid());*/
 
             EntityRenderers.register(ModEntities.SWOUIFFI.get(), SwouiffiRenderer::new);
             EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);

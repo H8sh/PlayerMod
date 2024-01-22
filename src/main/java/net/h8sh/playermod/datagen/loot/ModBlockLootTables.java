@@ -22,7 +22,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        this.dropSelf(ModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(ModBlocks.PALADIN_LECTERN.get());
         this.dropSelf(ModBlocks.AOE_MARKER_BLOCK.get());
         this.dropSelf(ModBlocks.TARGET_MARK_BLOCK.get());
