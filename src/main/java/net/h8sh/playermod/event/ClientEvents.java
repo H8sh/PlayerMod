@@ -85,6 +85,10 @@ public class ClientEvents {
 
             //SPELLS: --------------------------------------------------------------------------------------------------
 
+            if (KeyBinding.SKILL_SCREEN_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
+                //Minecraft.getInstance().setScreen(new SkillScreen(new ClientSkills(Minecraft.getInstance(), null)));
+            }
+
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getFirstSpell();
                 SpellManager.activeSpell(firstSpell, minecraft);
