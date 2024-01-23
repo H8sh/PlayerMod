@@ -14,6 +14,7 @@ import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineEastBlock;
 import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineNorthBlock;
 import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineSouthBlock;
 import net.h8sh.playermod.block.custom.linkzone.mine.LinkZoneMineWestBlock;
+import net.h8sh.playermod.block.custom.profession.*;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -28,18 +29,19 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 public class ModBlocks {
-
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, PlayerMod.MODID);
 
     public static final RegistryObject<LiquidBlock> SOAP_WATER_BLOCK = BLOCKS.register("soap_water_block",
             () -> new LiquidBlock(ModFluids.SOURCE_SOAP_WATER, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
-
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal",
             () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
 
+    public static final RegistryObject<Block> CONSTRUCTION_BLOCK = registerBlock("construction_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
     public static final RegistryObject<Block> DEATH_BLOCK = registerBlock("death_block",
-            () -> new DeathBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+            () -> new DeathBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noLootTable().lightLevel((blockState) -> 15)));
 
     public static final RegistryObject<Block> LINK_ZONE_CITADEL_NORTH_BLOCK = registerBlock("link_zone_citadel_north",
             () -> new LinkZoneCitadelNorthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
@@ -86,8 +88,32 @@ public class ModBlocks {
     public static final RegistryObject<Block> ADAM_BLOCK_ENTITY = BLOCKS.register("adam_block",
             () -> new AdamBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion()));
 
+    public static final RegistryObject<Block> WIZARD_BLOCK_ENTITY = BLOCKS.register("wizard_block",
+            () -> new WizardBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> PALADIN_BLOCK_ENTITY = BLOCKS.register("paladin_block",
+            () -> new PaladinBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> ROGUE_BLOCK_ENTITY = BLOCKS.register("rogue_block",
+            () -> new RogueBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> BERSERKER_BLOCK_ENTITY = BLOCKS.register("berserker_block",
+            () -> new BerserkerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> DRUID_BLOCK_ENTITY = BLOCKS.register("druid_block",
+            () -> new DruidBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> INVOCATOR_BLOCK_ENTITY = BLOCKS.register("invocator_block",
+            () -> new InvocatorBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> GUNSLINGER_BLOCK_ENTITY = BLOCKS.register("gunslinger_block",
+            () -> new GunslingerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
+    public static final RegistryObject<Block> MECHANIC_BLOCK_ENTITY = BLOCKS.register("mechanic_block",
+            () -> new MechanicBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.ANVIL).noOcclusion().noLootTable()));
+
     public static final RegistryObject<Block> PLINTH_BLOCK = registerBlock("plinth",
-            () -> new PlinthBLock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion()));
+            () -> new PlinthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion()));
 
 
     //TODO: change to custom block

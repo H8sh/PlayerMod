@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "playermod:block/invocator_block"
+    }
+  }
+}

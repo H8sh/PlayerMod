@@ -24,6 +24,7 @@ public class ModTabs {
 
                         pOutput.accept(ModBlocks.PORTAL_BLOCK.get());
                         pOutput.accept(ModBlocks.DEATH_BLOCK.get());
+                        pOutput.accept(ModBlocks.CONSTRUCTION_BLOCK.get());
                         pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_NORTH_BLOCK.get());
                         pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_SOUTH_BLOCK.get());
                         pOutput.accept(ModBlocks.LINK_ZONE_CITADEL_WEST_BLOCK.get());
@@ -39,6 +40,14 @@ public class ModTabs {
 
                         pOutput.accept(ModItems.PNJ_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.ADAM_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.WIZARD_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.PALADIN_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.ROGUE_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.DRUID_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.INVOCATOR_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.GUNSLINGER_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.MECHANIC_BLOCK_ITEM.get());
+                        pOutput.accept(ModItems.BERSERKER_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PLINTH_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
 

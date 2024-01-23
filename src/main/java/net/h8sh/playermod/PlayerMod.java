@@ -9,7 +9,7 @@ import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.block.entity.ModBlockEntities;
 import net.h8sh.playermod.block.entity.client.AdamBlockRenderer;
 import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
-import net.h8sh.playermod.block.entity.client.PlinthBlockRenderer;
+import net.h8sh.playermod.block.entity.client.profession.*;
 import net.h8sh.playermod.block.entity.client.PnjBlockRenderer;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
@@ -27,12 +27,9 @@ import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.potion.ModPotions;
-import net.h8sh.playermod.shader.ModRenderTypes;
 import net.h8sh.playermod.sound.ModSounds;
-import net.h8sh.playermod.world.dimension.ModDimensions;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
@@ -188,6 +185,14 @@ public class PlayerMod {
             BlockEntityRenderers.register(ModBlockEntities.PNJ_BLOCK_ENTITY.get(), PnjBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.ADAM_BLOCK_ENTITY.get(), AdamBlockRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.PLINTH_BLOCK_ENTITY.get(), PlinthBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.ROGUE_BLOCK_ENTITY.get(), RogueBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.PALADIN_BLOCK_ENTITY.get(), PaladinBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.WIZARD_BLOCK_ENTITY.get(), WizardBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.BERSERKER_BLOCK_ENTITY.get(), BerserkerBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.DRUID_BLOCK_ENTITY.get(), DruidBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.INVOCATOR_BLOCK_ENTITY.get(), InvocatorBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.GUNSLINGER_BLOCK_ENTITY.get(), GunslingerBlockRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.MECHANIC_BLOCK_ENTITY.get(), MechanicBlockRenderer::new);
         }
     }
 }

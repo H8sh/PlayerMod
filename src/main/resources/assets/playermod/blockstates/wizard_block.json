@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "playermod:block/wizard_block"
+    }
+  }
+}

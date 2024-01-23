@@ -5,7 +5,7 @@ import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.custom.PaladinLecternItem;
-import net.h8sh.playermod.item.custom.PlinthBlockItem;
+import net.h8sh.playermod.item.custom.profession.*;
 import net.h8sh.playermod.item.custom.PnjBlockItem;
 import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.BucketItem;
@@ -47,9 +47,32 @@ public class ModItems {
 
     public static final RegistryObject<Item> ADAM_BLOCK_ITEM = ITEMS.register("adam_block",
             () -> new PnjBlockItem(ModBlocks.ADAM_BLOCK_ENTITY.get(), new Item.Properties()));
-
     public static final RegistryObject<Item> PLINTH_BLOCK_ITEM = ITEMS.register("plinth_block",
             () -> new PlinthBlockItem(ModBlocks.PLINTH_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> WIZARD_BLOCK_ITEM = ITEMS.register("wizard_block",
+            () -> new WizardBlockItem(ModBlocks.WIZARD_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PALADIN_BLOCK_ITEM = ITEMS.register("paladin_block",
+            () -> new PaladinBlockItem(ModBlocks.PALADIN_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> ROGUE_BLOCK_ITEM = ITEMS.register("rogue_block",
+            () -> new RogueBlockItem(ModBlocks.ROGUE_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> BERSERKER_BLOCK_ITEM = ITEMS.register("berserker_block",
+            () -> new BerserkerBlockItem(ModBlocks.BERSERKER_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> DRUID_BLOCK_ITEM = ITEMS.register("druid_block",
+            () -> new DruidBlockItem(ModBlocks.DRUID_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> INVOCATOR_BLOCK_ITEM = ITEMS.register("invocator_block",
+            () -> new InvocatorBlockItem(ModBlocks.INVOCATOR_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNSLINGER_BLOCK_ITEM = ITEMS.register("gunslinger_block",
+            () -> new GunslingerBlockItem(ModBlocks.GUNSLINGER_BLOCK_ENTITY.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> MECHANIC_BLOCK_ITEM = ITEMS.register("mechanic_block",
+            () -> new MechanicBlockItem(ModBlocks.MECHANIC_BLOCK_ENTITY.get(), new Item.Properties()));
 
     //TODO: replace item book by custom item book
     public static final RegistryObject<Item> PALADIN_BOOK = ITEMS.register("paladin_book",

@@ -21,6 +21,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.AOE_BLOCK);
         blockWithItem(ModBlocks.DAMAGE_SPELL_BLOCK);
         blockWithItem(ModBlocks.DEATH_BLOCK);
+        blockWithItem(ModBlocks.CONSTRUCTION_BLOCK);
         blockWithItem(ModBlocks.LINK_ZONE_CITADEL_NORTH_BLOCK);
         blockWithItem(ModBlocks.LINK_ZONE_CITADEL_SOUTH_BLOCK);
         blockWithItem(ModBlocks.LINK_ZONE_CITADEL_WEST_BLOCK);

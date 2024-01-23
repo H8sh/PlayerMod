@@ -63,7 +63,6 @@ public class ScreenEvent {
                 Minecraft.getInstance().setScreen(new PnjBlockScreen());
                 closePnjBlockScreen();
             }
-
         }
     }
 
