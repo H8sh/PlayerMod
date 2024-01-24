@@ -20,7 +20,7 @@ import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
 import net.h8sh.playermod.gui.wizard.ManaOverlay;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
-import net.h8sh.playermod.skill.SkillScreen;
+import net.h8sh.playermod.skill.screen.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
