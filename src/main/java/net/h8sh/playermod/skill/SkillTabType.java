@@ -1,6 +1,7 @@
 package net.h8sh.playermod.skill;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -102,6 +103,6 @@ enum SkillTabType {
     public boolean isMouseOver(int pOffsetX, int pOffsetY, int pIndex, double pMouseX, double pMouseY) {
         int i = pOffsetX + this.getX(pIndex);
         int j = pOffsetY + this.getY(pIndex);
-        return pMouseX > (double) i && pMouseX < (double) (i + this.width) && pMouseY > (double) j && pMouseY < (double) (j + this.height);
+        return pMouseX > (double)i && pMouseX < (double)(i + this.width) && pMouseY > (double)j && pMouseY < (double)(j + this.height);
     }
 }

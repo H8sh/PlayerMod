@@ -66,22 +66,19 @@ public class Skill {
 
     }
 
-    public static Skill getRoot(Skill skill) {
-        Skill skill1 = skill;
+    public static Skill getRoot(Skill pAdvancement) {
+        Skill advancement = pAdvancement;
 
         while (true) {
-            Skill skill2 = skill1.getParent();
-            if (skill2 == null) {
-                return skill1;
+            Skill advancement1 = advancement.getParent();
+            if (advancement1 == null) {
+                return advancement;
             }
 
-            skill1 = skill2;
+            advancement = advancement1;
         }
     }
 
-    /**
-     * Deconstructs this advancement into a {@link net.minecraft.advancements.Advancement#Builder}.
-     */
     public Skill.Builder deconstruct() {
         return new Skill.Builder(this.parent == null ? null : this.parent.getId(), this.display, this.rewards, this.criteria, this.requirements, this.sendsTelemetryEvent);
     }
@@ -161,8 +158,8 @@ public class Skill {
         } else if (!(pOther instanceof Skill)) {
             return false;
         } else {
-            Skill skill = (Skill) pOther;
-            return this.id.equals(skill.id);
+            Skill advancement = (Skill) pOther;
+            return this.id.equals(advancement.id);
         }
     }
 
@@ -182,7 +179,7 @@ public class Skill {
         return this.chatComponent;
     }
 
-    public static class Builder implements IForgeSkillBuilder {
+    public static class Builder implements net.minecraftforge.common.extensions.IForgeAdvancementBuilder {
         private final boolean sendsTelemetryEvent;
         @Nullable
         private ResourceLocation parentId;
@@ -391,9 +388,9 @@ public class Skill {
         }
 
         public Skill save(Consumer<Skill> pConsumer, String pId) {
-            Skill build = this.build(new ResourceLocation(pId));
-            pConsumer.accept(build);
-            return build;
+            Skill advancement = this.build(new ResourceLocation(pId));
+            pConsumer.accept(advancement);
+            return advancement;
         }
 
         public JsonObject serializeToJson() {

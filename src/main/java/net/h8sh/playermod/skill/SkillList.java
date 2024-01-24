@@ -3,14 +3,13 @@ package net.h8sh.playermod.skill;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
-import net.minecraft.resources.ResourceLocation;
-import org.slf4j.Logger;
-
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import javax.annotation.Nullable;
+import net.minecraft.resources.ResourceLocation;
+import org.slf4j.Logger;
 
 public class SkillList {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -18,14 +17,14 @@ public class SkillList {
     private final Set<Skill> roots = Sets.newLinkedHashSet();
     private final Set<Skill> tasks = Sets.newLinkedHashSet();
     @Nullable
-    private Listener listener;
+    private SkillList.Listener listener;
 
     private void remove(Skill pAdvancement) {
-        for (Skill advancement : pAdvancement.getChildren()) {
+        for(Skill advancement : pAdvancement.getChildren()) {
             this.remove(advancement);
         }
 
-        LOGGER.info("Forgot about advancement {}", (Object) pAdvancement.getId());
+        LOGGER.info("Forgot about advancement {}", (Object)pAdvancement.getId());
         this.advancements.remove(pAdvancement.getId());
         if (pAdvancement.getParent() == null) {
             this.roots.remove(pAdvancement);
@@ -42,10 +41,10 @@ public class SkillList {
     }
 
     public void remove(Set<ResourceLocation> pIds) {
-        for (ResourceLocation resourcelocation : pIds) {
+        for(ResourceLocation resourcelocation : pIds) {
             Skill advancement = this.advancements.get(resourcelocation);
             if (advancement == null) {
-                LOGGER.warn("Told to remove advancement {} but I don't know what that is", (Object) resourcelocation);
+                LOGGER.warn("Told to remove advancement {} but I don't know what that is", (Object)resourcelocation);
             } else {
                 this.remove(advancement);
             }
@@ -56,11 +55,11 @@ public class SkillList {
     public void add(Map<ResourceLocation, Skill.Builder> pAdvancements) {
         Map<ResourceLocation, Skill.Builder> map = Maps.newHashMap(pAdvancements);
 
-        while (!map.isEmpty()) {
+        while(!map.isEmpty()) {
             boolean flag = false;
             Iterator<Map.Entry<ResourceLocation, Skill.Builder>> iterator = map.entrySet().iterator();
 
-            while (iterator.hasNext()) {
+            while(iterator.hasNext()) {
                 Map.Entry<ResourceLocation, Skill.Builder> entry = iterator.next();
                 ResourceLocation resourcelocation = entry.getKey();
                 Skill.Builder advancement$builder = entry.getValue();
@@ -84,14 +83,14 @@ public class SkillList {
             }
 
             if (!flag) {
-                for (Map.Entry<ResourceLocation, Skill.Builder> entry1 : map.entrySet()) {
+                for(Map.Entry<ResourceLocation, Skill.Builder> entry1 : map.entrySet()) {
                     LOGGER.error("Couldn't load advancement {}: {}", entry1.getKey(), entry1.getValue());
                 }
                 break;
             }
         }
 
-        LOGGER.info("Loaded {} advancements", (int) this.advancements.size());
+        LOGGER.info("Loaded {} advancements", (int)this.advancements.size());
     }
 
     public void clear() {
@@ -117,14 +116,14 @@ public class SkillList {
         return this.advancements.get(pId);
     }
 
-    public void setListener(@Nullable Listener pListener) {
+    public void setListener(@Nullable SkillList.Listener pListener) {
         this.listener = pListener;
         if (pListener != null) {
-            for (Skill advancement : this.roots) {
+            for(Skill advancement : this.roots) {
                 pListener.onAddAdvancementRoot(advancement);
             }
 
-            for (Skill advancement1 : this.tasks) {
+            for(Skill advancement1 : this.tasks) {
                 pListener.onAddAdvancementTask(advancement1);
             }
         }

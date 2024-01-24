@@ -1,7 +1,9 @@
 package net.h8sh.playermod.mixin;
 
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ClientboundPlayerCombatKillPacket;
+import net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

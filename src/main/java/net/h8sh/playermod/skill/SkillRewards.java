@@ -76,7 +76,7 @@ public class SkillRewards {
     }
 
     public String toString() {
-        return "AdvancementRewards{experience=" + this.experience + ", loot=" + Arrays.toString((Object[])this.loot) + ", recipes=" + Arrays.toString((Object[])this.recipes) + ", function=" + this.function + "}";
+        return "SkillRewards{experience=" + this.experience + ", loot=" + Arrays.toString((Object[])this.loot) + ", recipes=" + Arrays.toString((Object[])this.recipes) + ", function=" + this.function + "}";
     }
 
     public JsonElement serializeToJson() {
@@ -152,23 +152,23 @@ public class SkillRewards {
         /**
          * Creates a new builder with the given amount of experience as a reward
          */
-        public static Builder experience(int pExperience) {
-            return (new Builder()).addExperience(pExperience);
+        public static SkillRewards.Builder experience(int pExperience) {
+            return (new SkillRewards.Builder()).addExperience(pExperience);
         }
 
         /**
          * Adds the given amount of experience. (Not a direct setter)
          */
-        public Builder addExperience(int pExperience) {
+        public SkillRewards.Builder addExperience(int pExperience) {
             this.experience += pExperience;
             return this;
         }
 
-        public static Builder loot(ResourceLocation pLootTableId) {
-            return (new Builder()).addLootTable(pLootTableId);
+        public static SkillRewards.Builder loot(ResourceLocation pLootTableId) {
+            return (new SkillRewards.Builder()).addLootTable(pLootTableId);
         }
 
-        public Builder addLootTable(ResourceLocation pLootTableId) {
+        public SkillRewards.Builder addLootTable(ResourceLocation pLootTableId) {
             this.loot.add(pLootTableId);
             return this;
         }
@@ -176,23 +176,23 @@ public class SkillRewards {
         /**
          * Creates a new builder with the given recipe as a reward.
          */
-        public static Builder recipe(ResourceLocation pRecipeId) {
-            return (new Builder()).addRecipe(pRecipeId);
+        public static SkillRewards.Builder recipe(ResourceLocation pRecipeId) {
+            return (new SkillRewards.Builder()).addRecipe(pRecipeId);
         }
 
         /**
          * Adds the given recipe to the rewards.
          */
-        public Builder addRecipe(ResourceLocation pRecipeId) {
+        public SkillRewards.Builder addRecipe(ResourceLocation pRecipeId) {
             this.recipes.add(pRecipeId);
             return this;
         }
 
-        public static Builder function(ResourceLocation pFunctionId) {
-            return (new Builder()).runs(pFunctionId);
+        public static SkillRewards.Builder function(ResourceLocation pFunctionId) {
+            return (new SkillRewards.Builder()).runs(pFunctionId);
         }
 
-        public Builder runs(ResourceLocation pFunctionId) {
+        public SkillRewards.Builder runs(ResourceLocation pFunctionId) {
             this.function = pFunctionId;
             return this;
         }

@@ -1,0 +1,173 @@
+{
+  "skill_types": [
+    {
+      "skill_type": {
+        "name": "basic",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "paladin",
+        "skills": [
+          {
+            "first_spell": "heal",
+            "second_spell": "armor",
+            "third_spell": "damage_boost",
+            "ultimate_spell": "lightning_strike"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "wizard",
+        "skills": [
+          {
+            "first_spell": "mana_drain",
+            "second_spell": "aoe",
+            "third_spell": "freeze",
+            "ultimate_spell": "laser"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "druid",
+        "skills": [
+          {
+            "first_spell": "fireMeta",
+            "second_spell": "aquaMeta",
+            "third_spell": "windMeta",
+            "ultimate_spell": "spiritusMeta"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "fireMeta",
+        "skills": [
+          {
+            "first_spell": "damage_spell",
+            "second_spell": "fire_aura",
+            "third_spell": "fire_scream",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "aquaMeta",
+        "skills": [
+          {
+            "first_spell": "grab",
+            "second_spell": "shield",
+            "third_spell": "waterAoe",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "windMeta",
+        "skills": [
+          {
+            "first_spell": "speed",
+            "second_spell": "range",
+            "third_spell": "dodge",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "spiritusMeta",
+        "skills": [
+          {
+            "first_spell": "fire_boost",
+            "second_spell": "aqua_boost",
+            "third_spell": "wind_boost",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "rogue",
+        "skills": [
+          {
+            "first_spell": "smoke",
+            "second_spell": "teleportation",
+            "third_spell": "shot",
+            "ultimate_spell": "double"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "berserk",
+        "skills": [
+          {
+            "first_spell": "healthSacrifice",
+            "second_spell": "charge",
+            "third_spell": "slam",
+            "ultimate_spell": "rage"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "invocator",
+        "skills": [
+          {
+            "first_spell": "target",
+            "second_spell": "invocation",
+            "third_spell": "boost",
+            "ultimate_spell": "assemble"
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "gunslinger",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "skill_type": {
+        "name": "mechanic",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    }
+  ]
+}

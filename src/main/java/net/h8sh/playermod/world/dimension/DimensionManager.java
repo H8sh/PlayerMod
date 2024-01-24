@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 @AutoRegisterCapability
 public class DimensionManager {
-    private static Direction direction;
+    private static Direction direction = Direction.EAST;
     private static int x;
     private static int y;
 

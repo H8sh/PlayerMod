@@ -27,6 +27,7 @@ import net.h8sh.playermod.item.ModItems;
 import net.h8sh.playermod.item.ModTabs;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.potion.ModPotions;
+import net.h8sh.playermod.skill.reader.SkillTypes;
 import net.h8sh.playermod.sound.ModSounds;
 import net.h8sh.playermod.world.dimension.mansion.MansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
@@ -69,6 +70,7 @@ public class PlayerMod {
 
         forgeBus.addListener(this::jsonStructureReader);
         forgeBus.addListener(this::jsonProfessionReader);
+        forgeBus.addListener(this::jsonSkillReader);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -152,6 +154,27 @@ public class PlayerMod {
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();
                         System.out.println("Json file failed to load for profession");
+                    }
+                });
+            }
+        });
+    }
+
+    private void jsonSkillReader(AddReloadListenerEvent event) {
+        event.addListener(new SimpleJsonResourceReloadListener((new GsonBuilder()).create(), "skill") {
+            @Override
+            protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+                pObject.forEach((resourceLocation, jsonProfessionElement) -> {
+                    try {
+                        JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonProfessionElement, "skills");
+
+                        Gson gson = new Gson();
+                        SkillTypes professionsType = gson.fromJson(jsonObject, SkillTypes.class);
+                        SkillTypes.setPrototypesFromJson(professionsType);
+
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                        System.out.println("Json file failed to load for skill");
                     }
                 });
             }

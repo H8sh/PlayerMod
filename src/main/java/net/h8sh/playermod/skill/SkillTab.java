@@ -1,6 +1,7 @@
 package net.h8sh.playermod.skill;
 
 import com.google.common.collect.Maps;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +23,7 @@ public class SkillTab {
     private final SkillScreen screen;
     private final SkillTabType type;
     private final int index;
-    private final Skill skill;
+    private final Skill advancement;
     private final DisplayInfo display;
     private final ItemStack icon;
     private final Component title;
@@ -38,17 +39,17 @@ public class SkillTab {
     private boolean centered;
     private int page;
 
-    public SkillTab(Minecraft pMinecraft, SkillScreen pScreen, SkillTabType pType, int pIndex, Skill skill, DisplayInfo pDisplay) {
+    public SkillTab(Minecraft pMinecraft, SkillScreen pScreen, SkillTabType pType, int pIndex, Skill pAdvancement, DisplayInfo pDisplay) {
         this.minecraft = pMinecraft;
         this.screen = pScreen;
         this.type = pType;
         this.index = pIndex;
-        this.skill = skill;
+        this.advancement = pAdvancement;
         this.display = pDisplay;
         this.icon = pDisplay.getIcon();
         this.title = pDisplay.getTitle();
-        this.root = new SkillWidget(this, pMinecraft, skill, pDisplay);
-        this.addWidget(this.root, skill);
+        this.root = new SkillWidget(this, pMinecraft, pAdvancement, pDisplay);
+        this.addWidget(this.root, pAdvancement);
     }
 
     public SkillTab(Minecraft mc, SkillScreen screen, SkillTabType type, int index, int page, Skill adv, DisplayInfo info) {
@@ -57,16 +58,16 @@ public class SkillTab {
     }
 
     @Nullable
-    public static SkillTab create(Minecraft pMinecraft, SkillScreen pScreen, int pTabIndex, Skill skill) {
-        if (skill.getDisplay() == null) {
+    public static SkillTab create(Minecraft pMinecraft, SkillScreen pScreen, int pTabIndex, Skill pAdvancement) {
+        if (pAdvancement.getDisplay() == null) {
             return null;
         } else {
-            for (SkillTabType SkillTabType : SkillTabType.values()) {
-                if ((pTabIndex % SkillTabType.MAX_TABS) < SkillTabType.getMax()) {
-                    return new SkillTab(pMinecraft, pScreen, SkillTabType, pTabIndex % SkillTabType.MAX_TABS, pTabIndex / SkillTabType.MAX_TABS, skill, skill.getDisplay());
+            for (SkillTabType advancementtabtype : SkillTabType.values()) {
+                if ((pTabIndex % SkillTabType.MAX_TABS) < advancementtabtype.getMax()) {
+                    return new SkillTab(pMinecraft, pScreen, advancementtabtype, pTabIndex % SkillTabType.MAX_TABS, pTabIndex / SkillTabType.MAX_TABS, pAdvancement, pAdvancement.getDisplay());
                 }
 
-                pTabIndex -= SkillTabType.getMax();
+                pTabIndex -= advancementtabtype.getMax();
             }
 
             return null;
@@ -85,8 +86,8 @@ public class SkillTab {
         return this.index;
     }
 
-    public Skill getSkill() {
-        return this.skill;
+    public Skill getAdvancement() {
+        return this.advancement;
     }
 
     public Component getTitle() {
@@ -142,10 +143,10 @@ public class SkillTab {
         int i = Mth.floor(this.scrollX);
         int j = Mth.floor(this.scrollY);
         if (pMouseX > 0 && pMouseX < 234 && pMouseY > 0 && pMouseY < 113) {
-            for (SkillWidget skillWidget : this.widgets.values()) {
-                if (skillWidget.isMouseOver(i, j, pMouseX, pMouseY)) {
+            for (SkillWidget advancementwidget : this.widgets.values()) {
+                if (advancementwidget.isMouseOver(i, j, pMouseX, pMouseY)) {
                     flag = true;
-                    skillWidget.drawHover(pGuiGraphics, i, j, this.fade, pWidth, pHeight);
+                    advancementwidget.drawHover(pGuiGraphics, i, j, this.fade, pWidth, pHeight);
                     break;
                 }
             }
@@ -175,15 +176,15 @@ public class SkillTab {
 
     }
 
-    public void addAdvancement(Skill skill) {
-        if (skill.getDisplay() != null) {
-            SkillWidget skillWidget = new SkillWidget(this, this.minecraft, skill, skill.getDisplay());
-            this.addWidget(skillWidget, skill);
+    public void addAdvancement(Skill pAdvancement) {
+        if (pAdvancement.getDisplay() != null) {
+            SkillWidget advancementwidget = new SkillWidget(this, this.minecraft, pAdvancement, pAdvancement.getDisplay());
+            this.addWidget(advancementwidget, pAdvancement);
         }
     }
 
-    private void addWidget(SkillWidget pWidget, Skill skill) {
-        this.widgets.put(skill, pWidget);
+    private void addWidget(SkillWidget pWidget, Skill pAdvancement) {
+        this.widgets.put(pAdvancement, pWidget);
         int i = pWidget.getX();
         int j = i + 28;
         int k = pWidget.getY();
@@ -193,15 +194,15 @@ public class SkillTab {
         this.minY = Math.min(this.minY, k);
         this.maxY = Math.max(this.maxY, l);
 
-        for (SkillWidget skillWidget : this.widgets.values()) {
-            skillWidget.attachToParent();
+        for (SkillWidget advancementwidget : this.widgets.values()) {
+            advancementwidget.attachToParent();
         }
 
     }
 
     @Nullable
-    public SkillWidget getWidget(Skill skill) {
-        return this.widgets.get(skill);
+    public SkillWidget getWidget(Skill pAdvancement) {
+        return this.widgets.get(pAdvancement);
     }
 
     public SkillScreen getScreen() {

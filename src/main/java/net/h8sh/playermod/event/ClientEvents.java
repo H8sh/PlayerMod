@@ -20,6 +20,7 @@ import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
 import net.h8sh.playermod.gui.wizard.ManaOverlay;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
+import net.h8sh.playermod.skill.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -86,7 +87,7 @@ public class ClientEvents {
             //SPELLS: --------------------------------------------------------------------------------------------------
 
             if (KeyBinding.SKILL_SCREEN_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
-                //Minecraft.getInstance().setScreen(new SkillScreen(new ClientSkills(Minecraft.getInstance(), null)));
+                Minecraft.getInstance().setScreen(new SkillScreen(null));
             }
 
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
