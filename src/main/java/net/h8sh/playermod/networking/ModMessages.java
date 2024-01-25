@@ -32,8 +32,6 @@ import net.h8sh.playermod.networking.riding.RidingResetC2SPacket;
 import net.h8sh.playermod.networking.riding.RidingWizardC2SPacket;
 import net.h8sh.playermod.networking.travelling.*;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
-import net.h8sh.playermod.skill.network.CustomClientboundUpdateAdvancementsPacket;
-import net.h8sh.playermod.skill.network.CustomServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -61,18 +59,6 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        //Skill: -------------------------------------------------------------------------------------------------------
-        net.messageBuilder(CustomServerboundSeenAdvancementsPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(CustomServerboundSeenAdvancementsPacket::new)
-                .encoder(CustomServerboundSeenAdvancementsPacket::toBytes)
-                .consumerMainThread(CustomServerboundSeenAdvancementsPacket::handle)
-                .add();
-
-        net.messageBuilder(CustomClientboundUpdateAdvancementsPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(CustomClientboundUpdateAdvancementsPacket::new)
-                .encoder(CustomClientboundUpdateAdvancementsPacket::toBytes)
-                .consumerMainThread(CustomClientboundUpdateAdvancementsPacket::handle)
-                .add();
 
         //Animations ---------------------------------------------------------------------------------------------------
         net.messageBuilder(SteveAttackC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
