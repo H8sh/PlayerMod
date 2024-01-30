@@ -4,6 +4,7 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.networking.animation.SteveAttackC2SPacket;
 import net.h8sh.playermod.networking.animation.SteveShiftDownC2SPacket;
 import net.h8sh.playermod.networking.animation.SyncDeltaMovementProgressS2CPacket;
+import net.h8sh.playermod.networking.camera.SpawnCameraC2SPacket;
 import net.h8sh.playermod.networking.classes.berserk.SyncRageBarProgressS2CPacket;
 import net.h8sh.playermod.networking.classes.berserk.charge.ChargeC2SPacket;
 import net.h8sh.playermod.networking.classes.berserk.healthsacrifice.HealthSacrificeC2SPacket;
@@ -59,6 +60,14 @@ public class ModMessages {
 
         INSTANCE = net;
 
+
+        //CAMERA: ------------------------------------------------------------------------------------------------------
+
+        net.messageBuilder(SpawnCameraC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SpawnCameraC2SPacket::new)
+                .encoder(SpawnCameraC2SPacket::toBytes)
+                .consumerMainThread(SpawnCameraC2SPacket::handle)
+                .add();
 
         //Animations ---------------------------------------------------------------------------------------------------
         net.messageBuilder(SteveAttackC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)

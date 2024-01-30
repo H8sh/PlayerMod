@@ -17,10 +17,7 @@ import net.h8sh.playermod.config.WonderlandsModCommonConfigs;
 import net.h8sh.playermod.config.WonderlandsModServerConfigs;
 import net.h8sh.playermod.effect.ModEffects;
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.client.CrystalRenderer;
-import net.h8sh.playermod.entity.client.LivingLamppostRenderer;
-import net.h8sh.playermod.entity.client.PnjEntityRenderer;
-import net.h8sh.playermod.entity.client.SwouiffiRenderer;
+import net.h8sh.playermod.entity.client.*;
 import net.h8sh.playermod.fluid.ModFluidTypes;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.ModItems;
@@ -202,6 +199,7 @@ public class PlayerMod {
             EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);
             EntityRenderers.register(ModEntities.CRYSTAL.get(), CrystalRenderer::new);
             EntityRenderers.register(ModEntities.CUSTOM_PNJ.get(), PnjEntityRenderer::new);
+            EntityRenderers.register(ModEntities.CAMERA.get(), CameraRenderer::new);
 
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);

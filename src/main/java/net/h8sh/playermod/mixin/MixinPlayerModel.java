@@ -336,6 +336,194 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         PartDefinition wizard_left_jewel = wizard_left_arm_full.addOrReplaceChild("wizard_left_jewel", CubeListBuilder.create().texOffs(31, 48).addBox(0.0F, 4.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
+        PartDefinition rogue_body = body.addOrReplaceChild("rogue_body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rogue_head = rogue_body.addOrReplaceChild("rogue_head", CubeListBuilder.create(), PartPose.offset(0.0F, -6.0F, 0.0F));
+
+        PartDefinition wizard_face2 = rogue_head.addOrReplaceChild("wizard_face2", CubeListBuilder.create().texOffs(41, 48).addBox(-4.0F, -5.0F, -4.0F, 8.0F, 9.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair32 = rogue_head.addOrReplaceChild("hair32", CubeListBuilder.create().texOffs(90, 78).addBox(-1.0F, -5.0F, -5.0F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair33 = rogue_head.addOrReplaceChild("hair33", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 4.0F, 0.0F, 3.1416F, 0.0F));
+
+        PartDefinition hair34 = hair33.addOrReplaceChild("hair34", CubeListBuilder.create().texOffs(31, 90).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair35 = hair33.addOrReplaceChild("hair35", CubeListBuilder.create(), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair15_r2 = hair35.addOrReplaceChild("hair15_r2", CubeListBuilder.create().texOffs(53, 35).addBox(-0.842F, -0.0603F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.3681F, 6.7588F, 0.0F, 0.0F, 0.0F, -0.6981F));
+
+        PartDefinition hair36 = hair33.addOrReplaceChild("hair36", CubeListBuilder.create(), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair14_r2 = hair36.addOrReplaceChild("hair14_r2", CubeListBuilder.create().texOffs(58, 0).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 4.0F, 0.0F, 0.0F, 0.0F, -0.3491F));
+
+        PartDefinition hair37 = rogue_head.addOrReplaceChild("hair37", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair38 = hair37.addOrReplaceChild("hair38", CubeListBuilder.create().texOffs(0, 60).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair39 = hair37.addOrReplaceChild("hair39", CubeListBuilder.create(), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair11_r2 = hair39.addOrReplaceChild("hair11_r2", CubeListBuilder.create().texOffs(13, 0).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 4.0F, 0.0F, 0.0F, 0.0F, -0.3491F));
+
+        PartDefinition hair40 = hair37.addOrReplaceChild("hair40", CubeListBuilder.create(), PartPose.offsetAndRotation(4.5F, -5.0F, 2.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition hair12_r2 = hair40.addOrReplaceChild("hair12_r2", CubeListBuilder.create().texOffs(14, 34).addBox(-0.842F, -0.0603F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.3681F, 6.7588F, 0.0F, 0.0F, 0.0F, -0.6981F));
+
+        PartDefinition hair41 = rogue_head.addOrReplaceChild("hair41", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair42 = hair41.addOrReplaceChild("hair42", CubeListBuilder.create().texOffs(89, 85).addBox(-2.95F, 12.0F, 2.0F, 3.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair43 = hair41.addOrReplaceChild("hair43", CubeListBuilder.create().texOffs(80, 86).addBox(-2.95F, 5.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair44 = rogue_head.addOrReplaceChild("hair44", CubeListBuilder.create(), PartPose.offset(6.0F, 0.0F, 0.0F));
+
+        PartDefinition hair45 = hair44.addOrReplaceChild("hair45", CubeListBuilder.create().texOffs(85, 48).addBox(-2.95F, 12.0F, 2.0F, 3.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair46 = hair44.addOrReplaceChild("hair46", CubeListBuilder.create().texOffs(71, 86).addBox(-2.95F, 5.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair47 = rogue_head.addOrReplaceChild("hair47", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair48 = hair47.addOrReplaceChild("hair48", CubeListBuilder.create().texOffs(75, 73).addBox(4.0F, -5.0F, -5.0F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair49 = hair47.addOrReplaceChild("hair49", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair7_r2 = hair49.addOrReplaceChild("hair7_r2", CubeListBuilder.create().texOffs(82, 10).addBox(-0.5F, 0.0F, -3.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.5F, 1.0F, -2.0F, 0.0F, 0.0F, -0.3491F));
+
+        PartDefinition hair50 = rogue_head.addOrReplaceChild("hair50", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair51 = hair50.addOrReplaceChild("hair51", CubeListBuilder.create().texOffs(19, 75).addBox(4.0F, -5.0F, -5.0F, 1.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-9.0F, 0.0F, 0.0F));
+
+        PartDefinition hair52 = hair50.addOrReplaceChild("hair52", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.237F, 1.6595F, -2.0F, 0.0F, 0.0F, 0.6109F));
+
+        PartDefinition hair9_r2 = hair52.addOrReplaceChild("hair9_r2", CubeListBuilder.create().texOffs(82, 0).addBox(-0.5F, 0.0F, -3.0F, 1.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.513F, -0.4095F, 0.0F, 0.0F, 0.0F, -0.3491F));
+
+        PartDefinition hair53 = rogue_head.addOrReplaceChild("hair53", CubeListBuilder.create(), PartPose.offset(-3.0F, 0.0F, 0.0F));
+
+        PartDefinition hair54 = hair53.addOrReplaceChild("hair54", CubeListBuilder.create().texOffs(0, 3).addBox(-1.0F, -3.0F, -5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair55 = hair53.addOrReplaceChild("hair55", CubeListBuilder.create().texOffs(54, 65).addBox(-1.0F, -5.0F, -5.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair56 = rogue_head.addOrReplaceChild("hair56", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hair57 = hair56.addOrReplaceChild("hair57", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -3.0F, -5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, 0.0F, 0.0F));
+
+        PartDefinition hair58 = hair56.addOrReplaceChild("hair58", CubeListBuilder.create().texOffs(58, 12).addBox(5.0F, -5.0F, -5.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 0.0F, 0.0F));
+
+        PartDefinition hair59 = rogue_head.addOrReplaceChild("hair59", CubeListBuilder.create(), PartPose.offset(3.0F, 0.0F, 0.0F));
+
+        PartDefinition hair60 = hair59.addOrReplaceChild("hair60", CubeListBuilder.create().texOffs(62, 84).addBox(-2.95F, 12.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair61 = hair59.addOrReplaceChild("hair61", CubeListBuilder.create().texOffs(0, 46).addBox(-2.95F, 5.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, -10.0F, 1.0F));
+
+        PartDefinition hair62 = hair59.addOrReplaceChild("hair62", CubeListBuilder.create().texOffs(13, 73).addBox(-2.95F, 5.0F, 2.0F, 3.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 4.0F, 1.0F));
+
+        PartDefinition hat10 = rogue_head.addOrReplaceChild("hat10", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hat11 = hat10.addOrReplaceChild("hat11", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -5.0F, 0.0F, -1.7693F, -1.3928F, 1.7662F));
+
+        PartDefinition hat12 = hat11.addOrReplaceChild("hat12", CubeListBuilder.create(), PartPose.offset(-1.9415F, 7.0F, 5.665F));
+
+        PartDefinition hat1_r2 = hat12.addOrReplaceChild("hat1_r2", CubeListBuilder.create().texOffs(43, 0).addBox(-4.0F, -0.5F, -10.5F, 8.0F, 1.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, -6.5F, -5.5F, 0.0F, -0.6981F, 0.0F));
+
+        PartDefinition hat13 = hat11.addOrReplaceChild("hat13", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.2629F, 0.5F, 0.5481F, 0.0F, 0.6981F, 0.0F));
+
+        PartDefinition hat2_r2 = hat13.addOrReplaceChild("hat2_r2", CubeListBuilder.create().texOffs(39, 24).addBox(-4.0F, -0.5F, -10.5F, 8.0F, 1.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.3214F, 0.0F, -0.383F, 0.0F, -0.6981F, 0.0F));
+
+        PartDefinition hat14 = hat11.addOrReplaceChild("hat14", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.2629F, 0.5F, 0.5481F, 0.0F, 1.3963F, 0.0F));
+
+        PartDefinition hat3_r2 = hat14.addOrReplaceChild("hat3_r2", CubeListBuilder.create().texOffs(0, 22).addBox(-4.0F, -0.5F, -10.5F, 8.0F, 1.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.3214F, 0.0F, -0.383F, 0.0F, -0.6981F, 0.0F));
+
+        PartDefinition hat15 = hat11.addOrReplaceChild("hat15", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.2629F, 0.5F, 0.5481F, 0.0F, 2.2602F, 0.0F));
+
+        PartDefinition hat4_r2 = hat15.addOrReplaceChild("hat4_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -0.5F, -9.5F, 12.0F, 1.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.3214F, 0.0F, -0.383F, 0.0F, -0.6981F, 0.0F));
+
+        PartDefinition hat16 = hat10.addOrReplaceChild("hat16", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hat6_r2 = hat16.addOrReplaceChild("hat6_r2", CubeListBuilder.create().texOffs(0, 46).addBox(-5.0F, -1.5F, -5.0F, 10.0F, 3.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -5.5F, 0.0F, -0.3231F, 0.7013F, -0.2302F));
+
+        PartDefinition hat17 = hat10.addOrReplaceChild("hat17", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition hat7_r2 = hat17.addOrReplaceChild("hat7_r2", CubeListBuilder.create().texOffs(0, 60).addBox(-4.0F, -1.5F, -4.0F, 8.0F, 4.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0506F, -8.41F, 0.7277F, -0.5452F, 0.6385F, -0.3768F));
+
+        PartDefinition hat18 = hat10.addOrReplaceChild("hat18", CubeListBuilder.create(), PartPose.offsetAndRotation(0.004F, -11.2506F, 1.8782F, -0.3927F, 0.0F, 0.0F));
+
+        PartDefinition hat8_r2 = hat18.addOrReplaceChild("hat8_r2", CubeListBuilder.create().texOffs(0, 22).addBox(-2.5F, -1.5F, -2.5F, 5.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0546F, -0.1593F, 0.8495F, -0.5452F, 0.6385F, -0.3768F));
+
+        PartDefinition hat19 = hat10.addOrReplaceChild("hat19", CubeListBuilder.create(), PartPose.offsetAndRotation(0.004F, -13.2506F, 5.8782F, -0.7418F, 0.0F, 0.0F));
+
+        PartDefinition hat9_r2 = hat19.addOrReplaceChild("hat9_r2", CubeListBuilder.create().texOffs(0, 83).addBox(-1.5F, -1.5F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0546F, -0.1593F, 0.8495F, -0.5452F, 0.6385F, -0.3768F));
+
+        PartDefinition neck2 = rogue_head.addOrReplaceChild("neck2", CubeListBuilder.create().texOffs(45, 12).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, 0.0F));
+
+        PartDefinition rogue_right_arm_full = rogue_body.addOrReplaceChild("rogue_right_arm_full", CubeListBuilder.create(), PartPose.offsetAndRotation(-4.0F, 0.7F, 0.0F, 0.0F, 0.0F, 0.2618F));
+
+        PartDefinition wizard_right_arm2 = rogue_right_arm_full.addOrReplaceChild("wizard_right_arm2", CubeListBuilder.create().texOffs(51, 84).addBox(-3.0F, -2.0F, -1.0F, 2.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_right_forearm2 = rogue_right_arm_full.addOrReplaceChild("wizard_right_forearm2", CubeListBuilder.create().texOffs(25, 60).addBox(-1.0F, 1.0F, -2.0F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 3.0F, 1.0F));
+
+        PartDefinition wizard_right_shoulder_armor2 = rogue_right_arm_full.addOrReplaceChild("wizard_right_shoulder_armor2", CubeListBuilder.create().texOffs(0, 34).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_right_hand2 = rogue_right_arm_full.addOrReplaceChild("wizard_right_hand2", CubeListBuilder.create().texOffs(65, 48).addBox(-3.0F, 8.0F, -1.0F, 2.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_right_jewel2 = rogue_right_arm_full.addOrReplaceChild("wizard_right_jewel2", CubeListBuilder.create().texOffs(0, 12).addBox(-4.0F, 4.0F, -2.0F, 4.0F, 2.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rogue_left_leg_full = rogue_body.addOrReplaceChild("rogue_left_leg_full", CubeListBuilder.create(), PartPose.offset(3.0F, 6.0F, 0.0F));
+
+        PartDefinition wizard_left_bottom2 = rogue_left_leg_full.addOrReplaceChild("wizard_left_bottom2", CubeListBuilder.create().texOffs(39, 35).addBox(-2.0F, 3.0F, -2.0F, 4.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -1.0F));
+
+        PartDefinition wizard_left_leg2 = rogue_left_leg_full.addOrReplaceChild("wizard_left_leg2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_left_leg_r2 = wizard_left_leg2.addOrReplaceChild("wizard_left_leg_r2", CubeListBuilder.create().texOffs(78, 24).addBox(-2.3F, -2.8F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 6.0F, 0.0F, 0.0F, 0.0F, -0.0873F));
+
+        PartDefinition rogue_right_leg_full = rogue_body.addOrReplaceChild("rogue_right_leg_full", CubeListBuilder.create(), PartPose.offset(-3.0F, 6.0F, 0.0F));
+
+        PartDefinition wizard_right_leg_bottom2 = rogue_right_leg_full.addOrReplaceChild("wizard_right_leg_bottom2", CubeListBuilder.create().texOffs(78, 35).addBox(-2.0F, 3.0F, -2.0F, 4.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -1.0F));
+
+        PartDefinition wizard_right_leg2 = rogue_right_leg_full.addOrReplaceChild("wizard_right_leg2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_right_leg_r2 = wizard_right_leg2.addOrReplaceChild("wizard_right_leg_r2", CubeListBuilder.create().texOffs(58, 73).addBox(-1.7F, -2.8F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.0873F));
+
+        PartDefinition rogue_chest = rogue_body.addOrReplaceChild("rogue_chest", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition belt3 = rogue_chest.addOrReplaceChild("belt3", CubeListBuilder.create().texOffs(58, 65).addBox(-5.0F, 5.0F, -3.0F, 10.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock8 = rogue_chest.addOrReplaceChild("rock8", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock1_r2 = rock8.addOrReplaceChild("rock1_r2", CubeListBuilder.create().texOffs(45, 0).addBox(-1.5F, -0.5F, -3.0F, 3.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.5F, 6.0F, 0.0F, 0.0F, 0.0F, 0.2182F));
+
+        PartDefinition rock9 = rogue_chest.addOrReplaceChild("rock9", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock2_r2 = rock9.addOrReplaceChild("rock2_r2", CubeListBuilder.create().texOffs(0, 0).addBox(5.25F, 1.0F, -3.0F, 3.0F, 5.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.5F, 6.0F, 0.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition little_chest3 = rogue_chest.addOrReplaceChild("little_chest3", CubeListBuilder.create().texOffs(33, 65).addBox(-4.0F, -1.0F, -2.0F, 8.0F, 11.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock10 = rogue_chest.addOrReplaceChild("rock10", CubeListBuilder.create().texOffs(0, 73).addBox(2.85F, 9.0F, -3.0F, 3.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock11 = rogue_chest.addOrReplaceChild("rock11", CubeListBuilder.create().texOffs(72, 48).addBox(-5.95F, 9.0F, -3.0F, 3.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition belt4 = rogue_chest.addOrReplaceChild("belt4", CubeListBuilder.create().texOffs(71, 73).addBox(3.0F, 5.0F, -3.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 0.0F, 0.0F));
+
+        PartDefinition rock12 = rogue_chest.addOrReplaceChild("rock12", CubeListBuilder.create().texOffs(89, 58).addBox(-2.95F, 5.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rock13 = rogue_chest.addOrReplaceChild("rock13", CubeListBuilder.create().texOffs(22, 88).addBox(0.05F, 5.0F, 2.0F, 3.0F, 7.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition little_chest4 = rogue_chest.addOrReplaceChild("little_chest4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition little_chest2_r2 = little_chest4.addOrReplaceChild("little_chest2_r2", CubeListBuilder.create().texOffs(39, 24).addBox(-3.0F, -2.0F, -3.75F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.3054F, 0.0F, 0.0F));
+
+        PartDefinition rock14 = rogue_chest.addOrReplaceChild("rock14", CubeListBuilder.create().texOffs(72, 58).addBox(-4.0F, 6.0F, -2.75F, 8.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition rogue_left_arm_full = rogue_body.addOrReplaceChild("rogue_left_arm_full", CubeListBuilder.create(), PartPose.offsetAndRotation(4.0F, 0.5F, 0.0F, 0.0F, 0.0F, -0.2618F));
+
+        PartDefinition wizard_left_forearm2 = rogue_left_arm_full.addOrReplaceChild("wizard_left_forearm2", CubeListBuilder.create().texOffs(89, 71).addBox(-1.0F, 0.0F, -2.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 4.0F, 1.0F));
+
+        PartDefinition wizard_left_arm2 = rogue_left_arm_full.addOrReplaceChild("wizard_left_arm2", CubeListBuilder.create().texOffs(13, 88).addBox(1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 1.0F, 0.0F));
+
+        PartDefinition wizard_left_armor_shoulder2 = rogue_left_arm_full.addOrReplaceChild("wizard_left_armor_shoulder2", CubeListBuilder.create().texOffs(34, 81).addBox(0.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition wizard_left_hand2 = rogue_left_arm_full.addOrReplaceChild("wizard_left_hand2", CubeListBuilder.create().texOffs(38, 90).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, 10.0F, 0.0F));
+
+        PartDefinition wizard_left_jewel2 = rogue_left_arm_full.addOrReplaceChild("wizard_left_jewel2", CubeListBuilder.create().texOffs(31, 48).addBox(0.0F, 4.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
         return meshDefinition;
     }
 

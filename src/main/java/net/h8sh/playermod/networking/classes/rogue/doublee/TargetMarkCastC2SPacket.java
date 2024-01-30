@@ -45,6 +45,7 @@ public class TargetMarkCastC2SPacket {
                     DoubleCapability.setReadyToUse(false);
                     DoubleCapability.setOnCD(true);
                     KeyBinding.ULTIMATE_SPELL_KEY.setDown(false);
+
                 });
             }
 

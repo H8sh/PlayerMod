@@ -27,12 +27,6 @@ public class DoubleCapability {
     public static boolean isEntityFrizz() {
         return frizz;
     }
-
-    public static void frizz(Entity entity, double x, double y, double z) {
-        entity.teleportTo(x,y,z);
-        entity.setDeltaMovement(0,0,0);
-        System.out.println(entity.getName());
-    }
     public static boolean targetMarkerOn = false;
     private static Entity toTarget;
     private static boolean onCD;

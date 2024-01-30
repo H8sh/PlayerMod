@@ -8,12 +8,11 @@ import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.ability.wizard.aoe.MagicAoECapability;
 import net.h8sh.playermod.ability.wizard.mana.ManaCapability;
 import net.h8sh.playermod.capability.profession.Profession;
+import net.h8sh.playermod.gui.berserk.ChargeBarOverlay;
 import net.h8sh.playermod.gui.berserk.RageBarOverlay;
 import net.h8sh.playermod.gui.rogue.DoubleBarOverlay;
 import net.h8sh.playermod.gui.wizard.AoEBarOverlay;
-import net.h8sh.playermod.gui.berserk.ChargeBarOverlay;
 import net.h8sh.playermod.networking.ModMessages;
-import net.h8sh.playermod.networking.classes.berserk.rage.RageC2SPacket;
 import net.h8sh.playermod.networking.classes.druid.firemeta.fireaura.FireAuraC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.doublee.FrizzC2SPacket;
 import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkCastC2SPacket;
@@ -21,13 +20,11 @@ import net.h8sh.playermod.networking.classes.rogue.doublee.TargetMarkMarkerC2SPa
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoECastC2SPacket;
 import net.h8sh.playermod.networking.classes.wizard.aoe.AoEMarkerC2SPacket;
 import net.h8sh.playermod.util.KeyBinding;
-import net.minecraft.advancements.critereon.EntityHurtPlayerTrigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

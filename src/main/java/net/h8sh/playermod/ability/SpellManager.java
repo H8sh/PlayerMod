@@ -57,7 +57,6 @@ public class SpellManager {
                 break;
 
             case "aoe":
-
                 MagicAoECapability.setPrepareAoe(true);
 
                 break;

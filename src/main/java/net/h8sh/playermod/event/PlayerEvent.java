@@ -4,6 +4,10 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.animation.handler.AnimationHandler;
+import net.h8sh.playermod.entity.custom.CameraEntity;
+import net.h8sh.playermod.networking.ModMessages;
+import net.h8sh.playermod.networking.camera.SpawnCameraC2SPacket;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,11 +19,21 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class PlayerEvent {
+    private static CameraEntity camera;
+
+    public static CameraEntity getCamera() {
+        return camera;
+    }
+
+    public static void setCamera(CameraEntity camera) {
+        PlayerEvent.camera = camera;
+    }
 
     @SubscribeEvent
     public static void onPlayerJoiningWorld(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player) {
             AnimationHandler.setSteveAttack(false);
+            if (Minecraft.getInstance().player != null) ModMessages.sendToServer(new SpawnCameraC2SPacket());
         }
     }
 

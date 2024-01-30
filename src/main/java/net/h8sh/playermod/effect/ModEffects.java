@@ -16,6 +16,9 @@ public class ModEffects {
     public static final RegistryObject<MobEffect> SMOKE = MOB_EFFECTS.register("smog",
             () -> new SmokeEffect(MobEffectCategory.HARMFUL, 3124687));
 
+    public static final RegistryObject<MobEffect> FRIZZ = MOB_EFFECTS.register("frizz",
+            () -> new FrizzEffect(MobEffectCategory.HARMFUL, 3124687));
+
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
     }

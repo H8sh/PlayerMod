@@ -6,12 +6,17 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -21,7 +26,8 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class CrystalEntity extends Animal implements GeoEntity {
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);    private String customName;
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private String customName;
     private int timer;
 
     public CrystalEntity(EntityType<? extends Animal> entityType, Level level) {
@@ -34,6 +40,11 @@ public class CrystalEntity extends Animal implements GeoEntity {
                 .add(Attributes.ATTACK_DAMAGE, 3.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.4f).build();
+    }
+
+    @Override
+    public boolean isPickable() {
+        return true;
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
