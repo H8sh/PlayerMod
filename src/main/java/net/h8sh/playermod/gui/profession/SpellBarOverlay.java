@@ -19,6 +19,7 @@ public class SpellBarOverlay {
         Player player = gui.minecraft.player;
         ResourceLocation WIDGETS_LOCATION = null;
         ItemStack itemStack = null;
+        ItemStack camera = new ItemStack(ModItems.SOAP_WATER_BUCKET.get()); //TODO replace by camera
         var currentProfession = Profession.getProfession();
         if (currentProfession == Profession.Professions.PALADIN) {
             itemStack = new ItemStack(ModItems.PALADIN_BOOK.get());
@@ -83,6 +84,9 @@ public class SpellBarOverlay {
         }
 
         renderSlot(pGuiGraphics, i - 91 - 26, i2, pPartialTick, player, itemStack, l++, gui);
+
+        pGuiGraphics.renderItem(player, camera, i - 91 + 200, i2, l++);
+        pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.CAMERA_KEY.getKey().getValue(), 0), i - 91 + 200, screenHeight - 23, 8421504);
 
     };
 

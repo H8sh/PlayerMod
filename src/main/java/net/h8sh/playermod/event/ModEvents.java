@@ -38,7 +38,7 @@ import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
 import net.h8sh.playermod.animation.handler.AnimationProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
-import net.h8sh.playermod.capability.questing.QuestingProvider;
+import net.h8sh.playermod.capability.camera.CameraProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
 import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.capability.travel.TravelProvider;
@@ -47,7 +47,6 @@ import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.entity.custom.LivingLamppost;
 import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.h8sh.playermod.entity.custom.SwouiffiEntity;
-import net.h8sh.playermod.world.dimension.DimensionManager;
 import net.h8sh.playermod.world.dimension.DimensionProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -67,6 +66,9 @@ public class ModEvents {
         public static void onAttachedCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
             if (event.getObject() instanceof Player) {
 
+                if (!event.getObject().getCapability(CameraProvider.CAMERA).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "camera"), new CameraProvider());
+                }
                 if (!event.getObject().getCapability(AnimationProvider.ANIMATION_HANDLER).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "animation"), new AnimationProvider());
                 }
@@ -82,8 +84,8 @@ public class ModEvents {
                 if (!event.getObject().getCapability(RidingProvider.RIDING).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "riding"), new RidingProvider());
                 }
-                if (!event.getObject().getCapability(QuestingProvider.QUESTING).isPresent()) {
-                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "questing"), new QuestingProvider());
+                if (!event.getObject().getCapability(CameraProvider.CAMERA).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "questing"), new CameraProvider());
                 }
                 if (!event.getObject().getCapability(TravelProvider.PLAYER_TRAVEL).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "travel"), new TravelProvider());
@@ -234,6 +236,11 @@ public class ModEvents {
                 // Capability saver ------------------------------------------------------------------------------------
                 event.getOriginal().reviveCaps();
 
+                event.getOriginal().getCapability(CameraProvider.CAMERA).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(CameraProvider.CAMERA).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
                 event.getOriginal().getCapability(AnimationProvider.ANIMATION_HANDLER).ifPresent(oldStore -> {
                     event.getEntity().getCapability(AnimationProvider.ANIMATION_HANDLER).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
@@ -259,8 +266,8 @@ public class ModEvents {
                         newStore.copyFrom(oldStore);
                     });
                 });
-                event.getOriginal().getCapability(QuestingProvider.QUESTING).ifPresent(oldStore -> {
-                    event.getEntity().getCapability(QuestingProvider.QUESTING).ifPresent(newStore -> {
+                event.getOriginal().getCapability(CameraProvider.CAMERA).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(CameraProvider.CAMERA).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
                     });
                 });

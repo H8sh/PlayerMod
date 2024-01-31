@@ -1,4 +1,4 @@
-package net.h8sh.playermod.capability.questing;
+package net.h8sh.playermod.capability.camera;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,25 +11,25 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class QuestingProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class CameraProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<Questing> QUESTING = CapabilityManager.get(new CapabilityToken<Questing>() {});
+    public static Capability<CameraManager> CAMERA = CapabilityManager.get(new CapabilityToken<CameraManager>() {});
 
-    private Questing questing = null;
+    private CameraManager cameraManager = null;
 
-    private final LazyOptional<Questing> optional = LazyOptional.of(this::createQuesting);
+    private final LazyOptional<CameraManager> optional = LazyOptional.of(this::createCamera);
 
-    private Questing createQuesting() {
-        if (this.questing == null){
-            this.questing = new Questing();
+    private CameraManager createCamera() {
+        if (this.cameraManager == null){
+            this.cameraManager = new CameraManager();
         }
 
-        return this.questing;
+        return this.cameraManager;
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == QUESTING) {
+        if (cap == CAMERA) {
             return optional.cast();
         }
 
@@ -39,12 +39,12 @@ public class QuestingProvider implements ICapabilityProvider, INBTSerializable<C
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        createQuesting().saveNBTData(nbt);
+        createCamera().saveNBTData(nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        createQuesting().loadNBTData(nbt);
+        createCamera().loadNBTData(nbt);
     }
 }

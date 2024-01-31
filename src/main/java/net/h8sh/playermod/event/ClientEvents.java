@@ -20,6 +20,7 @@ import net.h8sh.playermod.gui.wizard.ManaBarOverlay;
 import net.h8sh.playermod.gui.wizard.ManaOverlay;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.utils.DashC2SPacket;
+import net.h8sh.playermod.screen.camera.CameraScreen;
 import net.h8sh.playermod.skill.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -82,6 +83,9 @@ public class ClientEvents {
             }
             if (KeyBinding.SHOW_KEYS_KEY.consumeClick() && Profession.getProfession() != Profession.Professions.BASIC) {
                 isKeysShown = !isKeysShown;
+            }
+            if (KeyBinding.CAMERA_KEY.isDown()) {
+                minecraft.setScreen(new CameraScreen());
             }
 
             //SPELLS: --------------------------------------------------------------------------------------------------
@@ -149,6 +153,7 @@ public class ClientEvents {
             event.register(KeyBinding.SKILL_SCREEN_KEY);
             event.register(KeyBinding.SHOW_KEYS_KEY);
             event.register(KeyBinding.DASH_KEY);
+            event.register(KeyBinding.CAMERA_KEY);
         }
 
         @SubscribeEvent

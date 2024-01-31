@@ -4,7 +4,7 @@ import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.networking.animation.SteveAttackC2SPacket;
 import net.h8sh.playermod.networking.animation.SteveShiftDownC2SPacket;
 import net.h8sh.playermod.networking.animation.SyncDeltaMovementProgressS2CPacket;
-import net.h8sh.playermod.networking.camera.SpawnCameraC2SPacket;
+import net.h8sh.playermod.networking.camera.*;
 import net.h8sh.playermod.networking.classes.berserk.SyncRageBarProgressS2CPacket;
 import net.h8sh.playermod.networking.classes.berserk.charge.ChargeC2SPacket;
 import net.h8sh.playermod.networking.classes.berserk.healthsacrifice.HealthSacrificeC2SPacket;
@@ -68,6 +68,55 @@ public class ModMessages {
                 .encoder(SpawnCameraC2SPacket::toBytes)
                 .consumerMainThread(SpawnCameraC2SPacket::handle)
                 .add();
+
+        net.messageBuilder(ResetCameraC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ResetCameraC2SPacket::new)
+                .encoder(ResetCameraC2SPacket::toBytes)
+                .consumerMainThread(ResetCameraC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(ResetCameraToVanillaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ResetCameraToVanillaC2SPacket::new)
+                .encoder(ResetCameraToVanillaC2SPacket::toBytes)
+                .consumerMainThread(ResetCameraToVanillaC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToDownC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToDownC2SPacket::new)
+                .encoder(MoveCameraToDownC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToDownC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToBackwardC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToBackwardC2SPacket::new)
+                .encoder(MoveCameraToBackwardC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToBackwardC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToFowardC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToFowardC2SPacket::new)
+                .encoder(MoveCameraToFowardC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToFowardC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToUpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToUpC2SPacket::new)
+                .encoder(MoveCameraToUpC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToUpC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToLeftC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToLeftC2SPacket::new)
+                .encoder(MoveCameraToLeftC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToLeftC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(MoveCameraToRightC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MoveCameraToRightC2SPacket::new)
+                .encoder(MoveCameraToRightC2SPacket::toBytes)
+                .consumerMainThread(MoveCameraToRightC2SPacket::handle)
+                .add();
+
 
         //Animations ---------------------------------------------------------------------------------------------------
         net.messageBuilder(SteveAttackC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)

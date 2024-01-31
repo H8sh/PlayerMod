@@ -7,7 +7,6 @@ import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.entity.custom.CameraEntity;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.camera.SpawnCameraC2SPacket;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

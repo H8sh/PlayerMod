@@ -3,13 +3,10 @@ package net.h8sh.playermod.mixin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.h8sh.playermod.ability.rogue.smoke.SmokeCapability;
+import net.h8sh.playermod.capability.camera.CameraManager;
 import net.h8sh.playermod.capability.profession.Profession;
 import net.h8sh.playermod.capability.riding.Riding;
-import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.h8sh.playermod.event.ClientEvents;
-import net.h8sh.playermod.event.PlayerEvent;
-import net.minecraft.client.Camera;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -17,23 +14,17 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EndCrystalRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerRenderer.class)
 public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    private static PoseStack currentPoseStack;
+    private static PoseStack currentPoseStack = new PoseStack();
 
     private MixinPlayerRenderer(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> model, float shadow) {
         super(context, model, shadow);
@@ -193,98 +184,76 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     @Shadow
     protected abstract void renderHand(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pCombinedLight, AbstractClientPlayer pPlayer, ModelPart pRendererArm, ModelPart pRendererArmwear);
 
+    @Shadow
+    protected abstract void setModelProperties(AbstractClientPlayer pClientPlayer);
+
+    @Shadow
+    protected abstract void setupRotations(AbstractClientPlayer pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks);
+
+    @Inject(
+            method = {"render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"},
+            at = {@At("HEAD")},
+            cancellable = true
+    )
+    private void render(AbstractClientPlayer pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
+        ci.cancel();
+
+        PlayerRenderer playerRenderer = (PlayerRenderer) (Object) this;
+
+        this.setModelProperties(pEntity);
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(pEntity, playerRenderer, pPartialTicks, pPoseStack, pBuffer, pPackedLight)))
+            return;
+        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(pEntity, playerRenderer, pPartialTicks, pPoseStack, pBuffer, pPackedLight));
+
+    }
+
     @Inject(
             method = {"setupRotations(Lnet/minecraft/client/player/AbstractClientPlayer;Lcom/mojang/blaze3d/vertex/PoseStack;FFF)V"},
             at = {@At("HEAD")},
             cancellable = true
     )
-    protected void setupRotations(AbstractClientPlayer pEntityLiving, PoseStack poseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks, CallbackInfo ci) {
-        ci.cancel();
+    protected void setupRotations(AbstractClientPlayer pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks, CallbackInfo ci) {
+        if (!CameraManager.isVanillaCamera()) {
 
-        if (pEntityLiving.isDeadOrDying() || Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON) {
+            ci.cancel();
 
-            Direction direction = Minecraft.getInstance().getCameraEntity().getDirection();
+            if (pEntityLiving.isDeadOrDying() || Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON) {
 
-            switch (direction) {
-                case EAST, WEST -> {
-                    if (Minecraft.getInstance().options.keyRight.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 90F));
-                        poseStack.pushPose();
+                Direction direction = Minecraft.getInstance().getCameraEntity().getDirection();
+
+                switch (direction) {
+                    case EAST, WEST -> {
+                        if (Minecraft.getInstance().options.keyRight.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyLeft.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() + 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyDown.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 2 * 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyUp.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot()));
+                        }
                     }
-                    if (Minecraft.getInstance().options.keyLeft.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() + 90F));
-                        poseStack.pushPose();
-                    }
-                    if (Minecraft.getInstance().options.keyDown.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 2 * 90F));
-                        poseStack.pushPose();
-                    }
-                    if (Minecraft.getInstance().options.keyUp.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot()));
-                        poseStack.pushPose();
-                    }
-                }
-                case SOUTH, NORTH -> {
-                    if (Minecraft.getInstance().options.keyLeft.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 90F));
-                        poseStack.pushPose();
-                    }
-                    if (Minecraft.getInstance().options.keyRight.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() + 90F));
-                        poseStack.pushPose();
-                    }
-                    if (Minecraft.getInstance().options.keyUp.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 2 * 90F));
-                        poseStack.pushPose();
-                    }
-                    if (Minecraft.getInstance().options.keyDown.isDown()) {
-                        poseStack.popPose();
-                        poseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot()));
-                        poseStack.pushPose();
+                    case SOUTH, NORTH -> {
+                        if (Minecraft.getInstance().options.keyLeft.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyRight.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() + 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyUp.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot() - 2 * 90F));
+                        }
+                        if (Minecraft.getInstance().options.keyDown.isDown()) {
+                            pPoseStack.mulPose(Axis.YP.rotationDegrees(direction.toYRot()));
+                        }
                     }
                 }
             }
         }
-    }
-
-    protected void setupCustomRotations(AbstractClientPlayer pEntityLiving, PoseStack pPoseStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
-        float f = pEntityLiving.getSwimAmount(pPartialTicks);
-        if (pEntityLiving.isFallFlying()) {
-            super.setupRotations(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-            float f1 = (float) pEntityLiving.getFallFlyingTicks() + pPartialTicks;
-            float f2 = Mth.clamp(f1 * f1 / 100.0F, 0.0F, 1.0F);
-            if (!pEntityLiving.isAutoSpinAttack()) {
-                pPoseStack.mulPose(Axis.XP.rotationDegrees(f2 * (-90.0F - pEntityLiving.getXRot())));
-            }
-
-            Vec3 vec3 = pEntityLiving.getViewVector(pPartialTicks);
-            Vec3 vec31 = pEntityLiving.getDeltaMovementLerped(pPartialTicks);
-            double d0 = vec31.horizontalDistanceSqr();
-            double d1 = vec3.horizontalDistanceSqr();
-            if (d0 > 0.0D && d1 > 0.0D) {
-                double d2 = (vec31.x * vec3.x + vec31.z * vec3.z) / Math.sqrt(d0 * d1);
-                double d3 = vec31.x * vec3.z - vec31.z * vec3.x;
-                pPoseStack.mulPose(Axis.YP.rotation((float) (Math.signum(d3) * Math.acos(d2))));
-            }
-        } else if (f > 0.0F) {
-            super.setupRotations(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-            float f3 = pEntityLiving.isInWater() || pEntityLiving.isInFluidType((fluidType, height) -> pEntityLiving.canSwimInFluidType(fluidType)) ? -90.0F - pEntityLiving.getXRot() : -90.0F;
-            float f4 = Mth.lerp(f, 0.0F, f3);
-            pPoseStack.mulPose(Axis.XP.rotationDegrees(f4));
-            if (pEntityLiving.isVisuallySwimming()) {
-                pPoseStack.translate(0.0F, -1.0F, 0.3F);
-            }
-        } else {
-            super.setupRotations(pEntityLiving, pPoseStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-        }
-
     }
 
     @Inject(

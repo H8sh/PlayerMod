@@ -3,6 +3,7 @@ package net.h8sh.playermod.mixin;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.h8sh.playermod.capability.camera.CameraManager;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -121,7 +122,16 @@ public abstract class MixinGameRenderer {
         camera.setup(this.minecraft.level, (Entity) (this.minecraft.getCameraEntity() == null ? this.minecraft.player : this.minecraft.getCameraEntity()), !this.minecraft.options.getCameraType().isFirstPerson(), this.minecraft.options.getCameraType().isMirrored(), pPartialTicks);
 
         //MODIFIED
-        camera.setPosition(camera.getPosition().x(), camera.getPosition().y() + 3, camera.getPosition().z());
+
+        /*camera.setPosition(CameraManager.getCameraX() + this.minecraft.player.getX(),
+                CameraManager.getCameraY() + this.minecraft.player.getY() + 2,
+                CameraManager.getCameraZ() + this.minecraft.player.getZ() + 2);*/
+
+        Entity cameraEntity = (Entity) (this.minecraft.getCameraEntity() == null ? this.minecraft.player : this.minecraft.getCameraEntity());
+
+        camera.setPosition(Mth.lerp((double) pPartialTicks, cameraEntity.xo, CameraManager.getCameraX() + cameraEntity.getX()),Mth.lerp((double) pPartialTicks, cameraEntity.yo, CameraManager.getCameraY() + cameraEntity.getY()) + (double) Mth.lerp(pPartialTicks, camera.eyeHeightOld, camera.eyeHeight), Mth.lerp((double) pPartialTicks, cameraEntity.zo, CameraManager.getCameraZ() + cameraEntity.getZ()));
+
+        camera.move(-camera.getMaxZoom(4.0D), 0.0D, 0.0D);
 
         net.minecraftforge.client.event.ViewportEvent.ComputeCameraAngles cameraSetup = net.minecraftforge.client.ForgeHooksClient.onCameraSetup(gameRenderer, camera, pPartialTicks);
         camera.setAnglesInternal(cameraSetup.getYaw(), cameraSetup.getPitch());
