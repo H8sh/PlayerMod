@@ -118,20 +118,18 @@ public abstract class MixinGameRenderer {
         this.resetProjectionMatrix(matrix4f);
 
 
-
         camera.setup(this.minecraft.level, (Entity) (this.minecraft.getCameraEntity() == null ? this.minecraft.player : this.minecraft.getCameraEntity()), !this.minecraft.options.getCameraType().isFirstPerson(), this.minecraft.options.getCameraType().isMirrored(), pPartialTicks);
 
-        //MODIFIED
+        //MODIFIED START -----------------------------------------------------------------------------------------------
+        if (!CameraManager.isVanillaCamera()) {
+            Entity cameraEntity = (Entity) (this.minecraft.getCameraEntity() == null ? this.minecraft.player : this.minecraft.getCameraEntity());
 
-        /*camera.setPosition(CameraManager.getCameraX() + this.minecraft.player.getX(),
-                CameraManager.getCameraY() + this.minecraft.player.getY() + 2,
-                CameraManager.getCameraZ() + this.minecraft.player.getZ() + 2);*/
+            camera.setPosition(CameraManager.getCameraX() + Mth.lerp((double) pPartialTicks, cameraEntity.xo, cameraEntity.getX()), CameraManager.getCameraY() + Mth.lerp((double) pPartialTicks, cameraEntity.yo, cameraEntity.getY()) + (double) Mth.lerp(pPartialTicks, camera.eyeHeightOld, camera.eyeHeight), CameraManager.getCameraZ() + Mth.lerp((double) pPartialTicks, cameraEntity.zo, cameraEntity.getZ()));
 
-        Entity cameraEntity = (Entity) (this.minecraft.getCameraEntity() == null ? this.minecraft.player : this.minecraft.getCameraEntity());
+            camera.move(-camera.getMaxZoom(4.0D), 0.0D, 0.0D);
+        }
 
-        camera.setPosition(Mth.lerp((double) pPartialTicks, cameraEntity.xo, CameraManager.getCameraX() + cameraEntity.getX()),Mth.lerp((double) pPartialTicks, cameraEntity.yo, CameraManager.getCameraY() + cameraEntity.getY()) + (double) Mth.lerp(pPartialTicks, camera.eyeHeightOld, camera.eyeHeight), Mth.lerp((double) pPartialTicks, cameraEntity.zo, CameraManager.getCameraZ() + cameraEntity.getZ()));
-
-        camera.move(-camera.getMaxZoom(4.0D), 0.0D, 0.0D);
+        //MODIFIED START -----------------------------------------------------------------------------------------------
 
         net.minecraftforge.client.event.ViewportEvent.ComputeCameraAngles cameraSetup = net.minecraftforge.client.ForgeHooksClient.onCameraSetup(gameRenderer, camera, pPartialTicks);
         camera.setAnglesInternal(cameraSetup.getYaw(), cameraSetup.getPitch());

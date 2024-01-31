@@ -1,5 +1,6 @@
 package net.h8sh.playermod.screen.camera;
 
+import net.h8sh.playermod.capability.camera.CameraManager;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.camera.*;
 import net.minecraft.ChatFormatting;
@@ -25,30 +26,31 @@ public class CameraScreen extends Screen {
 
     @Override
     protected void init() {
-        addRenderableWidget(Button.builder(Component.literal("Reset Camera Position").withStyle(ChatFormatting.RED), (button) -> {
-            ModMessages.sendToServer(new ResetCameraC2SPacket());
-        }).bounds(this.width - 400, 12, 120, 20).build());
+
         this.cameraSwitch = createCameraModButton(this.width - 160, 12, "Camera Type: ");
         this.cameraSwitch.active = true;
         this.cameraSwitch.visible = true;
         addRenderableWidget(this.cameraSwitch);
+        addRenderableWidget(Button.builder(Component.literal("Reset Camera Position").withStyle(ChatFormatting.RED), (button) -> {
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new ResetCameraC2SPacket());
+        }).bounds(this.width - 400, 12, 120, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Left").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToLeftC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToLeftC2SPacket());
         }).bounds(this.width - 400, 180, 80, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Right").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToRightC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToRightC2SPacket());
         }).bounds(this.width - 100, 180, 80, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Up").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToUpC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToUpC2SPacket());
         }).bounds(this.width - 200, 180, 80, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Down").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToDownC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToDownC2SPacket());
         }).bounds(this.width - 300, 180, 80, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Forward").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToFowardC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToFowardC2SPacket());
         }).bounds(this.width - 400, 140, 80, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Backward").withStyle(ChatFormatting.DARK_GRAY), (button) -> {
-            ModMessages.sendToServer(new MoveCameraToBackwardC2SPacket());
+            if (!CameraManager.isVanillaCamera()) ModMessages.sendToServer(new MoveCameraToBackwardC2SPacket());
         }).bounds(this.width - 100, 140, 80, 20).build());
     }
 

@@ -199,7 +199,7 @@ public class PlayerMod {
             EntityRenderers.register(ModEntities.LIVING_LAMPPOST.get(), LivingLamppostRenderer::new);
             EntityRenderers.register(ModEntities.CRYSTAL.get(), CrystalRenderer::new);
             EntityRenderers.register(ModEntities.CUSTOM_PNJ.get(), PnjEntityRenderer::new);
-            EntityRenderers.register(ModEntities.CAMERA.get(), CameraRenderer::new);
+            EntityRenderers.register(ModEntities.PET.get(), PetRenderer::new);
 
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);

@@ -24,6 +24,7 @@ import net.h8sh.playermod.networking.classes.wizard.mana.ManaExtractionC2SPacket
 import net.h8sh.playermod.networking.classes.wizard.mana.PacketSyncCrystalToClient;
 import net.h8sh.playermod.networking.classes.wizard.mana.PacketSyncManaToClient;
 import net.h8sh.playermod.networking.narrator.*;
+import net.h8sh.playermod.networking.pet.SpawnPetC2SPacket;
 import net.h8sh.playermod.networking.profession.*;
 import net.h8sh.playermod.networking.reputation.ReputationNormalC2SPacket;
 import net.h8sh.playermod.networking.reputation.SyncReputationToClientS2CPacket;
@@ -63,10 +64,10 @@ public class ModMessages {
 
         //CAMERA: ------------------------------------------------------------------------------------------------------
 
-        net.messageBuilder(SpawnCameraC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(SpawnCameraC2SPacket::new)
-                .encoder(SpawnCameraC2SPacket::toBytes)
-                .consumerMainThread(SpawnCameraC2SPacket::handle)
+        net.messageBuilder(SpawnPetC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SpawnPetC2SPacket::new)
+                .encoder(SpawnPetC2SPacket::toBytes)
+                .consumerMainThread(SpawnPetC2SPacket::handle)
                 .add();
 
         net.messageBuilder(ResetCameraC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)

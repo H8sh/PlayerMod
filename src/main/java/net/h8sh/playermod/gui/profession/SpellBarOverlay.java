@@ -85,8 +85,8 @@ public class SpellBarOverlay {
 
         renderSlot(pGuiGraphics, i - 91 - 26, i2, pPartialTick, player, itemStack, l++, gui);
 
-        pGuiGraphics.renderItem(player, camera, i - 91 + 200, i2, l++);
-        pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.CAMERA_KEY.getKey().getValue(), 0), i - 91 + 200, screenHeight - 23, 8421504);
+        pGuiGraphics.renderItem(player, camera, i - 91 + 220, i2, l++);
+        pGuiGraphics.drawString(gui.getFont(), GLFW.glfwGetKeyName(KeyBinding.CAMERA_KEY.getKey().getValue(), 0), i - 91 + 220, screenHeight - 23, 8421504);
 
     };
 

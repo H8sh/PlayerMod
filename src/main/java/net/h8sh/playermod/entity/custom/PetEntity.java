@@ -20,9 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CameraEntity extends ShoulderRidingEntity implements FlyingAnimal {
+public class PetEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
-    public CameraEntity(EntityType<? extends ShoulderRidingEntity> pEntityType, Level pLevel) {
+    public PetEntity(EntityType<? extends ShoulderRidingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new FlyingMoveControl(this, 10, false);
     }
@@ -84,7 +84,7 @@ public class CameraEntity extends ShoulderRidingEntity implements FlyingAnimal {
     @Nullable
     @Override
     public ShoulderRidingEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return ModEntities.CAMERA.get().create(pLevel);
+        return ModEntities.PET.get().create(pLevel);
     }
 
     @Override

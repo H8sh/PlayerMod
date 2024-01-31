@@ -39,11 +39,11 @@ public class ModEntities {
                             .sized(1.5f, 1.75f)
                             .build(new ResourceLocation(PlayerMod.MODID, "crystal").toString()));
 
-    public static final RegistryObject<EntityType<CameraEntity>> CAMERA =
-            ENTITY_TYPES.register("camera",
-                    ()-> EntityType.Builder.of(CameraEntity::new, MobCategory.CREATURE)
+    public static final RegistryObject<EntityType<PetEntity>> PET =
+            ENTITY_TYPES.register("pet",
+                    ()-> EntityType.Builder.of(PetEntity::new, MobCategory.CREATURE)
                             .sized(1f,1f)
-                            .build("camera"));
+                            .build("pet"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

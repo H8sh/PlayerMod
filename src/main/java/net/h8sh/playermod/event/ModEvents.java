@@ -37,6 +37,7 @@ import net.h8sh.playermod.ability.wizard.mana.ManaCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
 import net.h8sh.playermod.animation.handler.AnimationProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
+import net.h8sh.playermod.capability.pet.PetProvider;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
 import net.h8sh.playermod.capability.camera.CameraProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
@@ -92,6 +93,9 @@ public class ModEvents {
                 }
                 if (!event.getObject().getCapability(DimensionProvider.PLAYER_DIMENSION).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "dimension"), new DimensionProvider());
+                }
+                if (!event.getObject().getCapability(PetProvider.PET).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "pet"), new PetProvider());
                 }
 
                 //WIZARD -----------------------------------------------------------------------------------------------
@@ -236,6 +240,11 @@ public class ModEvents {
                 // Capability saver ------------------------------------------------------------------------------------
                 event.getOriginal().reviveCaps();
 
+                event.getOriginal().getCapability(PetProvider.PET).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(PetProvider.PET).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
                 event.getOriginal().getCapability(CameraProvider.CAMERA).ifPresent(oldStore -> {
                     event.getEntity().getCapability(CameraProvider.CAMERA).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);

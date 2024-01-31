@@ -30,7 +30,6 @@ public class ResetCameraToVanillaC2SPacket {
 
             player.getCapability(CameraProvider.CAMERA).ifPresent(cameraManager -> {
                 cameraManager.resetCameraVanilla();
-                cameraManager.resetCameraPosition();
                 player.sendSystemMessage(Component.literal("reset vanilla"));
             });
 

@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 @AutoRegisterCapability
 public class CameraManager {
     private static final Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
-    private static boolean isVanillaCamera;
+    private static boolean isVanillaCamera = false;
     private static int cameraX = 0;
     private static int cameraY = 0;
     private static int cameraZ = 0;
@@ -41,11 +41,11 @@ public class CameraManager {
     }
 
     public void moveCameraToRight() {
-        cameraX--;
+        cameraX++;
     }
 
     public void moveCameraToLeft() {
-        cameraX++;
+        cameraX--;
     }
 
     public void moveCameraToUp() {
@@ -57,11 +57,11 @@ public class CameraManager {
     }
 
     public void moveCameraToFoward() {
-        cameraZ++;
+        cameraZ--;
     }
 
     public void moveCameraToBackward() {
-        cameraZ--;
+        cameraZ++;
     }
 
     public void copyFrom(CameraManager source) {

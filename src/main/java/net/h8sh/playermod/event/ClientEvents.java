@@ -23,6 +23,7 @@ import net.h8sh.playermod.networking.utils.DashC2SPacket;
 import net.h8sh.playermod.screen.camera.CameraScreen;
 import net.h8sh.playermod.skill.SkillScreen;
 import net.h8sh.playermod.util.KeyBinding;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -86,6 +87,7 @@ public class ClientEvents {
             }
             if (KeyBinding.CAMERA_KEY.isDown()) {
                 minecraft.setScreen(new CameraScreen());
+                minecraft.options.setCameraType(CameraType.THIRD_PERSON_BACK);
             }
 
             //SPELLS: --------------------------------------------------------------------------------------------------
