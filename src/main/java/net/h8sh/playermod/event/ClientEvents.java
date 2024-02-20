@@ -98,19 +98,19 @@ public class ClientEvents {
 
             if (KeyBinding.FIRST_SPELL_KEY.consumeClick()) {
                 String firstSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getFirstSpell();
-                SpellManager.activeSpell(firstSpell, minecraft);
+                SpellManager.activeSpell(firstSpell);
             }
             if (KeyBinding.SECOND_SPELL_KEY.consumeClick()) {
                 String secondSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getSecondSpell();
-                SpellManager.activeSpell(secondSpell, minecraft);
+                SpellManager.activeSpell(secondSpell);
             }
             if (KeyBinding.THIRD_SPELL_KEY.consumeClick()) {
                 String thirdSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getThirdSpell();
-                SpellManager.activeSpell(thirdSpell, minecraft);
+                SpellManager.activeSpell(thirdSpell);
             }
             if (KeyBinding.ULTIMATE_SPELL_KEY.consumeClick()) {
                 String ultimateSpell = ProfessionTypes.getProfessionType().getTypes().get(currentProfession.getId()).getProfessionType().getSkills().get(0).getUltimate();
-                SpellManager.activeSpell(ultimateSpell, minecraft);
+                SpellManager.activeSpell(ultimateSpell);
             }
 
             if (KeyBinding.INTERACTION_KEY.consumeClick()) {

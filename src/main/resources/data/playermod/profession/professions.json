@@ -142,6 +142,32 @@
           }
         ]
       }
+    },
+    {
+      "profession_type": {
+        "name": "gunslinger",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
+    },
+    {
+      "profession_type": {
+        "name": "mechanic",
+        "skills": [
+          {
+            "first_spell": "",
+            "second_spell": "",
+            "third_spell": "",
+            "ultimate_spell": ""
+          }
+        ]
+      }
     }
   ]
 }

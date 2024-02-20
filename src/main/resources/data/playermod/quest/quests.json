@@ -1,0 +1,44 @@
+{
+  "Quests": {
+    "MainQuests": [
+      {
+        "quest": {
+          "id": "",
+          "texture": "",
+          "description": "",
+          "name": "",
+          "parentId": ""
+        }
+      },
+      {
+        "quest": {
+          "id": "",
+          "texture": "",
+          "description": "",
+          "name": "",
+          "parentId": ""
+        }
+      }
+    ],
+    "OtherQuests": [
+      {
+        "quest": {
+          "id": "",
+          "texture": "",
+          "description": "",
+          "name": "",
+          "parentId": ""
+        }
+      },
+      {
+        "quest": {
+          "id": "",
+          "texture": "",
+          "description": "",
+          "name": "",
+          "parentId": ""
+        }
+      }
+    ]
+  }
+}

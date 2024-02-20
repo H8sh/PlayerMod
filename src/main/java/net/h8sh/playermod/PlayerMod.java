@@ -9,9 +9,10 @@ import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.block.entity.ModBlockEntities;
 import net.h8sh.playermod.block.entity.client.AdamBlockRenderer;
 import net.h8sh.playermod.block.entity.client.PaladinLecternRenderer;
-import net.h8sh.playermod.block.entity.client.profession.*;
 import net.h8sh.playermod.block.entity.client.PnjBlockRenderer;
+import net.h8sh.playermod.block.entity.client.profession.*;
 import net.h8sh.playermod.capability.profession.reader.ProfessionTypes;
+import net.h8sh.playermod.capability.questing.reader.Quests;
 import net.h8sh.playermod.config.WonderlandsModClientConfigs;
 import net.h8sh.playermod.config.WonderlandsModCommonConfigs;
 import net.h8sh.playermod.config.WonderlandsModServerConfigs;
@@ -69,6 +70,7 @@ public class PlayerMod {
         forgeBus.addListener(this::jsonStructureReader);
         forgeBus.addListener(this::jsonProfessionReader);
         forgeBus.addListener(this::jsonSkillReader);
+        forgeBus.addListener(this::jsonQuestsReader);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -149,6 +151,8 @@ public class PlayerMod {
                         ProfessionTypes professionsType = gson.fromJson(jsonObject, ProfessionTypes.class);
                         ProfessionTypes.setPrototypesFromJson(professionsType);
 
+
+
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();
                         System.out.println("Json file failed to load for profession");
@@ -169,6 +173,27 @@ public class PlayerMod {
                         Gson gson = new Gson();
                         SkillTypes professionsType = gson.fromJson(jsonObject, SkillTypes.class);
                         SkillTypes.setPrototypesFromJson(professionsType);
+
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                        System.out.println("Json file failed to load for skill");
+                    }
+                });
+            }
+        });
+    }
+
+    private void jsonQuestsReader(AddReloadListenerEvent event) {
+        event.addListener(new SimpleJsonResourceReloadListener((new GsonBuilder()).create(), "quest") {
+            @Override
+            protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+                pObject.forEach((resourceLocation, jsonProfessionElement) -> {
+                    try {
+                        JsonObject jsonObject = GsonHelper.convertToJsonObject(jsonProfessionElement, "quests");
+
+                        Gson gson = new Gson();
+                        Quests quests = gson.fromJson(jsonObject, Quests.class);
+                        Quests.setQuestsFromJson(quests);
 
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();

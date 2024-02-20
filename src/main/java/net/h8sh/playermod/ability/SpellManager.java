@@ -23,9 +23,9 @@ import net.minecraft.world.entity.player.Player;
 
 public class SpellManager {
 
-    public static void activeSpell(String spell, Minecraft minecraft) {
-        Player player = minecraft.player;
+    public static void activeSpell(String spell) {
         switch (spell) {
+
             //BASIC: no spells
 
             case "":
@@ -200,6 +200,42 @@ public class SpellManager {
                 break;
 
             case "assemble":
+                //TODO
+                break;
+
+            //GUNSLINGER: ----------------------------------------------------------------------------------------------
+
+            case "a":
+                //TODO
+                break;
+
+            case "b":
+                //TODO
+                break;
+
+            case "c":
+                //TODO
+                break;
+
+            case "d":
+                //TODO
+                break;
+
+            //MECHANIC: ------------------------------------------------------------------------------------------------
+
+            case "e":
+                //TODO
+                break;
+
+            case "f":
+                //TODO
+                break;
+
+            case "g":
+                //TODO
+                break;
+
+            case "h":
                 //TODO
                 break;
 
