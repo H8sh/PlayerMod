@@ -50,6 +50,7 @@ public class ModTabs {
                         pOutput.accept(ModItems.BERSERKER_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PLINTH_BLOCK_ITEM.get());
                         pOutput.accept(ModItems.PALADIN_LECTERN_ITEM.get());
+                        pOutput.accept(ModItems.SNIPER_ITEM.get());
 
                         pOutput.accept(ModItems.PALADIN_BOOK.get());
                         pOutput.accept(ModItems.DRUID_BOOK.get());

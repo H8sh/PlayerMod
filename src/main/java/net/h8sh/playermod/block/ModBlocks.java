@@ -43,6 +43,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> DEATH_BLOCK = registerBlock("death_block",
             () -> new DeathBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noLootTable().lightLevel((blockState) -> 15)));
 
+    public static final RegistryObject<Block> SNIPER_BLOCK = registerBlock("sniper_block",
+            () -> new SniperBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noLootTable()));
+
     public static final RegistryObject<Block> LINK_ZONE_CITADEL_NORTH_BLOCK = registerBlock("link_zone_citadel_north",
             () -> new LinkZoneCitadelNorthBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.ANVIL).noOcclusion().noCollission().noLootTable()));
 

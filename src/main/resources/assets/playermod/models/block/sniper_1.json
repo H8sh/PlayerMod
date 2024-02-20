@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "up": "playermod:block/sniper_1",
+    "down": "playermod:block/sniper_1",
+    "north": "playermod:block/sniper_1",
+    "east": "playermod:block/sniper_1",
+    "south": "playermod:block/sniper_1",
+    "west": "playermod:block/sniper_1",
+    "particle": "playermod:nlock/sniper_1"
+  }
+}

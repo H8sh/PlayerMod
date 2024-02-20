@@ -31,7 +31,7 @@ public class PlayerEvent {
     @SubscribeEvent
     public static void onPlayerJoiningWorld(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player) {
-            AnimationHandler.setSteveAttack(false);
+            AnimationHandler.setPlayerAttack(false);
             if (Minecraft.getInstance().player != null) ModMessages.sendToServer(new SpawnPetC2SPacket());
         }
     }
@@ -39,7 +39,7 @@ public class PlayerEvent {
     @SubscribeEvent
     public static void onPlayerDashInvincible(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player) {
-            if (AnimationHandler.getSteveFrontDash() || AnimationHandler.getSteveRightDash() || AnimationHandler.getSteveLeftDash() || AnimationHandler.getSteveBackDash()) {
+            if (AnimationHandler.getPlayerFrontDash() || AnimationHandler.getPlayerRightDash() || AnimationHandler.getPlayerLeftDash() || AnimationHandler.getPlayerBackDash()) {
                 event.setCanceled(true);
             }
         }

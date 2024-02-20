@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "number=up": {
+      "model": "playermod:block/sniper_1"
+    },
+    "number=north": {
+      "model": "playermod:block/sniper_2"
+    },
+    "number=east": {
+      "model": "playermod:block/sniper_3"
+    },
+    "number=south": {
+      "model": "playermod:block/sniper_4"
+    },
+    "number=west": {
+      "model": "playermod:block/sniper_5"
+    },
+    "number=down": {
+      "model": "playermod:block/sniper_6"
+    }
+  }
+}

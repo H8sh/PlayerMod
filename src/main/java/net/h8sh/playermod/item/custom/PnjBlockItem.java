@@ -25,10 +25,12 @@ public class PnjBlockItem extends BlockItem implements GeoItem {
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
+
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private PnjBlockItemRenderer renderer;
+
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (this.renderer == null)

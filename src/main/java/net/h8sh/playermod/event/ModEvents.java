@@ -18,6 +18,7 @@ import net.h8sh.playermod.ability.druid.spiritusmeta.windboost.WindBoostCapabili
 import net.h8sh.playermod.ability.druid.windmeta.dodge.DodgeCapabilityProvider;
 import net.h8sh.playermod.ability.druid.windmeta.range.RangeCapabilityProvider;
 import net.h8sh.playermod.ability.druid.windmeta.speed.SpeedCapabilityProvider;
+import net.h8sh.playermod.ability.gunslinger.sniper.SniperCapabilityProvider;
 import net.h8sh.playermod.ability.invocator.assemble.AssembleCapabilityProvider;
 import net.h8sh.playermod.ability.invocator.boost.BoostCapabilityProvider;
 import net.h8sh.playermod.ability.invocator.invocation.InvocationCapabilityProvider;
@@ -36,10 +37,10 @@ import net.h8sh.playermod.ability.wizard.laser.LaserCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.ManaCapabilityProvider;
 import net.h8sh.playermod.ability.wizard.mana.crystal.CrystalCapabilityProvider;
 import net.h8sh.playermod.animation.handler.AnimationProvider;
+import net.h8sh.playermod.capability.camera.CameraProvider;
 import net.h8sh.playermod.capability.narrator.NarratorProvider;
 import net.h8sh.playermod.capability.pet.PetProvider;
 import net.h8sh.playermod.capability.profession.ProfessionProvider;
-import net.h8sh.playermod.capability.camera.CameraProvider;
 import net.h8sh.playermod.capability.reputation.ReputationProvider;
 import net.h8sh.playermod.capability.riding.RidingProvider;
 import net.h8sh.playermod.capability.travel.TravelProvider;
@@ -96,6 +97,12 @@ public class ModEvents {
                 }
                 if (!event.getObject().getCapability(PetProvider.PET).isPresent()) {
                     event.addCapability(new ResourceLocation(PlayerMod.MODID, "pet"), new PetProvider());
+                }
+
+                //GUNSLINGER -------------------------------------------------------------------------------------------
+
+                if (!event.getObject().getCapability(SniperCapabilityProvider.PLAYER_SNIPER).isPresent()) {
+                    event.addCapability(new ResourceLocation(PlayerMod.MODID, "sniper"), new SniperCapabilityProvider());
                 }
 
                 //WIZARD -----------------------------------------------------------------------------------------------
@@ -287,6 +294,14 @@ public class ModEvents {
                 });
                 event.getOriginal().getCapability(DimensionProvider.PLAYER_DIMENSION).ifPresent(oldStore -> {
                     event.getEntity().getCapability(DimensionProvider.PLAYER_DIMENSION).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+
+                //GUNSLINGER -------------------------------------------------------------------------------------------
+
+                event.getOriginal().getCapability(SniperCapabilityProvider.PLAYER_SNIPER).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(SniperCapabilityProvider.PLAYER_SNIPER).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
                     });
                 });

@@ -5,6 +5,7 @@ import net.h8sh.playermod.block.ModBlocks;
 import net.h8sh.playermod.entity.ModEntities;
 import net.h8sh.playermod.fluid.ModFluids;
 import net.h8sh.playermod.item.custom.PaladinLecternItem;
+import net.h8sh.playermod.item.custom.SniperItem;
 import net.h8sh.playermod.item.custom.profession.*;
 import net.h8sh.playermod.item.custom.PnjBlockItem;
 import net.minecraft.world.item.BookItem;
@@ -20,6 +21,11 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PlayerMod.MODID);
+
+
+    public static final RegistryObject<Item> SNIPER_ITEM = ITEMS.register("sniper_item",
+            () -> new SniperItem(new Item.Properties()));
+
 
     public static final RegistryObject<Item> SOAP_WATER_BUCKET = ITEMS.register("soap_water_bucket",
             () -> new BucketItem(ModFluids.SOURCE_SOAP_WATER,

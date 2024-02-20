@@ -5,10 +5,8 @@ import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.animation.SyncDeltaMovementProgressS2CPacket;
 import net.h8sh.playermod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -33,22 +31,22 @@ public class DashC2SPacket {
 
             ServerPlayer player = context.getSender();
 
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown() && !AnimationHandler.getSteveRightDash()) {
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyRight.isDown() && !AnimationHandler.getPlayerRightDash()) {
                 ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(0), player);
-                AnimationHandler.setSteveRightDash(true);
+                AnimationHandler.setPlayerRightDash(true);
 
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown() && !AnimationHandler.getSteveLeftDash()) {
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyLeft.isDown() && !AnimationHandler.getPlayerLeftDash()) {
                 ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(1), player);
-                AnimationHandler.setSteveLeftDash(true);
+                AnimationHandler.setPlayerLeftDash(true);
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown() && !AnimationHandler.getSteveFrontDash()) {
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyUp.isDown() && !AnimationHandler.getPlayerFrontDash()) {
                 ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(2), player);
-                AnimationHandler.setSteveFrontDash(true);
+                AnimationHandler.setPlayerFrontDash(true);
             }
-            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown() && !AnimationHandler.getSteveBackDash()) {
+            if (KeyBinding.DASH_KEY.isDown() && Minecraft.getInstance().options.keyDown.isDown() && !AnimationHandler.getPlayerBackDash()) {
                 ModMessages.sendToPlayer(new SyncDeltaMovementProgressS2CPacket(3), player);
-                AnimationHandler.setSteveBackDash(true);
+                AnimationHandler.setPlayerBackDash(true);
             }
         });
 

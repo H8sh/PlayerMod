@@ -30,6 +30,7 @@ import net.h8sh.playermod.world.dimension.mansion.MansionManager;
 import net.h8sh.playermod.world.dimension.mansion.reader.Prototypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -200,6 +201,7 @@ public class PlayerMod {
             EntityRenderers.register(ModEntities.CRYSTAL.get(), CrystalRenderer::new);
             EntityRenderers.register(ModEntities.CUSTOM_PNJ.get(), PnjEntityRenderer::new);
             EntityRenderers.register(ModEntities.PET.get(), PetRenderer::new);
+            EntityRenderers.register(ModEntities.SNIPER.get(), ThrownItemRenderer::new);
 
 
             BlockEntityRenderers.register(ModBlockEntities.ANIMATED_BLOCK_ENTITY.get(), PaladinLecternRenderer::new);

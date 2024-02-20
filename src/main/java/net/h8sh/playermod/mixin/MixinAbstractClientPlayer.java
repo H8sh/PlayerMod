@@ -11,8 +11,8 @@ public class MixinAbstractClientPlayer {
 
     @Inject(method = "getFieldOfViewModifier", at = @At("HEAD"), cancellable = true)
     private void getFieldOfViewModifier(CallbackInfoReturnable<Float> cir) {
-        cir.cancel();
-        cir.setReturnValue(1.2F);
+    /*    cir.cancel();
+        cir.setReturnValue(1.2F);*/
     }
 
 }

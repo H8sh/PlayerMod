@@ -7,8 +7,6 @@ import net.h8sh.playermod.animation.handler.AnimationHandler;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.animation.SteveAttackC2SPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
@@ -17,13 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = PlayerMod.MODID)
 public class AnimationEvent {
-
-    static PlayerModel<AbstractClientPlayer> playermodel;
-
-    public static void setPlayermodel(PlayerModel<AbstractClientPlayer> playermodel) {
-        AnimationEvent.playermodel = playermodel;
-    }
-
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event) {
@@ -36,24 +27,24 @@ public class AnimationEvent {
 
             AnimationHandler.countTickAnimation();
 
-            if (AnimationManager.STEVE_ATTACK_FLAG == 0) {
-                AnimationHandler.setSteveAttack(true);
+            if (AnimationManager.ANIM_ATTACK_FLAG == 0) {
+                AnimationHandler.setPlayerAttack(true);
                 ModMessages.sendToServer(new SteveAttackC2SPacket());
             }
-            if (AnimationManager.STEVE_SHIFT_DOWN_FLAG == 0) {
+            if (AnimationManager.ANIM_SHIFT_DOWN_FLAG == 0) {
                 if (player.walkAnimation.isMoving()) {
-                    AnimationHandler.setSteveShiftDown(true);
-                    AnimationHandler.setSteveIdleShiftDown(false);
+                    AnimationHandler.setPlayerShiftDown(true);
+                    AnimationHandler.setPlayerIdleShiftDown(false);
                 }
                 if (!player.walkAnimation.isMoving()) {
-                    AnimationHandler.setSteveIdleShiftDown(true);
-                    AnimationHandler.setSteveShiftDown(false);
+                    AnimationHandler.setPlayerIdleShiftDown(true);
+                    AnimationHandler.setPlayerShiftDown(false);
                 }
 
             }
-            if (AnimationManager.STEVE_SHIFT_DOWN_FLAG != 0) {
-                AnimationHandler.setSteveShiftDown(false);
-                AnimationHandler.setSteveIdleShiftDown(false);
+            if (AnimationManager.ANIM_SHIFT_DOWN_FLAG != 0) {
+                AnimationHandler.setPlayerShiftDown(false);
+                AnimationHandler.setPlayerIdleShiftDown(false);
             }
 
         }
@@ -62,9 +53,9 @@ public class AnimationEvent {
     @SubscribeEvent
     public static void onPlayerAttackAnimation(InputEvent.MouseButton event) {
         if (event.getButton() == Minecraft.getInstance().options.keyAttack.getKey().getValue() && Minecraft.getInstance().player != null && (event.getAction() == InputConstants.PRESS || event.getAction() == InputConstants.REPEAT) && !Minecraft.getInstance().player.isDeadOrDying() && Minecraft.getInstance().screen == null) {
-            AnimationManager.STEVE_ATTACK_FLAG = 0;
+            AnimationManager.ANIM_ATTACK_FLAG = 0;
         } else {
-            AnimationManager.STEVE_ATTACK_FLAG = 1;
+            AnimationManager.ANIM_ATTACK_FLAG = 1;
         }
     }
 
@@ -72,9 +63,9 @@ public class AnimationEvent {
     @SubscribeEvent
     public static void onPlayerShiftDownAnimation(InputEvent.MouseButton event) {
         if (event.getButton() == Minecraft.getInstance().options.keyShift.getKey().getValue() && Minecraft.getInstance().player != null && (event.getAction() == InputConstants.PRESS || event.getAction() == InputConstants.REPEAT)) {
-            AnimationManager.STEVE_SHIFT_DOWN_FLAG = 0;
+            AnimationManager.ANIM_SHIFT_DOWN_FLAG = 0;
         } else {
-            AnimationManager.STEVE_SHIFT_DOWN_FLAG = 1;
+            AnimationManager.ANIM_SHIFT_DOWN_FLAG = 1;
         }
     }
 

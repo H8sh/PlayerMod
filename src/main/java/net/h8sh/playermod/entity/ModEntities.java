@@ -2,6 +2,7 @@ package net.h8sh.playermod.entity;
 
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.entity.custom.*;
+import net.h8sh.playermod.entity.custom.gunslinger.Sniper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -44,6 +45,12 @@ public class ModEntities {
                     ()-> EntityType.Builder.of(PetEntity::new, MobCategory.CREATURE)
                             .sized(1f,1f)
                             .build("pet"));
+
+    public static final RegistryObject<EntityType<Sniper>> SNIPER =
+            ENTITY_TYPES.register("sniper",
+                    ()-> EntityType.Builder.<Sniper>of(Sniper::new, MobCategory.CREATURE)
+                            .sized(1f,1f)
+                            .build("sniper"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

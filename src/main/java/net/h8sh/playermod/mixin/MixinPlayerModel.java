@@ -34,8 +34,8 @@ import java.util.Optional;
 public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidModel<T> {
 
     private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
+    static int deathTick = 0;
     private static ModelPart root;
-    int deathTick = 0;
 
     public MixinPlayerModel(ModelPart root) {
         super(root);
@@ -531,30 +531,20 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
         return partdefinition.addOrReplaceChild(name, CubeListBuilder.create().texOffs(0, 0).addBox(0, 0, 0, 0, 0, 0, CubeDeformation.NONE), PartPose.ZERO);
     }
 
-    @Inject(at = @At("TAIL"), method = "<init>")
-    private void PlayerModel(ModelPart pRoot, boolean pSlim, CallbackInfo info) {
-        this.root = pRoot;
-    }
-
-    protected void animateWalk(AnimationDefinition pAnimationDefinition, float pLimbSwing, float pLimbSwingAmount, float pMaxAnimationSpeed, float pAnimationScaleFactor) {
+    protected static void animateWalk(AnimationDefinition pAnimationDefinition, float pLimbSwing, float pLimbSwingAmount, float pMaxAnimationSpeed, float pAnimationScaleFactor) {
         long i = (long) (pLimbSwing * 50.0F * pMaxAnimationSpeed);
         float f = Math.min(pLimbSwingAmount * pAnimationScaleFactor, 1.0F);
         animate(pAnimationDefinition, i, f, ANIMATION_VECTOR_CACHE);
     }
 
-    protected void animate(AnimationState pAnimationState, AnimationDefinition pAnimationDefinition, float pAgeInTicks, float pSpeed) {
+    protected static void animate(AnimationState pAnimationState, AnimationDefinition pAnimationDefinition, float pAgeInTicks, float pSpeed) {
         pAnimationState.updateTime(pAgeInTicks, pSpeed);
         pAnimationState.ifStarted((p_233392_) -> {
             animate(pAnimationDefinition, p_233392_.getAccumulatedTime(), 1.0F, ANIMATION_VECTOR_CACHE);
         });
     }
 
-    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
-            at = @At("HEAD"), cancellable = true)
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-
-        ci.cancel();
-
+    private static void setupAnimSteve(LivingEntity entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
         if (entity.isDeadOrDying()) deathTick++;
         if (entity.isAlive()) deathTick = 0;
 
@@ -580,18 +570,54 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
 
         animate(ModAnimationStates.STEVE_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.STEVE_RIGHT_DASH_SPEED);
 
-        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveAttack() && AnimationHandler.getSteveShiftDown() && !AnimationHandler.getSteveBackDash() && !AnimationHandler.getSteveRightDash() && !AnimationHandler.getSteveFrontDash() && !AnimationHandler.getSteveLeftDash()) {
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
             animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
         }
 
-        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getSteveAttack() && !AnimationHandler.getSteveShiftDown() && !AnimationHandler.getSteveIdleShiftDown() && !AnimationHandler.getSteveJump() && !AnimationHandler.getSteveBackDash() && !AnimationHandler.getSteveRightDash() && !AnimationHandler.getSteveFrontDash() && !AnimationHandler.getSteveLeftDash()) {
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
             animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
         }
+    }
 
+    @Inject(at = @At("TAIL"), method = "<init>")
+    private void PlayerModel(ModelPart pRoot, boolean pSlim, CallbackInfo info) {
+        this.root = pRoot;
+    }
+
+    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
+            at = @At("HEAD"), cancellable = true)
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+
+        ci.cancel();
+
+        if (Profession.getProfession() == Profession.Professions.BASIC)
+            setupAnimSteve(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.WIZARD)
+            setupAnimWizard(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.PALADIN)
+            setupAnimPaladin(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.DRUID)
+            setupAnimDruid(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.FIREMETA)
+            setupAnimFireMeta(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.WINDMETA)
+            setupAnimWindMeta(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.AQUAMETA)
+            setupAnimAquaMeta(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.SPIRITUSMETA)
+            setupAnimSpiritusMeta(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.ROGUE)
+            setupAnimRogue(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.INVOCATOR)
+            setupAnimInvocator(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.GUNSLINGER)
+            setupAnimGunslinger(entity, ageInTicks, limbSwing, limbSwingAmount);
+        if (Profession.getProfession() == Profession.Professions.MECHANIC)
+            setupAnimMechanic(entity, ageInTicks, limbSwing, limbSwingAmount);
 
         //HEAD ROTATION: -----------------------------------------------------------------------------------------------
 
-        if (entity.isAlive() && !AnimationHandler.getSteveFrontDash()) {
+        if (entity.isAlive() && !AnimationHandler.getPlayerFrontDash()) {
             var head = this.body.getChild(Profession.getProfessionName() + "_body").getChild(Profession.getProfessionName() + "_head");
             boolean flag = entity.getFallFlyingTicks() > 4;
             boolean flag1 = entity.isVisuallySwimming();
@@ -608,8 +634,391 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends HumanoidM
                 head.xRot = headPitch * ((float) Math.PI / 180F);
             }
         }
+    }
 
+    private void setupAnimMechanic(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
 
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.MECHANIC_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.MECHANIC_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.MECHANIC_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.MECHANIC_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.MECHANIC_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimGunslinger(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.GUNSLINGER_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.GUNSLINGER_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.GUNSLINGER_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.GUNSLINGER_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.GUNSLINGER_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimInvocator(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.INVOCATOR_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.INVOCATOR_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.INVOCATOR_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.INVOCATOR_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.INVOCATOR_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimRogue(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.ROGUE_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.ROGUE_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.ROGUE_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.ROGUE_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.ROGUE_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimSpiritusMeta(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.SPIRITUSMETA_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.SPIRITUSMETA_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.SPIRITUSMETA_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_DEATH, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.SPIRITUSMETA_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.SPIRITUSMETA_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimWindMeta(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.WINDMETA_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.WINDMETA_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.WINDMETA_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WINDMETA_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.WINDMETA_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimAquaMeta(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.AQUAMETA_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.AQUAMETA_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.AQUAMETA_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.AQUAMETA_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.AQUAMETA_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimFireMeta(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.FIREMETA_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.FIREMETA_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.FIREMETA_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.FIREMETA_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.FIREMETA_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimDruid(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.DRUID_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.DRUID_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.DRUID_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.DRUID_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.DRUID_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimPaladin(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.PALADIN_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.PALADIN_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.PALADIN_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.PALADIN_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.PALADIN_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
+    }
+
+    private void setupAnimWizard(T entity, float ageInTicks, float limbSwing, float limbSwingAmount) {
+        if (entity.isDeadOrDying()) deathTick++;
+        if (entity.isAlive()) deathTick = 0;
+
+        root().getAllParts().forEach(ModelPart::resetPose);
+
+        animate(ModAnimationStates.WIZARD_IDLE, CustomPlayerAnimation.STEVE_IDLE, ageInTicks, AnimationManager.WIZARD_IDLE_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_DEATH, CustomPlayerAnimation.STEVE_DEATH, deathTick, AnimationManager.WIZARD_DEATH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_ATTACK, CustomPlayerAnimation.STEVE_ATTACK, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_ATTACK_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_IDLE_SHIFT_DOWN, CustomPlayerAnimation.STEVE_IDLE_SHIFT_DOWN, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_IDLE_SHIFT_DOWN_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_JUMP, CustomPlayerAnimation.STEVE_JUMP, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_JUMP_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_BACK_DASH, CustomPlayerAnimation.STEVE_DASH_BACK, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_BACK_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_FALL, CustomPlayerAnimation.STEVE_FALL, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_FALL_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_FRONT_DASH, CustomPlayerAnimation.STEVE_DASH_FRONT, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_FRONT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_LEFT_DASH, CustomPlayerAnimation.STEVE_DASH_LEFT, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_LEFT_DASH_ANIMATION_SPEED);
+
+        animate(ModAnimationStates.WIZARD_RIGHT_DASH, CustomPlayerAnimation.STEVE_DASH_RIGHT, AnimationHandler.getCountTickAnimation(), AnimationManager.WIZARD_RIGHT_DASH_SPEED);
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_SHIFT_DOWN, limbSwing, limbSwingAmount, 2, 2.5F);
+        }
+
+        if (entity.isAlive() && entity.walkAnimation.isMoving() && !AnimationHandler.getPlayerAttack() && !AnimationHandler.getPlayerShiftDown() && !AnimationHandler.getPlayerIdleShiftDown() && !AnimationHandler.getPlayerJump() && !AnimationHandler.getPlayerBackDash() && !AnimationHandler.getPlayerRightDash() && !AnimationHandler.getPlayerFrontDash() && !AnimationHandler.getPlayerLeftDash()) {
+            animateWalk(CustomPlayerAnimation.STEVE_WALK, limbSwing, limbSwingAmount, 1.5F, 2.5F);
+        }
     }
 
 }

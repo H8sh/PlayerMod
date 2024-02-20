@@ -69,7 +69,9 @@ public class Profession {
         SPIRITUSMETA(7, "spiritus"),
         ROGUE(8, "rogue"),
         BERSERK(9, "berserk"),
-        INVOCATOR(10, "invocator");
+        INVOCATOR(10, "invocator"),
+        GUNSLINGER(11, "gunslinger"),
+        MECHANIC(10, "mechanic");
 
         private final int id;
         private final String name;
@@ -91,6 +93,8 @@ public class Profession {
                 case 8 -> Professions.ROGUE;
                 case 9 -> Professions.BERSERK;
                 case 10 -> Professions.INVOCATOR;
+                case 11 -> Professions.GUNSLINGER;
+                case 12 -> Professions.MECHANIC;
                 default -> Professions.BASIC;
             };
         }

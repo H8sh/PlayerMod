@@ -129,13 +129,13 @@ public class ClientEvents {
             }
 
             if (Minecraft.getInstance().options.keyShift.isDown() || Minecraft.getInstance().options.keyDown.consumeClick()) {
-                AnimationManager.STEVE_SHIFT_DOWN_FLAG = 0;
+                AnimationManager.ANIM_SHIFT_DOWN_FLAG = 0;
             }
             if (!(Minecraft.getInstance().options.keyShift.isDown() || Minecraft.getInstance().options.keyDown.consumeClick())) {
-                AnimationManager.STEVE_SHIFT_DOWN_FLAG = 1;
+                AnimationManager.ANIM_SHIFT_DOWN_FLAG = 1;
             }
             if (Minecraft.getInstance().options.keyJump.consumeClick() && minecraft.player != null && !minecraft.player.isDeadOrDying()) {
-                AnimationHandler.setSteveJump(true);
+                AnimationHandler.setPlayerJump(true);
             }
         }
 
