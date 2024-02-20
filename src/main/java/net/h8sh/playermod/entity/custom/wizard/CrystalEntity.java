@@ -1,4 +1,4 @@
-package net.h8sh.playermod.entity.custom;
+package net.h8sh.playermod.entity.custom.wizard;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

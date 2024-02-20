@@ -2,7 +2,7 @@ package net.h8sh.playermod.ability.wizard.mana.crystal;
 
 import net.h8sh.playermod.ability.wizard.mana.ManaCapability;
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

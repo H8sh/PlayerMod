@@ -2,12 +2,11 @@ package net.h8sh.playermod.ability.berserk.slam;
 
 import net.h8sh.playermod.ability.berserk.rage.RageCapability;
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;

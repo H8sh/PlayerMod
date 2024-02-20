@@ -1,7 +1,7 @@
 package net.h8sh.playermod.ability.rogue.doublee;
 
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

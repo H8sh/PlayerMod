@@ -3,7 +3,6 @@ package net.h8sh.playermod.screen.pnj;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.block.entity.PnjBlockEntity;
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.PnjEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;

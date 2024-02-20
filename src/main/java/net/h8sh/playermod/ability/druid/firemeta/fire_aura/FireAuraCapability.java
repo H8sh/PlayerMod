@@ -1,8 +1,6 @@
 package net.h8sh.playermod.ability.druid.firemeta.fire_aura;
 
-import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
-import net.minecraft.client.Minecraft;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

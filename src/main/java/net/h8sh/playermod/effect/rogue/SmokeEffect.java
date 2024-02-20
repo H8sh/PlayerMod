@@ -1,4 +1,4 @@
-package net.h8sh.playermod.effect;
+package net.h8sh.playermod.effect.rogue;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

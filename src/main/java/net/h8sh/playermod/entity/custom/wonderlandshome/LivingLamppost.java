@@ -1,11 +1,7 @@
-package net.h8sh.playermod.entity.custom;
+package net.h8sh.playermod.entity.custom.wonderlandshome;
 
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.event.ModEvents;
 import net.h8sh.playermod.sound.ModSounds;
-import net.minecraft.client.renderer.entity.EndCrystalRenderer;
-import net.minecraft.client.renderer.entity.EnderDragonRenderer;
-import net.minecraft.client.renderer.entity.GuardianRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;

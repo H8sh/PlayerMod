@@ -1,9 +1,8 @@
-package net.h8sh.playermod.entity.client;
+package net.h8sh.playermod.entity.client.pnj;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.entity.custom.PnjEntity;
-import net.h8sh.playermod.entity.custom.SwouiffiEntity;
+import net.h8sh.playermod.entity.custom.pnj.PnjEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

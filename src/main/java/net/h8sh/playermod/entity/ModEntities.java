@@ -1,8 +1,12 @@
 package net.h8sh.playermod.entity;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.entity.custom.*;
 import net.h8sh.playermod.entity.custom.gunslinger.Sniper;
+import net.h8sh.playermod.entity.custom.pet.PetEntity;
+import net.h8sh.playermod.entity.custom.pet.SwouiffiEntity;
+import net.h8sh.playermod.entity.custom.pnj.PnjEntity;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
+import net.h8sh.playermod.entity.custom.wonderlandshome.LivingLamppost;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

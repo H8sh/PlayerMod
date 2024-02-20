@@ -2,8 +2,6 @@ package net.h8sh.playermod.networking.classes.druid.firemeta.fireaura;
 
 import net.h8sh.playermod.ability.druid.firemeta.fire_aura.FireAuraCapability;
 import net.h8sh.playermod.ability.druid.firemeta.fire_aura.FireAuraCapabilityProvider;
-import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

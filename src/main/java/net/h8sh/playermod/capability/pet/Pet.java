@@ -27,4 +27,30 @@ public class Pet {
         hasPet = nbt.getBoolean("hasPet");
     }
 
+    private enum Pets {
+        CAT(0, "cat"),
+        HORSE(1, "horse"),
+        AXE(2, "axe"),
+        BEAR(3, "axe"),
+        SKELETON_SPIDER(4, "skeleton_spider"),
+        MECHANICAL_CREATURE(5, "mechanical_creature"),
+        WOLF(6, "wolf");
+
+        private final int id;
+        private final String name;
+
+        Pets(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 }

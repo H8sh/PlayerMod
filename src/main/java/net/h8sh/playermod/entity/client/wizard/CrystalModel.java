@@ -1,7 +1,7 @@
-package net.h8sh.playermod.entity.client;
+package net.h8sh.playermod.entity.client.wizard;
 
 import net.h8sh.playermod.PlayerMod;
-import net.h8sh.playermod.entity.custom.CrystalEntity;
+import net.h8sh.playermod.entity.custom.wizard.CrystalEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

@@ -1,6 +1,8 @@
 package net.h8sh.playermod.effect;
 
 import net.h8sh.playermod.PlayerMod;
+import net.h8sh.playermod.effect.rogue.FrizzEffect;
+import net.h8sh.playermod.effect.rogue.SmokeEffect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.eventbus.api.IEventBus;

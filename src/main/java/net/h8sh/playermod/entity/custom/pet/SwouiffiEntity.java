@@ -1,4 +1,4 @@
-package net.h8sh.playermod.entity.custom;
+package net.h8sh.playermod.entity.custom.pet;
 
 import net.h8sh.playermod.entity.ModEntities;
 import net.minecraft.server.level.ServerLevel;

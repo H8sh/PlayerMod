@@ -1,4 +1,4 @@
-package net.h8sh.playermod.entity.client;
+package net.h8sh.playermod.entity.client.pet;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

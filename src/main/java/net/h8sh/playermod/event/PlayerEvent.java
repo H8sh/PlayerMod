@@ -4,7 +4,7 @@ package net.h8sh.playermod.event;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.ability.rogue.doublee.DoubleCapability;
 import net.h8sh.playermod.animation.handler.AnimationHandler;
-import net.h8sh.playermod.entity.custom.PetEntity;
+import net.h8sh.playermod.entity.custom.pet.PetEntity;
 import net.h8sh.playermod.networking.ModMessages;
 import net.h8sh.playermod.networking.pet.SpawnPetC2SPacket;
 import net.minecraft.client.Minecraft;

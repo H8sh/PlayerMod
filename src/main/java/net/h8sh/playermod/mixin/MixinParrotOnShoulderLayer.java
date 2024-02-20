@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.h8sh.playermod.PlayerMod;
 import net.h8sh.playermod.entity.ModEntities;
-import net.h8sh.playermod.entity.client.PetModel;
+import net.h8sh.playermod.entity.client.pet.PetModel;
 import net.h8sh.playermod.entity.client.ModModelLayers;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
